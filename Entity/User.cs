@@ -8,5 +8,3 @@ public class User
 
     public string LastName { get; set; }
 }
-
-
