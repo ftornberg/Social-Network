@@ -5,5 +5,9 @@ public class DirectMessage
     
     public DateTime TimeSent {get; set;}
 
+    public Guid Sender { get; set; }
+
+    public Guid Reciever { get; set; }
+
     public string? Message { get; set; }
 }
