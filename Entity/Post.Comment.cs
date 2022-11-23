@@ -3,19 +3,20 @@ public partial class Post
 {
   public class Comment : Post
   {
-        public Comment(Post? postId)
-        {
-            PostId = postId;
-        }
-        
-        public int Id { get; set; }
+    public Comment(int userId, int postId) : base(userId, postId)
 
-        public Post? PostId { get; set; }
+    {
+      UserId = userId;
+      PostId = postId;
+    }
+    public int Id { get; set; }
 
-        public int UserId { get; set; }
+    public int PostId { get; set; }
 
-        public string? Message { get; set; }
+    public int UserId { get; set; }
 
-        public DateTime CommentedTime { get; set; }
+    public string? Message { get; set; }
+
+    public DateTime CommentedTime { get; set; }
   }
 }
