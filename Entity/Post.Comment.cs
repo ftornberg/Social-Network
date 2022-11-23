@@ -12,11 +12,10 @@ public partial class Post
 
         public Post? PostId { get; set; }
 
+        public int UserId { get; set; }
 
         public string? Message { get; set; }
 
         public DateTime CommentedTime { get; set; }
-    
-        public int UserId { get; set; }
   }
 }
