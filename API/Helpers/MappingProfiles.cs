@@ -15,6 +15,8 @@ namespace API.Helpers
       CreateMap<DirectMessage, DirectMessageDto>();
 
       CreateMap<Post, PostDto>();
+
+      CreateMap<Post.Comment, CommentDto>();
     }
   }
 }
