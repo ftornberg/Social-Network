@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Entity;
 namespace API.Dto;
 
-public class User
+public class UserDto
 {
-    public List<User>? Followers { get; set; }
+    public List<UserDto>? Followers { get; set; }
 
     public List<Post>? Posts { get; set; }
 
