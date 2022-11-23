@@ -13,7 +13,7 @@ public partial class Post
 
     public int PostId { get; set; }
 
-    public int UserId { get; set; }
+    public User PostedBy { get; set; }
 
     public string? Message { get; set; }
 
