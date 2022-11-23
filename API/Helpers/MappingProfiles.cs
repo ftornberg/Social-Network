@@ -12,6 +12,8 @@ namespace API.Helpers
 
       CreateMap<User, FollowersDto>();
 
+      CreateMap<DirectMessage, DirectMessageDto>();
+
       CreateMap<Post, PostDto>();
     }
   }
