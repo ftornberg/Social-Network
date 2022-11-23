@@ -10,5 +10,5 @@ public partial class Post
     public List<Comment>? Comments { get; set; }
 
     public DateTime PostedTime { get; set; }
-    
+
 }
