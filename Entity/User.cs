@@ -1,10 +1,12 @@
-﻿namespace Entity;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class User
+namespace Entity;
+
+public class User : IdentityUser
 {
-    public Guid Id { get; set; }
+    public List<User>? Followers { get; set; }
 
-    public string FirstName { get; set; } 
+    public List<Post>? Posts { get; set; }
 
-    public string LastName { get; set; }
+    public List<DirectMessage>? Messages { get; set; }
 }
