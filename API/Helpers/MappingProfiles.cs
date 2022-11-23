@@ -4,13 +4,15 @@ using AutoMapper;
 
 namespace API.Helpers
 {
-    public class MappingProfiles : Profile
+  public class MappingProfiles : Profile
+  {
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            CreateMap<User, UserDto>();
+      CreateMap<User, UserDto>();
 
-            CreateMap<User, FollowersDto>();
-        }
+      CreateMap<User, FollowersDto>();
+
+      CreateMap<Post, PostDto>();
     }
+  }
 }
