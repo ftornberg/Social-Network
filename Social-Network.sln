@@ -3,19 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{27F43D29-37B7-405F-9AFE-E9707547FEAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{27F43D29-37B7-405F-9AFE-E9707547FEAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{C19A551D-2816-4C12-824B-C4E292246902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{C19A551D-2816-4C12-824B-C4E292246902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DBB4A1F9-AE7E-476A-B05B-717172E5698D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DBB4A1F9-AE7E-476A-B05B-717172E5698D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Social-Network.Test", "Social-Network.Test\Social-Network.Test.csproj", "{3775B5A3-3281-41FF-829D-4B61C0ACFF9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{27F43D29-37B7-405F-9AFE-E9707547FEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +29,15 @@ Global
 		{DBB4A1F9-AE7E-476A-B05B-717172E5698D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB4A1F9-AE7E-476A-B05B-717172E5698D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBB4A1F9-AE7E-476A-B05B-717172E5698D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3775B5A3-3281-41FF-829D-4B61C0ACFF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3775B5A3-3281-41FF-829D-4B61C0ACFF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3775B5A3-3281-41FF-829D-4B61C0ACFF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3775B5A3-3281-41FF-829D-4B61C0ACFF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4891CEAD-8112-4F71-8759-2C08922CCDC1}
 	EndGlobalSection
 EndGlobal
