@@ -14,6 +14,6 @@ namespace API.Dto
 
     public string? PostedMessage { get; set; }
 
-    public List<Post.Comment>? Comments { get; set; }
+    public List<Comment>? Comments { get; set; }
   }
 }

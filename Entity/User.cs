@@ -2,14 +2,7 @@
 
 public class User
 {
-  public User(int userId)
-  {
-    UserId = userId;
-  }
-
   public int Id { get; set; }
-
-  public int UserId { get; set; }
 
   public string? Name { get; set; }
 
