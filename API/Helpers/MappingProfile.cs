@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace API.Helpers
 {
-  public class MappingProfiles : Profile
+  public class MappingProfile : Profile
   {
-    public MappingProfiles()
+    public MappingProfile()
     {
       CreateMap<User, UserDto>();
 
