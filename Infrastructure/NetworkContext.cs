@@ -8,10 +8,15 @@ namespace Infrastructure
     public NetworkContext(DbContextOptions options) : base(options)
     {
     }
+
     public DbSet<User>? Users { get; set; }
+
     public DbSet<Post>? Posts { get; set; }
+
     public DbSet<Comment>? Comments { get; set; }
+
     public DbSet<DirectMessage>? DirectMessages { get; set; }
+
     public DbSet<Conversation>? Conversations { get; set; }
   }
 
