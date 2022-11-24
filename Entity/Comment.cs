@@ -5,7 +5,7 @@ public class Comment
 
   public int PostId { get; set; }
 
-  public User? PostedBy { get; set; }
+  public User PostedBy { get; set; }
 
   public string? Message { get; set; }
 
