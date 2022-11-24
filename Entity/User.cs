@@ -14,7 +14,7 @@ public class User
 
   public List<Post>? Posts { get; set; }
 
-  public List<DirectMessage>? Messages { get; set; }
+  public List<Conversation>? Messages { get; set; }
 
   public DateTime CreatedTime { get; set; }
 }

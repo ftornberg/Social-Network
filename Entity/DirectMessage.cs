@@ -3,6 +3,8 @@ public class DirectMessage
 {
   public int Id { get; set; }
 
+  public int ConversationId { get; set; }
+
   public DateTime TimeSent { get; set; }
 
   public int Sender { get; set; }

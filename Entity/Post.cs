@@ -1,5 +1,5 @@
 ﻿namespace Entity;
-public partial class Post
+public class Post
 {
   public int Id { get; set; }
 
