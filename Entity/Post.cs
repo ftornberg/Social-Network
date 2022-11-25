@@ -10,4 +10,5 @@ public class Post
   public List<Comment>? Comments { get; set; }
 
   public DateTime PostedTime { get; set; }
+  public object User { get; set; }
 }
