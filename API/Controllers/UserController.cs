@@ -6,6 +6,7 @@ using Entity;
 using Entity.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using API.Dto;
 
 
 
@@ -23,10 +24,36 @@ namespace API.Controllers
 
     [HttpGet("{id}")]
 
-    public async Task<User> GetUserById(int id)
+    /*public async Task<ActionResult<UserDto>> GetUserById(int id)
     {
       return await _userRepository.GetByIdAsync(id);
     }
+*/
+
+    [HttpGet("{id}")] //
+    public async Task<ActionResult<UserDto>> GetUserById(int userId)
+    {
+      var course = await _userRepository.GetByIdAsync(userId);
+
+      var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+      var sections = await _context.Sections.Where(x => x.CourseId == course.Id).Include(c => c.Lectures).ToListAsync();
+
+      var userCourse = _context.UserCourses.Where(x => x.User == user).Where(x => x.Course == course).First();
+
+      return new UserDto
+      {
+        CourseName = course.Title,
+        Sections = _mapper.Map<List<Section>, List<SectionDto>>(sections),
+        CurrentLecture = userCourse.CurrentLecture
+      };
+    }
+
+
+    // {
+    //   return await _userRepository.GetByIdAsync(id);
+
+    // }
 
     //   [HttpPost]
 
