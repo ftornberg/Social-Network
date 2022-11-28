@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddCors(opt =>
   {
     opt.AddPolicy("AllowOrigin", options => options.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-    .WithOrigins("http://localhost:3000"));
+    .WithOrigins("http://localhost:3001"));
   });
 
 using var scope = builder.Services.BuildServiceProvider().CreateScope();
@@ -55,6 +55,8 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
+app.UseCors("AllowOrigin");
 
 app.UseHttpsRedirection();
 
