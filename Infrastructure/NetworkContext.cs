@@ -1,3 +1,4 @@
+using System.Reflection;
 using Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,37 @@ namespace Infrastructure
     public DbSet<DirectMessage>? DirectMessages { get; set; }
 
     public DbSet<Conversation>? Conversations { get; set; }
-  }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+      builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+      builder.Entity<User>()
+        .HasData(
+          new User
+          {
+            Id = 1,
+            UserId = 1,
+            Name = "John",
+            Email = "john@email.com",
+            Password = "password",
+            CreatedTime = DateTime.Now
+          }
+        );
+
+      builder.Entity<User>()
+      .HasData(
+        new User
+        {
+          Id = 2,
+          UserId = 2,
+          Name = "Bill",
+          Email = "bill@email.com",
+          Password = "password",
+          CreatedTime = DateTime.Now
+        }
+      );
+    }
+  }
 }

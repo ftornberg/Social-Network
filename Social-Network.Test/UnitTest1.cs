@@ -1,16 +1,16 @@
 namespace Social_Network.Test
 {
-    [TestClass]
-    public class UnitTest1
+  [TestClass]
+  public class UnitTest1
+  {
+    [TestMethod]
+    public void TestGetUserById()
     {
-        [TestMethod]
-        public void TestPostShouldPost()
-        {
-            //Arrange
+      //Arrange
 
-            //Act
+      //Act
 
-            //Assert
-        }
+      //Assert
     }
+  }
 }

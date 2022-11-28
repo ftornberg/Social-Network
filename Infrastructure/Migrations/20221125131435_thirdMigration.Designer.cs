@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    partial class NetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20221125131435_thirdMigration")]
+    partial class thirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -144,20 +147,11 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 11, 28, 11, 9, 57, 850, DateTimeKind.Local).AddTicks(9692),
+                            CreatedTime = new DateTime(2022, 11, 25, 14, 14, 35, 497, DateTimeKind.Local).AddTicks(8278),
                             Email = "john@email.com",
                             Name = "John",
                             Password = "password",
                             UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2022, 11, 28, 11, 9, 57, 850, DateTimeKind.Local).AddTicks(9817),
-                            Email = "bill@email.com",
-                            Name = "Bill",
-                            Password = "password",
-                            UserId = 2
                         });
                 });
 
