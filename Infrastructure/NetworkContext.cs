@@ -37,6 +37,19 @@ namespace Infrastructure
             CreatedTime = DateTime.Now
           }
         );
+
+      builder.Entity<User>()
+      .HasData(
+        new User
+        {
+          Id = 2,
+          UserId = 2,
+          Name = "Bill",
+          Email = "bill@email.com",
+          Password = "password",
+          CreatedTime = DateTime.Now
+        }
+      );
     }
   }
 }

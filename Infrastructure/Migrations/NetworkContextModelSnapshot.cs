@@ -144,11 +144,20 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 11, 25, 14, 14, 35, 497, DateTimeKind.Local).AddTicks(8278),
+                            CreatedTime = new DateTime(2022, 11, 28, 11, 9, 57, 850, DateTimeKind.Local).AddTicks(9692),
                             Email = "john@email.com",
                             Name = "John",
                             Password = "password",
                             UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedTime = new DateTime(2022, 11, 28, 11, 9, 57, 850, DateTimeKind.Local).AddTicks(9817),
+                            Email = "bill@email.com",
+                            Name = "Bill",
+                            Password = "password",
+                            UserId = 2
                         });
                 });
 

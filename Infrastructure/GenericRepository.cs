@@ -1,6 +1,5 @@
 using Entity.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Entity;
 
 namespace Infrastructure
 {
@@ -51,24 +50,5 @@ namespace Infrastructure
     {
       return await _context.Set<T>().CountAsync();
     }
-
-    // public async Task<User> GetFollowersAsync(int id)
-    // {
-    //   return await _context.Set<T>().
-    // // }
-    // public async Task<IReadOnlyList<T>> ToListAsync(User User)
-    // {
-    //   return await _context.AddAsync(User).Result()
-    // }
-
-    // public Task<User> GetFollowersAsync(int id)
-    // {
-    //   throw new NotImplementedException();
-    // }
-
-    // public object AddAsync(int id)
-    // {
-    //   throw new NotImplementedException();
-    // }
   }
 }
