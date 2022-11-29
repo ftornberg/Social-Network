@@ -1,6 +1,6 @@
 ﻿namespace Entity;
 
-public class User
+public class User : BaseEntity
 {
 
   public User()
@@ -14,8 +14,6 @@ public class User
     Followers = new List<User>();
     Posts = new List<Post>();
   }
-
-  public int Id { get; set; }
 
   public int UserId { get; set; }
 

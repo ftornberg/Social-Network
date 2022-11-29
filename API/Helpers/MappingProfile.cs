@@ -8,17 +8,17 @@ namespace API.Helpers
   {
     public MappingProfile()
     {
-      CreateMap<User, UserDto>();
+      CreateMap<User, UserDto>().ReverseMap();
 
-      CreateMap<User, FollowersDto>();
+      CreateMap<User, FollowersDto>().ReverseMap();
 
-      CreateMap<DirectMessage, DirectMessageDto>();
+      CreateMap<DirectMessage, DirectMessageDto>().ReverseMap();
 
-      CreateMap<Post, PostDto>();
+      CreateMap<Post, PostDto>().ReverseMap();
 
-      CreateMap<Comment, CommentDto>();
+      CreateMap<Comment, CommentDto>().ReverseMap();
 
-      CreateMap<Conversation, ConversationDto>();
+      CreateMap<Conversation, ConversationDto>().ReverseMap();
     }
   }
 }

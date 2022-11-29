@@ -1,8 +1,6 @@
 namespace Entity;
-public class Comment
+public class Comment : BaseEntity
 {
-  public int Id { get; set; }
-
   public int PostId { get; set; }
 
   public User PostedBy { get; set; }
