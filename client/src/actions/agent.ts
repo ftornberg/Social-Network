@@ -1,4 +1,3 @@
-import React from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { User } from '../models/user';
 
@@ -15,12 +14,13 @@ const requests = {
 	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
-const Users = {
-	getUser: () => requests.get<User>('users/getUser/'),
+const ApplicationUser = {
+	list: () => requests.get<User[]>('/user'),
+	getUser: () => requests.get<User>('/user/{id}'),
 };
 
 const agent = {
-	Users,
+	ApplicationUser,
 };
 
 export default agent;

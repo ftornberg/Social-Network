@@ -1,15 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import ShowUser from './component/ShowUser.tsx';
+import ShowUsers from './component/ShowUsers';
 
 function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
-				<p>
-					<ShowUser />
-				</p>
+				Show Users
+				<ShowUsers />
 			</header>
 		</div>
 	);

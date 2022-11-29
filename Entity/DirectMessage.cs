@@ -1,7 +1,6 @@
 namespace Entity;
-public class DirectMessage
+public class DirectMessage : BaseEntity
 {
-  public int Id { get; set; }
 
   public int ConversationId { get; set; }
 

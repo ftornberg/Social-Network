@@ -1,6 +1,8 @@
 using Entity;
 using Entity.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using API.Dto;
 
 namespace API.Controllers
@@ -14,6 +16,19 @@ namespace API.Controllers
       _userRepository = userRepository;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsers()
+    {
+      var users = await _userRepository.ListAllAsync();
+
+      return Ok(users.Select(user => new UserDto
+      {
+        Id = user.Id,
+        Name = user.Name,
+        Email = user.Email
+      }));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetInfoAboutUserAsync(int id)
     {
@@ -21,9 +36,11 @@ namespace API.Controllers
 
       return new UserDto
       {
+        Id = user.Id,
         Name = user.Name,
         Email = user.Email,
       };
     }
+
   }
 }
