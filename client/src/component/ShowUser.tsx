@@ -1,23 +1,24 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import agent from '../actions/agent';
 
 const ShowUser = () => {
 	const [user, setUser] = useState<any>([]);
-	var id = 2;
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/user/' + id).then((response) => {
+		var id = 2;
+		agent.ApplicationUser.getUser(id).then((response) => {
 			console.log(response);
-			setUser(response.data);
+			setUser(response);
 		});
 	}, []);
 
 	return (
 		<div>
-			<h1>User</h1>
-			<ul>
-				<li>{user.name}</li>
-				<li>{user.email}</li>
-			</ul>
+			<h1>User {user.id}</h1>
+			<div>
+				<h3>{user.name}</h3>
+				<p>{user.email}</p>
+			</div>
 		</div>
 	);
 };

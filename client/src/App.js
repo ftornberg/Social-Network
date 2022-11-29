@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import ShowUsers from './component/ShowUsers';
+import ShowUser from './component/ShowUser';
+
 
 function App() {
 	return (
@@ -9,6 +11,8 @@ function App() {
 				<img src={logo} className="App-logo" alt="logo" />
 				Show Users
 				<ShowUsers />
+				Show User
+				<ShowUser />
 			</header>
 		</div>
 	);

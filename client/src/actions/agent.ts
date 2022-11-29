@@ -16,7 +16,7 @@ const requests = {
 
 const ApplicationUser = {
 	list: () => requests.get<User[]>('/user'),
-	getUser: () => requests.get<User>('/user/{id}'),
+	getUser: (id: number) => requests.get<User>('/user/' + id),
 };
 
 const agent = {
