@@ -1,6 +1,5 @@
 using Entity.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 namespace Infrastructure
 {
   public class GenericRepository<T> : IGenericRepository<T> where T : class
