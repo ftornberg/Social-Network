@@ -4,16 +4,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using API.Dto;
+using AutoMapper;
+using Infrastructure;
 
 namespace API.Controllers
 {
   public class UserController : BaseController
   {
     private readonly IGenericRepository<User> _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserController(IGenericRepository<User> userRepository)
+    private readonly NetworkContext _context;
+
+
+    public UserController(IGenericRepository<User> userRepository, IMapper mapper, NetworkContext context)
     {
       _userRepository = userRepository;
+      _mapper = mapper;
+      _context = context;
+    }
+
+    [HttpPost("register")]
+    public async Task<ActionResult<IReadOnlyList<RegisterUserDto>>> RegisterUser(RegisterUserDto registerUserDto)
+    {
+      User user = new User 
+      (
+        registerUserDto.Name,
+        registerUserDto.Email,
+        registerUserDto.Password,
+        DateTime.Now
+      );
+
+        _context.Users?.Add(user);
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        return result ? Ok() : BadRequest();
     }
 
     [HttpGet]

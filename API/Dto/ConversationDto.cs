@@ -4,6 +4,6 @@ namespace API.Dto
 {
     public class ConversationDto
     {
-        public List<DirectMessage>? Messages { get; set; }
+        public ICollection<DirectMessage>? Messages { get; set; }
     }
 }
