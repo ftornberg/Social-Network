@@ -1,21 +1,16 @@
 using Entity;
 using Entity.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using API.Dto;
 using AutoMapper;
 using Infrastructure;
-
 namespace API.Controllers
 {
   public class UserController : BaseController
   {
     private readonly IGenericRepository<User> _userRepository;
     private readonly IMapper _mapper;
-
     private readonly NetworkContext _context;
-
 
     public UserController(IGenericRepository<User> userRepository, IMapper mapper, NetworkContext context)
     {
@@ -68,5 +63,28 @@ namespace API.Controllers
       };
     }
 
+    [HttpDelete]
+    public async Task<ActionResult<bool>> DeleteUser(string email, string password)
+    {
+      var user = await GetUserByEmailAsync(email);
+
+      if (user?.Value?.Password != password) return BadRequest();
+      var entity = await _userRepository.GetByIdAsync(user.Value.Id);
+
+      await _userRepository.DeleteAsync(entity);
+
+      return true;
+    }
+
+    private async Task<ActionResult<UserDto>?> GetUserByEmailAsync(string email)
+    {
+      var users = await _userRepository.ListAllAsync();
+
+      var user = users.FirstOrDefault(u => u.Email == email);
+
+      UserDto userDto = new UserDto{ Email = user.Email, Password = user.Password, Name = user.Name, Id = user.Id };
+
+      return userDto;
+    }
   }
 }
