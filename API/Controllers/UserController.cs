@@ -79,12 +79,16 @@ namespace API.Controllers
     private async Task<ActionResult<UserDto>?> GetUserByEmailAsync(string email)
     {
       var users = await _userRepository.ListAllAsync();
-
-      var user = users.FirstOrDefault(u => u.Email == email);
-
-      UserDto userDto = new UserDto{ Email = user.Email, Password = user.Password, Name = user.Name, Id = user.Id };
-
-      return userDto;
+      try
+      {
+        var user = users.FirstOrDefault(u => u.Email == email);
+        UserDto userDto = new UserDto{ Email = user.Email, Password = user.Password, Name = user.Name, Id = user.Id };
+        return userDto;
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex);
+      }
     }
   }
 }
