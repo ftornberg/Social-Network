@@ -25,8 +25,16 @@ namespace API.Controllers
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<IReadOnlyList<RegisterUserDto>>> RegisterUser(User user)
+    public async Task<ActionResult<IReadOnlyList<RegisterUserDto>>> RegisterUser(RegisterUserDto registerUserDto)
     {
+      User user = new User 
+      (
+        registerUserDto.Name,
+        registerUserDto.Email,
+        registerUserDto.Password,
+        DateTime.Now
+      );
+
         _context.Users?.Add(user);
 
         var result = await _context.SaveChangesAsync() > 0;

@@ -1,7 +1,5 @@
 namespace Entity;
-public class Conversation
+public class Conversation : BaseEntity
 {
-    public int ConversationId { get; set; }
-
-    public List<DirectMessage>? Messages { get; set; }
+    public ICollection<DirectMessage>? Messages { get; set; }
 }

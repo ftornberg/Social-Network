@@ -46,16 +46,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Entity.Conversation", b =>
                 {
-                    b.Property<int>("ConversationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ConversationId");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Conversations");
                 });
@@ -100,12 +95,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("PostedTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -131,12 +121,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
 
@@ -144,20 +129,18 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 11, 29, 13, 19, 17, 683, DateTimeKind.Local).AddTicks(8184),
+                            CreatedTime = new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4571),
                             Email = "john@email.com",
                             Name = "John",
-                            Password = "password",
-                            UserId = 1
+                            Password = "password"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 11, 29, 13, 19, 17, 683, DateTimeKind.Local).AddTicks(8590),
+                            CreatedTime = new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4630),
                             Email = "bill@email.com",
                             Name = "Bill",
-                            Password = "password",
-                            UserId = 2
+                            Password = "password"
                         });
                 });
 
@@ -178,36 +161,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("PostedBy");
                 });
 
-            modelBuilder.Entity("Entity.Conversation", b =>
-                {
-                    b.HasOne("Entity.User", null)
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("Entity.DirectMessage", b =>
                 {
                     b.HasOne("Entity.Conversation", null)
                         .WithMany("Messages")
                         .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entity.Post", b =>
-                {
-                    b.HasOne("Entity.User", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entity.User", b =>
-                {
-                    b.HasOne("Entity.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -220,15 +178,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Entity.Post", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Entity.User", b =>
-                {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Messages");
-
-                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

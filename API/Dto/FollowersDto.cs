@@ -5,6 +5,6 @@ namespace API.Dto
 {
     public class FollowersDto
     {
-        public  List<User>? Followers { get; set; }
+        public  ICollection<User>? Followers { get; set; }
     }
 }
