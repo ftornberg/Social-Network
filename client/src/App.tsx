@@ -1,15 +1,14 @@
 import './App.css';
 import ShowUsers from './component/ShowUsers';
 import ShowUser from './component/ShowUser';
-
+import RegisterUser from './component/RegisterUser';
 
 function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				Show Users
+				<RegisterUser />
 				<ShowUsers />
-				Show User
 				<ShowUser />
 			</header>
 		</div>
