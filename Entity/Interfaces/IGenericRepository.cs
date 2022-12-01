@@ -15,7 +15,7 @@ namespace Entity.Interfaces
 
     Task DeleteAsync(T entity);
 
-    Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
+    Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
 
     Task<int> CountAsync();
   }

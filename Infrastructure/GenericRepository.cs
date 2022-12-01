@@ -40,7 +40,7 @@ namespace Infrastructure
       await _context.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
+    public async Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
     {
       return await _context.Set<T>().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }

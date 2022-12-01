@@ -1,6 +1,6 @@
 namespace API.Dto;
 
-public class RegisterUserDto : UserCredentialsDto
+public class UserRegisterDto : UserCredentialsDto
 {
   public string Name { get; set; }
 }
