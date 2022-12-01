@@ -77,27 +77,20 @@ namespace API.Controllers
         public async Task<ActionResult<User>> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await ValidateUserAsync(userUpdateDto.Email, userUpdateDto.Password);
-            
-            try
-            {
-                if (user.Value.Name == userUpdateDto.OldProperty)
-                    user.Value.Name = userUpdateDto.UpdatedProperty;
 
-                if (user.Value.Email == userUpdateDto.OldProperty)
-                    user.Value.Email = userUpdateDto.UpdatedProperty;
+            if (user.Value.Name == userUpdateDto.OldProperty)
+                user.Value.Name = userUpdateDto.UpdatedProperty;
 
-                if (user.Value.Password == userUpdateDto.OldProperty)
-                    user.Value.Password = userUpdateDto.UpdatedProperty;
-            }
-            catch (Exception ex)
-            {
-                BadRequest(ex);
-            }
+            if (user.Value.Email == userUpdateDto.OldProperty)
+                user.Value.Email = userUpdateDto.UpdatedProperty;
+
+            if (user.Value.Password == userUpdateDto.OldProperty)
+                user.Value.Password = userUpdateDto.UpdatedProperty;
 
             _context.Users?.Update(user.Value);
             var result = await _context.SaveChangesAsync() > 0;
 
-            return Ok(result);
+            return result ? Ok() : BadRequest();
         }
 
         private async Task<ActionResult<User>> ValidateUserAsync(string email, string password)
