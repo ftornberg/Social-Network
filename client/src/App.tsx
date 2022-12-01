@@ -7,9 +7,13 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<RegisterUser />
-				<ShowUsers />
-				<ShowUser />
+				<div className="Input-fields">
+					<RegisterUser />
+					<ShowUser />
+				</div>
+				<div className="Present-user-fields">
+					<ShowUsers />
+				</div>
 			</header>
 		</div>
 	);

@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: start;
 }
 
 .App-logo {
@@ -15,13 +15,34 @@
 
 .App-header {
   background-color: #282c34;
+  padding-inline: 2rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.Input-fields {
+  display: flex;
+  flex-direction: row;
+  padding-inline: 2rem;
+  gap: 5rem;
+
+  /* align-items: center;
+  justify-content: center; */
+}
+
+.Present-user-fields
+{
+  display: flex;
+  flex-direction: row;
+  padding-inline: 2rem;
+
+  /* align-items: left;
+  justify-content: left; */
 }
 
 .App-link {
