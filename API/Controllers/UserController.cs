@@ -37,7 +37,7 @@ namespace API.Controllers
             return result ? Ok() : BadRequest();
         }
 
-        [HttpGet]
+        [HttpGet("users")]
         public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsers()
         {
             var users = await _userRepository.ListAllAsync();
@@ -63,7 +63,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<ActionResult<bool>> DeleteUserAsync(string email, string password)
         {
             var user = await ValidateUserAsync(email, password);
@@ -73,30 +73,37 @@ namespace API.Controllers
             return true;
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<ActionResult<User>> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await ValidateUserAsync(userUpdateDto.Email, userUpdateDto.Password);
             
-            if (user.Value.Name == userUpdateDto.OldProperty)
-            user.Value.Name = userUpdateDto.UpdatedProperty;
+            try
+            {
+                if (user.Value.Name == userUpdateDto.OldProperty)
+                    user.Value.Name = userUpdateDto.UpdatedProperty;
 
-            if (user.Value.Email == userUpdateDto.OldProperty)
-            user.Value.Email = userUpdateDto.UpdatedProperty;
+                if (user.Value.Email == userUpdateDto.OldProperty)
+                    user.Value.Email = userUpdateDto.UpdatedProperty;
 
-            if (user.Value.Password == userUpdateDto.OldProperty)
-            user.Value.Password = userUpdateDto.UpdatedProperty;
+                if (user.Value.Password == userUpdateDto.OldProperty)
+                    user.Value.Password = userUpdateDto.UpdatedProperty;
+            }
+            catch (Exception ex)
+            {
+                BadRequest(ex);
+            }
 
             _context.Users?.Update(user.Value);
-
             var result = await _context.SaveChangesAsync() > 0;
 
-            return result ? Ok() : BadRequest();
+            return Ok(result);
         }
 
         private async Task<ActionResult<User>> ValidateUserAsync(string email, string password)
         {
             var user = await GetUserByEmailAsync(email);
+
             if (user?.Value?.Password != password) return BadRequest();
             var entity = await _userRepository.GetByIdAsync(user.Value.Id);
 
