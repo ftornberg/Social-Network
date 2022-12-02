@@ -1,11 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import agent from '../actions/agent';
 
 const ShowUser = () => {
 	const [user, setUser] = useState<any>([]);
+
 	useEffect(() => {
-		var id = 2;
+		const id = Math.floor(Math.random() * 10) + 1;
 		agent.ApplicationUser.getUser(id).then((response) => {
 			console.log(response);
 			setUser(response);
@@ -14,7 +14,7 @@ const ShowUser = () => {
 
 	return (
 		<div>
-			<h1>User {user.id}</h1>
+			<h1>Spotlight</h1>
 			<div>
 				<h3>{user.name}</h3>
 				<p>{user.email}</p>
