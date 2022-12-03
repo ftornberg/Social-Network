@@ -5,6 +5,10 @@ namespace API.Dto
   {
     public string? PostedMessage { get; set; }
 
-    public ICollection<Comment>? Comments { get; set; }
+    public int PostedByUserId { get; set; }
+
+    public int PostedToUserId { get; set; }
+
+    public DateTime PostedTime { get; set; }
   }
 }

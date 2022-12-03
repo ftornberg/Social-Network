@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    partial class NetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20221203104739_secondMigration")]
+    partial class secondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -74,19 +77,23 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostedByUser")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PostedMessage")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PostedTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PostedToUser")
+                    b.Property<int>("PostedToUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostedToUserId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -120,7 +127,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 12, 3, 11, 56, 15, 483, DateTimeKind.Local).AddTicks(4314),
+                            CreatedTime = new DateTime(2022, 12, 3, 11, 47, 39, 363, DateTimeKind.Local).AddTicks(3744),
                             Email = "john@email.com",
                             Name = "John",
                             Password = "password"
@@ -128,7 +135,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 12, 3, 11, 56, 15, 483, DateTimeKind.Local).AddTicks(4388),
+                            CreatedTime = new DateTime(2022, 12, 3, 11, 47, 39, 363, DateTimeKind.Local).AddTicks(3846),
                             Email = "bill@email.com",
                             Name = "Bill",
                             Password = "password"
@@ -144,6 +151,25 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PostedBy");
+                });
+
+            modelBuilder.Entity("Entity.Post", b =>
+                {
+                    b.HasOne("Entity.User", "PostedToUser")
+                        .WithMany()
+                        .HasForeignKey("PostedToUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.User", "PostedByUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostedByUser");
+
+                    b.Navigation("PostedToUser");
                 });
 #pragma warning restore 612, 618
         }
