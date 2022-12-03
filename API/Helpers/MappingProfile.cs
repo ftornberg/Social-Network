@@ -17,8 +17,6 @@ namespace API.Helpers
       CreateMap<Post, PostDto>().ReverseMap();
 
       CreateMap<Comment, CommentDto>().ReverseMap();
-
-      CreateMap<Conversation, ConversationDto>().ReverseMap();
     }
   }
 }
