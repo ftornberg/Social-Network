@@ -51,6 +51,19 @@ namespace API.Controllers
             }));
         }
 
-        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PostDto>> GetPostByIdAsync(int id)
+        {
+            var post = await _postRepository.GetByIdAsync(id);
+
+            return new PostDto
+            {
+                Id = post.Id,
+                PostedMessage = post.PostedMessage,
+                PostedByUserId = post.PostedByUserId,
+                PostedToUserId = post.PostedToUserId,
+                PostedTime = post.PostedTime
+            };
+        }
     }
 }
