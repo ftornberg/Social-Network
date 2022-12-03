@@ -9,12 +9,12 @@ namespace API.Controllers
 {
     public class PostController : BaseController
     {
-        private readonly IGenericRepository<User> _userRepository;
+        private readonly IGenericRepository<Post> _postRepository;
         private readonly NetworkContext _context;
 
-        public PostController(IGenericRepository<User> userRepository,  NetworkContext context)
+        public PostController(IGenericRepository<Post> postRepository, NetworkContext context)
         {
-            _userRepository = userRepository;
+            _postRepository = postRepository;
             _context = context;
         }
 
@@ -35,5 +35,22 @@ namespace API.Controllers
 
             return result ? Ok() : BadRequest();
         }
+
+        [HttpGet("posts")]
+        public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPosts()
+        {
+            var posts = await _postRepository.ListAllAsync();
+
+            return Ok(posts.Select(post => new PostDto
+            {
+                Id = post.Id,
+                PostedMessage = post.PostedMessage,
+                PostedByUserId = post.PostedByUserId,
+                PostedToUserId = post.PostedToUserId,
+                PostedTime = post.PostedTime
+            }));
+        }
+
+        
     }
 }
