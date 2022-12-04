@@ -1,8 +1,6 @@
 namespace Entity;
 public class DirectMessage : BaseEntity
 {
-  public int ConversationId { get; set; }
-
   public DateTime TimeSent { get; set; }
 
   public int Sender { get; set; }

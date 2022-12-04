@@ -8,21 +8,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class firstPostsMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Conversations",
+                name: "DirectMessages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TimeSent = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Sender = table.Column<int>(type: "INTEGER", nullable: false),
+                    Receiver = table.Column<int>(type: "INTEGER", nullable: false),
+                    Message = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conversations", x => x.Id);
+                    table.PrimaryKey("PK_DirectMessages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,6 +36,8 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PostedMessage = table.Column<string>(type: "TEXT", nullable: true),
+                    PostedByUserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PostedToUserId = table.Column<int>(type: "INTEGER", nullable: false),
                     PostedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -56,29 +62,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DirectMessages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ConversationId = table.Column<int>(type: "INTEGER", nullable: false),
-                    TimeSent = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Sender = table.Column<int>(type: "INTEGER", nullable: false),
-                    Reciever = table.Column<int>(type: "INTEGER", nullable: false),
-                    Message = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DirectMessages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DirectMessages_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -93,12 +76,6 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Comments_Users_PostedById",
                         column: x => x.PostedById,
                         principalTable: "Users",
@@ -111,24 +88,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedTime", "Email", "Name", "Password" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4571), "john@email.com", "John", "password" },
-                    { 2, new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4630), "bill@email.com", "Bill", "password" }
+                    { 1, new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5147), "john@email.com", "John", "password" },
+                    { 2, new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5223), "bill@email.com", "Bill", "password" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostedById",
                 table: "Comments",
                 column: "PostedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostId",
-                table: "Comments",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DirectMessages_ConversationId",
-                table: "DirectMessages",
-                column: "ConversationId");
         }
 
         /// <inheritdoc />
@@ -145,9 +112,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Conversations");
         }
     }
 }
