@@ -39,7 +39,21 @@ namespace API.Controllers
             var result = await _context.SaveChangesAsync() > 0;
 
             return result ? Ok() : BadRequest();
+        }
 
+        [HttpGet("GetComments")]
+
+        public async Task<ActionResult<IReadOnlyList<CommentDto>>> GetComments()
+        {
+            var comments = await _commentRepository.ListAllAsync();
+
+            return Ok(comments.Select(comment => new CommentDto
+            {
+                PostId = comment.PostId,
+                CommentedByUserId = comment.CommentedByUserId,
+                Message = comment.Message,
+                CommentedTime = comment.CommentedTime
+            }));
         }
 
         [HttpGet("{id}")]
@@ -56,5 +70,30 @@ namespace API.Controllers
                 CommentedTime = comment.CommentedTime
             };
         }
+
+        /*[HttpDelete("DeleteComment")]
+        public async Task<ActionResult<bool>> DeleteCommentAsync(int commentId, int CommentedByUserId)
+        {
+            var comment = await _commentRepository.GetByIdAsync(commentId);
+
+            if (CommentedByUserId != comment.CommentedByUserId) return BadRequest();
+            await _commentRepository.DeleteAsync(comment);
+            return Ok();
+        }
+
+        [HttpPut("UpdateComment")]
+
+        public async Task<ActionResult<Comment>> UpdateCommentAsync(CommentDto commentDto, int userId)
+        {
+            var comment = await _commentRepository.GetByIdAsync(commentDto.PostId);
+
+            if (comment.CommentedByUserId != userId) return BadRequest();
+            comment.Message = commentDto.Message;
+
+            _context.Comments?.Update(comment);
+            var result = await _context.SaveChangesAsync() > 0;
+
+            return result ? Ok() : BadRequest();
+        }*/
     }
 }
