@@ -4,7 +4,9 @@ namespace API.Dto
 {
   public class CommentDto
   {
-    public User PostedBy { get; set; }
+    public int PostId { get; set; }
+
+    public int CommentedByUserId { get; set; }
 
     public string? Message { get; set; }
 

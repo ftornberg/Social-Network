@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    [Migration("20221130130014_firstMigration")]
-    partial class firstMigration
+    [Migration("20221203144123_CommentMigration")]
+    partial class CommentMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CommentedByUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CommentedTime")
                         .HasColumnType("TEXT");
 
@@ -35,14 +38,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostedById")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("PostedById");
 
                     b.ToTable("Comments");
                 });
@@ -132,7 +130,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4571),
+                            CreatedTime = new DateTime(2022, 12, 3, 15, 41, 23, 321, DateTimeKind.Local).AddTicks(8200),
                             Email = "john@email.com",
                             Name = "John",
                             Password = "password"
@@ -140,7 +138,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 11, 30, 14, 0, 14, 97, DateTimeKind.Local).AddTicks(4630),
+                            CreatedTime = new DateTime(2022, 12, 3, 15, 41, 23, 321, DateTimeKind.Local).AddTicks(8286),
                             Email = "bill@email.com",
                             Name = "Bill",
                             Password = "password"
@@ -154,14 +152,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Entity.User", "PostedBy")
-                        .WithMany()
-                        .HasForeignKey("PostedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PostedBy");
                 });
 
             modelBuilder.Entity("Entity.DirectMessage", b =>

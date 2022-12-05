@@ -5,7 +5,7 @@ public class DirectMessage : BaseEntity
 
   public int Sender { get; set; }
 
-  public int Reciever { get; set; }
+  public int Receiver { get; set; }
 
   public string Message { get; set; }
 

@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { User } from '../models/user';
-import {DirectMessage} from '../models/directmessage'
-import { DirectMessageDto} from '../models/directmessage';
+import { Register, User } from '../models/user';
+import { DirectMessageDto, DirectMessage} from '../models/directmessage';
 
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.headers.delete['Content-Type'] = 'application/json';
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -15,7 +15,7 @@ const requests = {
 	post: <T>(url: string, body: {}) =>
 		axios.post<T>(url, body).then(responseBody),
 	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
+	del: <T>(url: string, body: {}) => axios.delete<T>(url).then(responseBody),
 };
 const ApplicationDirectMessage = {
 	list: (sender: number, reciever: number) => requests.get<DirectMessage[]>('/DirectMessage/getmessages?sender=' + sender + '&reciever=' + reciever),
@@ -25,7 +25,7 @@ const ApplicationDirectMessage = {
 const ApplicationUser = {
 	list: () => requests.get<User[]>('/user/users'),
 	getUser: (id: number) => requests.get<User>('/user/' + id),
-	registerUser: (user: User) => requests.post<User>('/user/register', user),
+	registerUser: (user: Register) => requests.post<User>('/user/register', user),
 };
 
 const agent = {

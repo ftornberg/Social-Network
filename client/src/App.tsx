@@ -12,10 +12,10 @@ function App() {
 			<header className="App-header">
 				<div className="Input-fields">
 					<RegisterUser />
-					<ShowUser />
 				</div>
 				<div className="Present-user-fields">
 					<ShowUsers />
+					{/* <ShowUser /> */}
 				</div>
 				<div>
 					<SendMessage />
