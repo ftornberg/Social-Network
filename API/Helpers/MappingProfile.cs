@@ -18,7 +18,6 @@ namespace API.Helpers
 
       CreateMap<Comment, CommentDto>().ReverseMap();
 
-      CreateMap<Conversation, ConversationDto>().ReverseMap();
     }
   }
 }
