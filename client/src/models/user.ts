@@ -10,8 +10,3 @@ export interface Register {
 	email: string;
 	password: string;
 }
-
-export interface Delete {
-	email: string;
-	password: string;
-}

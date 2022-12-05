@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Delete, Register, User } from '../models/user';
+import { Register, User } from '../models/user';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.headers.delete['Content-Type'] = 'application/json';

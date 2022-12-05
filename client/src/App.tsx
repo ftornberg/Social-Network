@@ -9,13 +9,12 @@ function App() {
 		<div className="App">
 			<header className="App-header">
 				<div className="Input-fields">
-					{/* <RegisterUser /> */}
-					<DeleteUser />
+					<RegisterUser />
 				</div>
-				{/* <div className="Present-user-fields">
+				<div className="Present-user-fields">
 					<ShowUsers />
 					<ShowUser />
-				</div> */}
+				</div>
 			</header>
 		</div>
 	);
