@@ -1,5 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { User } from '../models/user';
+import {DirectMessage} from '../models/directmessage'
+import { DirectMessageDto} from '../models/directmessage';
+
+
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -13,6 +17,10 @@ const requests = {
 	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
 	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
+const ApplicationDirectMessage = {
+	list: (sender: number, reciever: number) => requests.get<DirectMessage[]>('/DirectMessage/getmessages?sender=' + sender + '&reciever=' + reciever),
+	sendMessage: (directMessageDto: DirectMessageDto) => requests.post<DirectMessage>('/DirectMessage/sendMessage', directMessageDto),
+};
 
 const ApplicationUser = {
 	list: () => requests.get<User[]>('/user/users'),
@@ -22,6 +30,7 @@ const ApplicationUser = {
 
 const agent = {
 	ApplicationUser,
+	ApplicationDirectMessage,
 };
 
 export default agent;
