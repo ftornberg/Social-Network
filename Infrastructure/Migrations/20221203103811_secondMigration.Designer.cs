@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    partial class NetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20221203103811_secondMigration")]
+    partial class secondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -21,9 +24,6 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CommentedByUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CommentedTime")
@@ -40,6 +40,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PostId");
+
                     b.HasIndex("PostedById");
 
                     b.ToTable("Comments");
@@ -54,7 +56,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Receiver")
+                    b.Property<int>("Reciever")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Sender")
@@ -74,17 +76,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostedByUserId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PostedMessage")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PostedTime")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("PostedToUserId")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -120,7 +116,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5147),
+                            CreatedTime = new DateTime(2022, 12, 3, 11, 38, 10, 751, DateTimeKind.Local).AddTicks(2012),
                             Email = "john@email.com",
                             Name = "John",
                             Password = "password"
@@ -128,7 +124,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5223),
+                            CreatedTime = new DateTime(2022, 12, 3, 11, 38, 10, 751, DateTimeKind.Local).AddTicks(2081),
                             Email = "bill@email.com",
                             Name = "Bill",
                             Password = "password"
@@ -137,6 +133,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Entity.Comment", b =>
                 {
+                    b.HasOne("Entity.Post", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.User", "PostedBy")
                         .WithMany()
                         .HasForeignKey("PostedById")
