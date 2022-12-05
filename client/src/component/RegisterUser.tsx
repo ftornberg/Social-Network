@@ -6,7 +6,6 @@ import ShowUsers from './ShowUsers';
 
 const RegisterUser = () => {
 	const [values, setValues] = useState<Register>({
-		id: 0,
 		email: '',
 		password: '',
 		name: '',
@@ -20,7 +19,6 @@ const RegisterUser = () => {
 
 	const handleClick = () => {
 		let register: Register = {
-			id: 0,
 			name: name,
 			email: email,
 			password: password,
@@ -32,24 +30,20 @@ const RegisterUser = () => {
 		});
 	};
 
-	useEffect(() => {
-		<ShowUsers />;
-	}, []);
-
 	return (
 		<div>
-			<h1>Register</h1>
+			<h1>Registrera</h1>
 			<form onSubmit={handleClick}>
 				<input
 					value={name}
 					name="name"
-					placeholder="Name"
+					placeholder="Namn"
 					onInput={handleInputChange}
 				/>
 				<br />
 				<input
 					value={email}
-					type="text"
+					type="email"
 					name="email"
 					placeholder="Email"
 					onInput={handleInputChange}
@@ -59,7 +53,7 @@ const RegisterUser = () => {
 					value={password}
 					type="password"
 					name="password"
-					placeholder="Password"
+					placeholder="Lösenord"
 					onInput={handleInputChange}
 				/>
 				<br />

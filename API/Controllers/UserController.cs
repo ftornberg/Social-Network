@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using API.Dto;
 using AutoMapper;
 using Infrastructure;
+using System.Text.Json;
+
 namespace API.Controllers
 {
   public class UserController : BaseController
   {
     private readonly IGenericRepository<User> _userRepository;
     private readonly IMapper _mapper;
-    private readonly NetworkContext _context;
 
-    public UserController(IGenericRepository<User> userRepository, IMapper mapper, NetworkContext context)
+    public UserController(IGenericRepository<User> userRepository, IMapper mapper)
     {
       _userRepository = userRepository;
       _mapper = mapper;
-      _context = context;
     }
 
     [HttpPost("register")]
@@ -30,15 +30,14 @@ namespace API.Controllers
         DateTime.Now
       );
 
-      _context.Users?.Add(user);
+      if (user == null) return BadRequest();
+      await _userRepository.AddAsync(user);
 
-      var result = await _context.SaveChangesAsync() > 0;
-
-      return result ? Ok() : BadRequest();
+      return Ok();
     }
 
     [HttpGet("users")]
-    public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsers()
+    public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsersAsync()
     {
       var users = await _userRepository.ListAllAsync();
 
@@ -63,59 +62,62 @@ namespace API.Controllers
       };
     }
 
-    [HttpDelete("delete")]
-    public async Task<ActionResult<bool>> DeleteUserAsync(string email, string password)
-    {
-      var user = await ValidateUserAsync(email, password);
+    // To Be Removed Later In The Project
 
-      await _userRepository.DeleteAsync(user.Value);
+    // [HttpDelete("delete")]
+    // public async Task<ActionResult<bool>> DeleteUserAsync(UserCredentialsDto userCredentialsDto)
+    // {
 
-      return true;
-    }
+    //   var user = await ValidateUserAsync(userCredentialsDto.Email, userCredentialsDto.Password);
 
-    [HttpPut("update")]
-    public async Task<ActionResult<User>> UpdateUserAsync(UserUpdateDto userUpdateDto)
-    {
-      var user = await ValidateUserAsync(userUpdateDto.Email, userUpdateDto.Password);
+    //   await _userRepository.DeleteAsync(user.Value);
 
-      if (user.Value.Name == userUpdateDto.OldProperty)
-        user.Value.Name = userUpdateDto.UpdatedProperty;
+    //   return true;
+    // }
 
-      if (user.Value.Email == userUpdateDto.OldProperty)
-        user.Value.Email = userUpdateDto.UpdatedProperty;
+    // [HttpPut("update")]
+    // public async Task<ActionResult<User>> UpdateUserAsync(UserUpdateDto userUpdateDto)
+    // {
+    //   var user = await ValidateUserAsync(userUpdateDto.Email, userUpdateDto.Password);
 
-      if (user.Value.Password == userUpdateDto.OldProperty)
-        user.Value.Password = userUpdateDto.UpdatedProperty;
+    //   if (user.Value.Name == userUpdateDto.OldProperty)
+    //     user.Value.Name = userUpdateDto.UpdatedProperty;
 
-      _context.Users?.Update(user.Value);
-      var result = await _context.SaveChangesAsync() > 0;
+    //   if (user.Value.Email == userUpdateDto.OldProperty)
+    //     user.Value.Email = userUpdateDto.UpdatedProperty;
 
-      return result ? Ok() : BadRequest();
-    }
+    //   if (user.Value.Password == userUpdateDto.OldProperty)
+    //     user.Value.Password = userUpdateDto.UpdatedProperty;
 
-    private async Task<ActionResult<User>> ValidateUserAsync(string email, string password)
-    {
-      var user = await GetUserByEmailAsync(email);
+    //   _context.Users?.Update(user.Value);
+    //   var result = await _context.SaveChangesAsync() > 0;
 
-      if (user?.Value?.Password != password) return BadRequest();
-      var entity = await _userRepository.GetByIdAsync(user.Value.Id);
+    //   return result ? Ok() : BadRequest();
+    // }
 
-      return entity;
-    }
+    // private async Task<ActionResult<User>> ValidateUserAsync(string email, string password)
+    // {
+    //   var user = await GetUserByEmailAsync(email);
 
-    private async Task<ActionResult<UserDto>?> GetUserByEmailAsync(string email)
-    {
-      var users = await _userRepository.ListAllAsync();
-      try
-      {
-        var user = users.FirstOrDefault(u => u.Email == email);
-        UserDto userDto = new UserDto { Email = user.Email, Password = user.Password, Name = user.Name, Id = user.Id };
-        return userDto;
-      }
-      catch (Exception)
-      {
-        return BadRequest();
-      }
-    }
+    //   if (user?.Value?.Password != password) return BadRequest();
+    //   var entity = await _userRepository.GetByIdAsync(user.Value.Id);
+
+    //   return entity;
+    // }
+
+    // private async Task<ActionResult<UserDto>?> GetUserByEmailAsync(string email)
+    // {
+    //   var users = await _userRepository.ListAllAsync();
+    //   try
+    //   {
+    //     var user = users.FirstOrDefault(u => u.Email == email);
+    //     UserDto userDto = new UserDto { Email = user.Email, Password = user.Password, Name = user.Name, Id = user.Id };
+    //     return userDto;
+    //   }
+    //   catch (Exception)
+    //   {
+    //     return BadRequest();
+    //   }
+    // }
   }
 }

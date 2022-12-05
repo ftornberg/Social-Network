@@ -6,8 +6,12 @@ export interface User {
 }
 
 export interface Register {
-	id: number;
 	name: string;
+	email: string;
+	password: string;
+}
+
+export interface Delete {
 	email: string;
 	password: string;
 }
