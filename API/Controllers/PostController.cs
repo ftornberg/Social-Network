@@ -18,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpPost("post")]
+        [ResponseCache(VaryByHeader ="User-Agent", Duration =50)]
         public async Task<ActionResult<IReadOnlyList<PostDto>>> Post(PostDto postDto)
         {
             Post post = new Post
