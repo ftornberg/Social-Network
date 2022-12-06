@@ -68,7 +68,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Reciever")
+                    b.Property<int>("Receiver")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Sender")

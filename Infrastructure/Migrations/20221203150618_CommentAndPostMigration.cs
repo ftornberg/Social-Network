@@ -31,7 +31,7 @@ namespace Infrastructure.Migrations
                 table: "Comments");
 
             migrationBuilder.RenameColumn(
-                name: "Reciever",
+                name: "Receiver",
                 table: "DirectMessages",
                 newName: "Receiver");
 
@@ -78,7 +78,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.RenameColumn(
                 name: "Receiver",
                 table: "DirectMessages",
-                newName: "Reciever");
+                newName: "Receiver");
 
             migrationBuilder.CreateTable(
                 name: "Conversations",
