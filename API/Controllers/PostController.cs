@@ -1,4 +1,5 @@
 using API.Dto;
+using AutoMapper;
 using Entity;
 using Entity.Interfaces;
 using Infrastructure;
@@ -9,16 +10,17 @@ namespace API.Controllers
     public class PostController : BaseController
     {
         private readonly IGenericRepository<Post> _postRepository;
-        private readonly NetworkContext _context;
+        private readonly IMapper _mapper;
 
-        public PostController(IGenericRepository<Post> postRepository, NetworkContext context)
+        public PostController(IGenericRepository<Post> postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
-            _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost("post")]
-        public async Task<ActionResult<IReadOnlyList<PostDto>>> Post(PostDto postDto)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<Post>> CreatePostAsync(PostDto postDto)
         {
             Post post = new Post
             (
@@ -28,15 +30,15 @@ namespace API.Controllers
                 DateTime.Now
             );
 
-            _context.Posts?.Add(post);
+            if (post.Id == null) return BadRequest();
+            var result = await _postRepository.AddAsync(post);
 
-            var result = await _context.SaveChangesAsync() > 0;
-
-            return result ? Ok() : BadRequest();
+            return Ok(result);
         }
 
         [HttpGet("getPosts")]
-        public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPosts(int postedToUserId)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<IReadOnlyList<PostDto>>> GetSpecificUserPostsAsync(int postedToUserId)
         {
 
             var allPosts = await _postRepository.ListAllAsync();
