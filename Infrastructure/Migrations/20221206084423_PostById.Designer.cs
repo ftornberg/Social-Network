@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetworkContext))]
-    [Migration("20221203144123_CommentMigration")]
-    partial class CommentMigration
+    [Migration("20221206084423_PostById")]
+    partial class PostById
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,20 +40,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
-
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Entity.Conversation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Conversations");
                 });
 
             modelBuilder.Entity("Entity.DirectMessage", b =>
@@ -62,13 +49,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ConversationId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Message")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Reciever")
+                    b.Property<int>("Receiver")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Sender")
@@ -79,8 +63,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConversationId");
-
                     b.ToTable("DirectMessages");
                 });
 
@@ -90,11 +72,17 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("PostedByUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("PostedMessage")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PostedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("PostedToUserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -125,52 +113,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedTime = new DateTime(2022, 12, 3, 15, 41, 23, 321, DateTimeKind.Local).AddTicks(8200),
-                            Email = "john@email.com",
-                            Name = "John",
-                            Password = "password"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2022, 12, 3, 15, 41, 23, 321, DateTimeKind.Local).AddTicks(8286),
-                            Email = "bill@email.com",
-                            Name = "Bill",
-                            Password = "password"
-                        });
-                });
-
-            modelBuilder.Entity("Entity.Comment", b =>
-                {
-                    b.HasOne("Entity.Post", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entity.DirectMessage", b =>
-                {
-                    b.HasOne("Entity.Conversation", null)
-                        .WithMany("Messages")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entity.Conversation", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("Entity.Post", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

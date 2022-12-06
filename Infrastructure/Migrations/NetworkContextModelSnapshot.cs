@@ -35,12 +35,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PostedById")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PostedById");
 
                     b.ToTable("Comments");
                 });
@@ -115,35 +110,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedTime = new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5147),
-                            Email = "john@email.com",
-                            Name = "John",
-                            Password = "password"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2022, 12, 4, 15, 10, 29, 741, DateTimeKind.Local).AddTicks(5223),
-                            Email = "bill@email.com",
-                            Name = "Bill",
-                            Password = "password"
-                        });
-                });
-
-            modelBuilder.Entity("Entity.Comment", b =>
-                {
-                    b.HasOne("Entity.User", "PostedBy")
-                        .WithMany()
-                        .HasForeignKey("PostedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PostedBy");
                 });
 
             modelBuilder.Entity("Entity.Post", b =>
