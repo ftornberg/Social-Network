@@ -1,8 +1,6 @@
 import { ChangeEvent, useState } from 'react';
-import { useEffect } from 'react';
 import agent from '../actions/agent';
-import { Register, User } from '../models/user';
-import ShowUsers from './ShowUsers';
+import { Register } from '../models/user';
 
 const RegisterUser = () => {
 	const [values, setValues] = useState<Register>({
@@ -12,8 +10,8 @@ const RegisterUser = () => {
 	});
 	const { email, password, name } = values;
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = event.target;
 		setValues({ ...values, [name]: value });
 	};
 

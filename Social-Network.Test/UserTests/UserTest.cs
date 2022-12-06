@@ -82,7 +82,7 @@ namespace Social_Network.Test.UserTests
             var users = await userController.GetUsersAsync();
 
             // Assert
-            Assert.IsNull(users.Value); // Varför kommer vi inte åt users.Result.Value?
+            Assert.IsNull(users.Value); // Varfï¿½r kommer vi inte ï¿½t users.Result.Value?
         }
     }
 }

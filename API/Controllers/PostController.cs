@@ -21,6 +21,7 @@ namespace API.Controllers
         [HttpPost("post")]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
         public async Task<ActionResult<Post>> CreatePostAsync(PostDto postDto)
+
         {
             Post post = new Post
             (

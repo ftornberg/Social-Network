@@ -2,7 +2,9 @@ import './App.css';
 import ShowUsers from './component/ShowUsers';
 import ShowUser from './component/ShowUser';
 import RegisterUser from './component/RegisterUser';
-import DeleteUser from './component/DeleteUser';
+import ShowMessages from './component/ShowMessages';
+import SendMessage from './component/SendMessage';
+
 
 function App() {
 	return (
@@ -13,7 +15,11 @@ function App() {
 				</div>
 				<div className="Present-user-fields">
 					<ShowUsers />
-					<ShowUser />
+					{/* <ShowUser /> */}
+				</div>
+				<div>
+					<SendMessage />
+					<ShowMessages />
 				</div>
 			</header>
 		</div>
