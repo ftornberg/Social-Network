@@ -14,8 +14,8 @@ namespace Social_Network.Test.UserTests
     [TestClass]
     public class UserControllerTest
     {
-        private IMapper _mapper;
-        private Mock<IGenericRepository<User>> _userRepositoryMock;
+        private IMapper? _mapper;
+        private Mock<IGenericRepository<User>>? _userRepositoryMock;
 
         [TestInitialize]
         public void Setup()
@@ -30,7 +30,7 @@ namespace Social_Network.Test.UserTests
 
         }
         [TestMethod]
-        public async Task TestShouldGetUserByIdFromController()
+        public async Task TestShouldGetUserByIdFromControllerAsync()
         {
             // Arrange
             _userRepositoryMock.Setup(x => x.GetByIdAsync(1))
