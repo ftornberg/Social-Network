@@ -18,7 +18,7 @@ const requests = {
 	del: <T>(url: string, body: {}) => axios.delete<T>(url).then(responseBody),
 };
 const ApplicationDirectMessage = {
-	list: (sender: number, reciever: number) => requests.get<DirectMessage[]>('/DirectMessage/getmessages?sender=' + sender + '&reciever=' + reciever),
+	list: (sender: number, receiver: number) => requests.get<DirectMessage[]>('/DirectMessage/getmessages?sender=' + sender + '&receiver=' + receiver),
 	sendMessage: (directMessageDto: DirectMessageDto) => requests.post<DirectMessage>('/DirectMessage/sendMessage', directMessageDto),
 };
 

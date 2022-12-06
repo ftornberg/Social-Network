@@ -9,7 +9,7 @@ namespace API.Dto
     {
         public int Sender { get; set; }
 
-        public int Reciever { get; set; }
+        public int Receiver { get; set; }
         
         public string? Message { get; set; }
 

@@ -9,10 +9,10 @@ public class DirectMessage : BaseEntity
 
   public string Message { get; set; }
 
-    public DirectMessage(int sender, int reciever, string message, DateTime timeSent)
+    public DirectMessage(int sender, int receiver, string message, DateTime timeSent)
   {
     Sender = sender;
-    Reciever = reciever;
+    Receiver = receiver;
     Message = message;
     TimeSent = timeSent;
   }

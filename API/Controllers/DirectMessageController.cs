@@ -26,7 +26,7 @@ namespace API.Controllers
             DirectMessage directMessage = new DirectMessage
             (
                 directMessageDto.Sender,
-                directMessageDto.Reciever,
+                directMessageDto.Receiver,
                 directMessageDto.Message,
                 DateTime.Now
             );
@@ -39,11 +39,11 @@ namespace API.Controllers
         }
 
         [HttpGet("getmessages")]
-        public async Task<ActionResult<IReadOnlyList<DirectMessage>>> GetMessages(int sender, int reciever)
+        public async Task<ActionResult<IReadOnlyList<DirectMessage>>> GetMessages(int sender, int receiver)
         {
             var directMessages = await _directMessageRepository.ListAllAsync();
             IReadOnlyList<DirectMessage> messages = directMessages
-            .Where(message => (message.Sender == sender && message.Reciever == reciever) || (message.Sender == reciever && message.Reciever == sender))
+            .Where(message => (message.Sender == sender && message.Receiver == receiver) || (message.Sender == receiver && message.Receiver == sender))
             .OrderByDescending(message => message.TimeSent).ToList();
             
             return Ok(messages);
