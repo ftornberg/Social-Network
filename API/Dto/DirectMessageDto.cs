@@ -7,12 +7,12 @@ namespace API.Dto
 {
     public class DirectMessageDto
     {
-        public DateTime TimeSent {get; set;}
+        public int Sender { get; set; }
 
-        public Guid Sender { get; set; }
-
-        public Guid Reciever { get; set; }
-
+        public int Receiver { get; set; }
+        
         public string? Message { get; set; }
+
+        public DateTime TimeSent {get; set;}
     }
 }

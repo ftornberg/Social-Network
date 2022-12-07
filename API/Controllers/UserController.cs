@@ -19,6 +19,7 @@ namespace API.Controllers
     }
 
     [HttpPost("register")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<UserRegisterDto>>> RegisterUser(UserRegisterDto userRegisterDto)
     {
       User user = new User
@@ -36,6 +37,7 @@ namespace API.Controllers
     }
 
     [HttpGet("users")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsersAsync()
     {
       var users = await _userRepository.ListAllAsync();
@@ -49,7 +51,7 @@ namespace API.Controllers
     }
 
     [HttpGet("{id}")]
-    
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<UserDto>> GetInfoAboutUserAsync(int id)
     {
       var user = await _userRepository.GetByIdAsync(id);

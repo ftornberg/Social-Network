@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Dto;
+using AutoMapper;
 using Entity;
 using Entity.Interfaces;
 using Infrastructure;
@@ -13,13 +14,12 @@ namespace API.Controllers
     public class CommentController : BaseController
     {
         private readonly IGenericRepository<Comment> _commentRepository;
+        private readonly IMapper _mapper;
 
-        private readonly NetworkContext _context;
-
-        public CommentController(IGenericRepository<Comment> commentRepository, NetworkContext context)
+        public CommentController(IGenericRepository<Comment> commentRepository, IMapper mapper)
         {
             _commentRepository = commentRepository;
-            _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost("PostComment")]
@@ -34,26 +34,20 @@ namespace API.Controllers
                 DateTime.Now
             );
 
-            _context.Comments.Add(comment);
+            if (comment == null) return BadRequest();
+            _commentRepository.AddAsync(comment);
 
-            var result = await _context.SaveChangesAsync() > 0;
-
-            return result ? Ok() : BadRequest();
+            return Ok();
         }
 
         [HttpGet("GetComments")]
 
-        public async Task<ActionResult<IReadOnlyList<CommentDto>>> GetComments()
+        public async Task<List<CommentDto>> GetComments()
         {
             var comments = await _commentRepository.ListAllAsync();
+            var commentDto = _mapper.Map<List<CommentDto>>(comments);
 
-            return Ok(comments.Select(comment => new CommentDto
-            {
-                PostId = comment.PostId,
-                CommentedByUserId = comment.CommentedByUserId,
-                Message = comment.Message,
-                CommentedTime = comment.CommentedTime
-            }));
+            return commentDto;
         }
 
         [HttpGet("{id}")]
@@ -61,14 +55,9 @@ namespace API.Controllers
         public async Task<ActionResult<CommentDto>> GetCommentById(int id)
         {
             var comment = await _commentRepository.GetByIdAsync(id);
+            var commentDto = _mapper.Map<CommentDto>(comment);
 
-            return new CommentDto
-            {
-                PostId = comment.PostId,
-                CommentedByUserId = comment.CommentedByUserId,
-                Message = comment.Message,
-                CommentedTime = comment.CommentedTime
-            };
+            return commentDto;
         }
 
         /*[HttpDelete("DeleteComment")]
