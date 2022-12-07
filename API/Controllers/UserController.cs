@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using API.Dto;
 using AutoMapper;
 
-
 namespace API.Controllers
 {
   public class UserController : BaseController
@@ -33,7 +32,7 @@ namespace API.Controllers
 
     [HttpGet("Users")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
-    public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsersByListAllAsync()
+    public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsersAsync()
     {
       var users = await _userRepository.ListAllAsync();
       var userDto = _mapper.Map<List<UserDto>>(users);

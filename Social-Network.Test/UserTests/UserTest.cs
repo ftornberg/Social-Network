@@ -75,7 +75,7 @@ namespace Social_Network.Test.UserTests
 
             // Act
             var userController = new UserController(_userRepositoryMock.Object, _mapper);
-            var users = await userController.GetUsersByListAllAsync();
+            var users = await userController.GetUsersAsync();
 
             // Assert
             Assert.IsNull(users.Value); // Varf�r kommer vi inte �t users.Result.Value?
