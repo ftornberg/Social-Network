@@ -26,7 +26,7 @@ const ApplicationUser = {
 };
 
 const ApplicationPost = {
-	list: () => requests.get<Post[]>('/post/getallposts'),
+	list: () => requests.get<Post[]>('/post/GetAllPosts'),
 	getAllPosts: (userId: number) => requests.get<Post[]>('/post/GetPostsToSpecificUser/?postedToUserId=' + userId),
 	getAllPostsToUser: (userId: number) => requests.get<Post[]>('/post/GetPostsToSpecificUser?postedToUserId=' + userId),
 	createPost: (post: CreatePost) => requests.post<Post>('/post/CreatePost/', post),
