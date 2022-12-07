@@ -9,40 +9,27 @@ axios.defaults.headers.delete['Content-Type'] = 'application/json';
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-	get: <T>(url: string, params?: URLSearchParams) =>
-		axios.get<T>(url, { params }).then(responseBody),
-	post: <T>(url: string, body: {}) =>
-		axios.post<T>(url, body).then(responseBody),
+	get: <T>(url: string, params?: URLSearchParams) => axios.get<T>(url, { params }).then(responseBody),
+	post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody), 
 	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
 	del: <T>(url: string, body: {}) => axios.delete<T>(url).then(responseBody),
 };
 const ApplicationDirectMessage = {
-	list: (sender: number, receiver: number) =>
-		requests.get<DirectMessage[]>(
-			'/DirectMessage/getmessages?sender=' + sender + '&receiver=' + receiver
-		),
-	sendMessage: (directMessageDto: DirectMessageDto) =>
-		requests.post<DirectMessage>(
-			'/DirectMessage/sendMessage',
-			directMessageDto
-		),
+	list: (sender: number, receiver: number) => requests.get<DirectMessage[]>('/DirectMessage/GetMessages?sender=' + sender + '&receiver=' + receiver),
+	sendMessage: (directMessageDto: DirectMessageDto) => requests.post<DirectMessage>('/DirectMessage/SendMessage', directMessageDto),
 };
 
 const ApplicationUser = {
-	list: () => requests.get<User[]>('/user/users'),
+	list: () => requests.get<User[]>('/user/Users'),
 	getUser: (id: number) => requests.get<User>('/user/' + id),
-	registerUser: (user: Register) => requests.post<User>('/user/register', user),
+	registerUser: (user: Register) => requests.post<User>('/user/Register', user),
 };
 
 const ApplicationPost = {
-	list: () => requests.get<Post[]>('/post/getallposts'),
-	getPost: (id: number) => requests.get<Post>('/post/' + id),
-	getAllPostsToUser: (userId: number) =>
-		requests.get<Post[]>(
-			'/post/GetPostsToSpecificUser?postedToUserId=' + userId
-		),
-	createPost: (post: CreatePost) =>
-		requests.post<Post>('/post/createpost/', post),
+	list: () => requests.get<Post[]>('/post/GetAllPosts'),
+	getAllPosts: (userId: number) => requests.get<Post[]>('/post/GetPostsToSpecificUser/?postedToUserId=' + userId),
+	getAllPostsToUser: (userId: number) => requests.get<Post[]>('/post/GetPostsToSpecificUser?postedToUserId=' + userId),
+	createPost: (post: CreatePost) => requests.post<Post>('/post/CreatePost/', post),
 };
 
 const agent = {

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using API;
-using AutoMapper;
+﻿using AutoMapper;
 using Entity.Interfaces;
 using Entity;
 using Moq;
 using API.Helpers;
-using System.Security.Cryptography.X509Certificates;
 using API.Controllers;
 using API.Dto;
 
