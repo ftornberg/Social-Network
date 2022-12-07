@@ -1,33 +1,11 @@
 import React from 'react';
-import './Loading.css';
 
 const Loading = () => {
 	return (
-		<div id="container">
-			<div className="divider" aria-hidden="true"></div>
-			<p className="loading-text" aria-label="Loading">
-				<span className="letter" aria-hidden="true">
-					L
-				</span>
-				<span className="letter" aria-hidden="true">
-					o
-				</span>
-				<span className="letter" aria-hidden="true">
-					a
-				</span>
-				<span className="letter" aria-hidden="true">
-					d
-				</span>
-				<span className="letter" aria-hidden="true">
-					i
-				</span>
-				<span className="letter" aria-hidden="true">
-					n
-				</span>
-				<span className="letter" aria-hidden="true">
-					g
-				</span>
-			</p>
+		<div className="d-flex justify-content-center">
+			<div className="spinner-border m-5" role="status">
+				<span className="visually-hidden">Loading...</span>
+			</div>
 		</div>
 	);
 };
