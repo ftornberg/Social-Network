@@ -1,27 +1,29 @@
 import './App.css';
-import ShowUsers from './component/ShowUsers';
-import ShowUser from './component/ShowUser';
-import RegisterUser from './component/RegisterUser';
-import ShowMessages from './component/ShowMessages';
-import SendMessage from './component/SendMessage';
+import Wall from './component/Wall';
+import UserWall from './component/UserWall';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Wall />,
+	},
+	{
+		path: 'user/:userId',
+		element: <UserWall />,
+	},
+]);
 
 function App() {
 	return (
-		<div className="App">
-			<header className="App-header">
-				<div className="Input-fields">
-					<RegisterUser />
-				</div>
-				<div className="Present-user-fields">
-					<ShowUsers />
-					{/* <ShowUser /> */}
-				</div>
-				<div>
-					<SendMessage />
-					<ShowMessages />
-				</div>
-			</header>
+		<div className="container">
+			<h1 className="display-1 center">Social Network</h1>
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
 		</div>
 	);
 }
