@@ -19,27 +19,27 @@ const requests = {
 const ApplicationDirectMessage = {
 	list: (sender: number, receiver: number) =>
 		requests.get<DirectMessage[]>(
-			'/DirectMessage/getmessages?sender=' + sender + '&receiver=' + receiver
+			'/DirectMessage/GetMessages?sender=' + sender + '&receiver=' + receiver
 		),
 	sendMessage: (directMessageDto: DirectMessageDto) =>
 		requests.post<DirectMessage>(
-			'/DirectMessage/sendMessage',
+			'/DirectMessage/SendMessage',
 			directMessageDto
 		),
 };
 
 const ApplicationUser = {
-	list: () => requests.get<User[]>('/user/users'),
+	list: () => requests.get<User[]>('/user/Users'),
 	getUser: (id: number) => requests.get<User>('/user/' + id),
-	registerUser: (user: Register) => requests.post<User>('/user/register', user),
+	registerUser: (user: Register) => requests.post<User>('/user/Register', user),
 };
 
 const ApplicationPost = {
 	getAllPosts: (userId: number) =>
-		requests.get<Post[]>('/post/getuserposts/?postedToUserId=' + userId),
-	getPost: (id: number) => requests.get<Post>('/post/' + id),
+		requests.get<Post[]>('/post/GetPostsToSpecificUser/?postedToUserId=' + userId),
+	getPost: (id: number) => requests.get<Post>('/post/' + id), //Ta bort denna rad i frontend eller gör om till GetAllPost
 	createPost: (post: CreatePost) =>
-		requests.post<Post>('/post/createpost/', post),
+		requests.post<Post>('/post/CreatePost/', post),
 };
 
 const agent = {
