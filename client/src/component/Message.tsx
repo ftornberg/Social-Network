@@ -8,6 +8,17 @@ const Message = () => {
 	const [textAreaValue, settextAreaValue] = useState('');
 	const { userId } = useParams<{ userId: string }>();
 
+	const [user, setUser] = useState<any>([]);
+
+	useEffect(() => {
+		agent.ApplicationUser.getUser(parseInt(userId as string)).then(
+			(response) => {
+				console.log(response);
+				setUser(response);
+			}
+		);
+	}, []);
+
 	const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		settextAreaValue(event.target.value);
 	};
@@ -31,7 +42,7 @@ const Message = () => {
 		<>
 			<div className="row rounded">
 				<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-					<h2 className="display-2">Meddelande</h2>
+					<h2 className="display-2">Meddelande till {user.name}</h2>
 
 					<div className="form-group ">
 						<label>Lämna ett meddelande:</label>
