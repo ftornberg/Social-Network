@@ -1,5 +1,3 @@
-using Entity;
-
 namespace API.Dto
 {
   public class CommentDto
