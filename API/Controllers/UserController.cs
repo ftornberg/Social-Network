@@ -18,7 +18,7 @@ namespace API.Controllers
       _mapper = mapper;
     }
 
-    [HttpPost("register")]
+    [HttpPost("Register")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<UserRegisterDto>>> RegisterUser(UserRegisterDto userRegisterDto)
     {
@@ -36,7 +36,7 @@ namespace API.Controllers
       return Ok();
     }
 
-    [HttpGet("users")]
+    [HttpGet("Users")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsersAsync()
     {

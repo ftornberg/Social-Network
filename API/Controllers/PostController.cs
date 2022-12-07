@@ -19,7 +19,7 @@ namespace API.Controllers
       _mapper = mapper;
     }
 
-    [HttpPost("createpost")]
+    [HttpPost("CreatePost")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<Post>> CreatePostAsync(PostDto postDto)
 
@@ -38,9 +38,20 @@ namespace API.Controllers
       return Ok(result);
     }
 
-    [HttpGet("getposts")]
+    [HttpGet("GetAllPosts")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
-    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetSpecificUserPostsAsync(int postedToUserId)
+    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync()
+    {
+      var allPosts = await _postRepository.ListAllAsync();
+      var postDto = _mapper.Map<List<PostDto>>(allPosts);
+
+      return Ok(postDto);
+    }
+
+
+    [HttpGet("GetPostsToSpecificUser")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
 
       var allPosts = await _postRepository.ListAllAsync();
