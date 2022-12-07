@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Controllers;
-using API.Dto;
 using API.Helpers;
 using AutoMapper;
 using Entity;
 using Entity.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 
@@ -33,7 +27,6 @@ namespace Social_Network.Test.UserTests
 
         }
         [TestMethod]
-
         public async Task TestShouldGetCommentByIdFromController()
         {
             // Arrange
@@ -49,7 +42,7 @@ namespace Social_Network.Test.UserTests
 
             // Act
             var commentController = new CommentController(_commentRepositoryMock.Object, _mapper);
-            var commentDto = await commentController.GetCommentById(1);
+            var commentDto = await commentController.GetCommentByIdAsync(1);
 
             // Assert
             Assert.AreEqual(1, commentDto.Value.PostId);
@@ -57,7 +50,6 @@ namespace Social_Network.Test.UserTests
         }
 
         [TestMethod]
-
         public async Task TestShouldGetCommentsByListFromController()
         {
             // Arrange
@@ -84,7 +76,8 @@ namespace Social_Network.Test.UserTests
 
             // Act
             var commentController = new CommentController(_commentRepositoryMock.Object, _mapper);
-            var comments = await commentController.GetComments();
+            var comments = await commentController.GetCommentsAsync();
+
             // Assert
             Assert.AreEqual(2, comments.Count);
         }

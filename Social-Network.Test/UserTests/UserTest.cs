@@ -1,13 +1,9 @@
 using AutoMapper;
 using Entity;
 using Entity.Interfaces;
-using API.Dto;
 using API.Helpers;
 using API.Controllers;
 using Moq;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Social_Network.Test.UserTests
 {
@@ -45,7 +41,7 @@ namespace Social_Network.Test.UserTests
 
             // Act
             var userController = new UserController(_userRepositoryMock.Object, _mapper);
-            var userDto = await userController.GetInfoAboutUserAsync(1);
+            var userDto = await userController.GetUserByIdAsync(1);
             
             // Assert
             Assert.AreEqual(1, userDto.Value.Id);
@@ -79,7 +75,7 @@ namespace Social_Network.Test.UserTests
 
             // Act
             var userController = new UserController(_userRepositoryMock.Object, _mapper);
-            var users = await userController.GetUsersAsync();
+            var users = await userController.GetUsersByListAllAsync();
 
             // Assert
             Assert.IsNull(users.Value); // Varf�r kommer vi inte �t users.Result.Value?
