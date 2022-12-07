@@ -49,9 +49,9 @@ namespace API.Controllers
     }
 
 
-    [HttpGet("GetSpecificPosts")]
+    [HttpGet("GetPostsToSpecificUser")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
-    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetSpecificUserPostsAsync(int postedToUserId)
+    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
 
       var allPosts = await _postRepository.ListAllAsync();
