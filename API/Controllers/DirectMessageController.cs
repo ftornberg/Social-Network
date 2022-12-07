@@ -20,7 +20,7 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpPost("sendMessage")]
+        [HttpPost("SendMessage")]
         public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> SendMessage(DirectMessageDto directMessageDto)
         {
             DirectMessage directMessage = new DirectMessage
@@ -38,7 +38,7 @@ namespace API.Controllers
             return result ? Ok() : BadRequest();
         }
 
-        [HttpGet("getmessages")]
+        [HttpGet("GetMessages")]
         public async Task<ActionResult<IReadOnlyList<DirectMessage>>> GetMessages(int sender, int receiver)
         {
             var directMessages = await _directMessageRepository.ListAllAsync();
