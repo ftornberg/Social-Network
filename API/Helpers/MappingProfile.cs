@@ -1,6 +1,7 @@
 using Entity;
 using API.Dto;
 using AutoMapper;
+using API.Dto.Follower;
 
 namespace API.Helpers
 {
@@ -10,7 +11,7 @@ namespace API.Helpers
     {
       CreateMap<User, UserDto>().ReverseMap();
 
-      CreateMap<User, FollowersDto>().ReverseMap();
+      CreateMap<Follower, FollowerDto>().ReverseMap();
 
       CreateMap<DirectMessage, DirectMessageDto>().ReverseMap();
 
