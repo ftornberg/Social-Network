@@ -11,67 +11,46 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<DirectMessage> _directMessageRepository;
         private readonly IMapper _mapper;
-        private readonly NetworkContext _context;
+        private readonly IGenericRepository<User> _userRepository;
 
-        public DirectMessageController(IGenericRepository<DirectMessage> directMessageRepository, IMapper mapper, NetworkContext context)
+        public DirectMessageController(IGenericRepository<DirectMessage> directMessageRepository, IMapper mapper, IGenericRepository<User> userRepository)
         {
             _directMessageRepository = directMessageRepository;
             _mapper = mapper;
-            _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpPost("SendMessage")]
-        public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> SendMessage(DirectMessageDto directMessageDto)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<DirectMessageDto>> SendMessageAsync(DirectMessageDto directMessageDto)
         {
-            DirectMessage directMessage = new DirectMessage
-            (
-                directMessageDto.Sender,
-                directMessageDto.Receiver,
-                directMessageDto.Message,
-                DateTime.Now
-            );
+            var directMessage = _mapper.Map<DirectMessage>(directMessageDto);
 
-            _context.DirectMessages?.Add(directMessage);
+            var user = await _userRepository.GetByIdAsync(directMessage.Receiver);
 
-            var result = await _context.SaveChangesAsync() > 0;
+            if (user == null)
+                return BadRequest();
 
-            return result ? Ok() : BadRequest();
+            var directMessageCreated = await _directMessageRepository.AddAsync(directMessage);
+            var directMessageCreatedDto = _mapper.Map<DirectMessageDto>(directMessageCreated);
+
+            return directMessageCreatedDto;
         }
 
         [HttpGet("GetMessages")]
-        public async Task<ActionResult<IReadOnlyList<DirectMessage>>> GetMessages(int sender, int receiver)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOne, int userTwo)
         {
             var directMessages = await _directMessageRepository.ListAllAsync();
-            IReadOnlyList<DirectMessage> messages = directMessages
-            .Where(message => (message.Sender == sender && message.Receiver == receiver) || (message.Sender == receiver && message.Receiver == sender))
-            .OrderByDescending(message => message.TimeSent).ToList();
             
-            return Ok(messages);
+            IReadOnlyList<DirectMessage> messages = directMessages
+            .Where(message => (message.Sender == userOne && message.Receiver == userTwo) || (message.Sender == userTwo && message.Receiver == userOne))
+            .OrderByDescending(message => message.TimeSent)
+            .ToList();
+
+            var messagesDto = _mapper.Map<List<DirectMessageDto>>(messages);
+            
+            return messagesDto;
         }
-
-        // [HttpDelete("delete")]
-        // public async Task<ActionResult<bool>> DeleteUserAsync(int messageId)
-        // {
-        //     var message = await GetMessageByIdAsync(messageId);
-
-        //     await _directMessageRepository.DeleteAsync(message.Value);
-
-        //     return true;
-        // }
-
-        // private async Task<ActionResult<DirectMessage>?> GetMessageByIdAsync(int id)
-        // {
-        //     var directMessages = await _directMessageRepository.ListAllAsync();
-        //     try
-        //     {
-        //         var message = directMessages.FirstOrDefault(p => p.Id == id);
-        //         return message;
-        //     }
-        //     catch (Exception)
-        //     {
-        //         return BadRequest();
-        //     }
-        // }
-
     }
 }

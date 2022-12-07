@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Dto;
 using AutoMapper;
 using Entity;
 using Entity.Interfaces;
-using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -23,26 +18,21 @@ namespace API.Controllers
         }
 
         [HttpPost("PostComment")]
-
-        public async Task<ActionResult<CommentDto>> PostComment(CommentDto commentDto)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<CommentDto>> PostCommentAsync(CommentDto commentDto)
         {
-            Comment comment = new Comment
-            (
-                commentDto.PostId,
-                commentDto.CommentedByUserId,
-                commentDto.Message,
-                DateTime.Now
-            );
+            var comment = _mapper.Map<Comment>(commentDto);
 
             if (comment == null) return BadRequest();
-            _commentRepository.AddAsync(comment);
+            var commentCreated = await _commentRepository.AddAsync(comment);
+            var commentCreatedDto = _mapper.Map<CommentDto>(commentCreated);
 
-            return Ok();
+            return commentCreatedDto;
         }
 
         [HttpGet("GetComments")]
-
-        public async Task<List<CommentDto>> GetComments()
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<List<CommentDto>> GetCommentsAsync()
         {
             var comments = await _commentRepository.ListAllAsync();
             var commentDto = _mapper.Map<List<CommentDto>>(comments);
@@ -51,38 +41,13 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-
-        public async Task<ActionResult<CommentDto>> GetCommentById(int id)
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+        public async Task<ActionResult<CommentDto>> GetCommentByIdAsync(int id)
         {
             var comment = await _commentRepository.GetByIdAsync(id);
             var commentDto = _mapper.Map<CommentDto>(comment);
 
             return commentDto;
         }
-
-        /*[HttpDelete("DeleteComment")]
-        public async Task<ActionResult<bool>> DeleteCommentAsync(int commentId, int CommentedByUserId)
-        {
-            var comment = await _commentRepository.GetByIdAsync(commentId);
-
-            if (CommentedByUserId != comment.CommentedByUserId) return BadRequest();
-            await _commentRepository.DeleteAsync(comment);
-            return Ok();
-        }
-
-        [HttpPut("UpdateComment")]
-
-        public async Task<ActionResult<Comment>> UpdateCommentAsync(CommentDto commentDto, int userId)
-        {
-            var comment = await _commentRepository.GetByIdAsync(commentDto.PostId);
-
-            if (comment.CommentedByUserId != userId) return BadRequest();
-            comment.Message = commentDto.Message;
-
-            _context.Comments?.Update(comment);
-            var result = await _context.SaveChangesAsync() > 0;
-
-            return result ? Ok() : BadRequest();
-        }*/
     }
 }
