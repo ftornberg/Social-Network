@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { CreatePost, Post } from '../models/post';
 import { Register, User } from '../models/user';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -21,8 +22,17 @@ const ApplicationUser = {
 	registerUser: (user: Register) => requests.post<User>('/user/register', user),
 };
 
+const ApplicationPost = {
+	getAllPosts: (userId: number) =>
+		requests.get<Post[]>('/post/getposts/?postedToUserId=' + userId),
+	getPost: (id: number) => requests.get<Post>('/post/' + id),
+	createPost: (post: CreatePost) =>
+		requests.post<Post>('/post/createpost/', post),
+};
+
 const agent = {
 	ApplicationUser,
+	ApplicationPost,
 };
 
 export default agent;

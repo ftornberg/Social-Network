@@ -49,6 +49,7 @@ namespace API.Controllers
     }
 
     [HttpGet("{id}")]
+    
     public async Task<ActionResult<UserDto>> GetInfoAboutUserAsync(int id)
     {
       var user = await _userRepository.GetByIdAsync(id);
