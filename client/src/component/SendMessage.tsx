@@ -22,7 +22,7 @@ const SendMessage = () => {
 			sender: sender,
 			receiver: receiver,
 			message: message,
-			timesent: new Date()
+			timesent: new Date(),
 		};
 
 		agent.ApplicationDirectMessage.sendMessage(dto).then((response) => {
@@ -31,12 +31,10 @@ const SendMessage = () => {
 		});
 	};
 
-	useEffect(() => {
-
-	}, []);
+	useEffect(() => {}, []);
 
 	return (
-		<div>
+		<div className="fs-5">
 			<h1>Send message</h1>
 			<form onSubmit={handleClick}>
 				<input
@@ -49,14 +47,14 @@ const SendMessage = () => {
 				<input
 					value={receiver}
 					name="receiver"
-					placeholder="Send to"
+					placeholder="Send to:"
 					onInput={handleInputChange}
 				/>
 				<br />
 				<input
 					value={message}
 					name="message"
-					placeholder="Message"
+					placeholder="Message:"
 					onInput={handleInputChange}
 				/>
 				<br />

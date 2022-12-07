@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
 
@@ -6,7 +8,7 @@ const Wall = () => {
 	let userId: number = 1;
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['wallData'],
-		queryFn: () => agent.ApplicationUser.list().then((response) => response),
+		queryFn: () => agent.ApplicationPost.list().then((response) => response),
 	});
 
 	if (isLoading)
@@ -29,26 +31,28 @@ const Wall = () => {
 
 	return (
 		<>
-			<div className="container">
+			<div className="container-fluid">
 				<div className="col-sm rounded">
 					<div className="clearfix"></div>
 					<ul className="list-unstyled p-3 mb-2">
 						{data &&
-							data.map((user) => (
+							data.map((post) => (
 								<li
 									className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
-									key={user.id}
+									key={post.id}
 								>
-									<Link to={`/user/${user.id}`}>
+									<Link to={`/user/${post.postedToUserId}`}>
 										<img
 											className="mr-3 rounded-circle"
-											src={`https://i.pravatar.cc/75?=${user.name}`}
-											alt="{user.name}"
+											src={`https://i.pravatar.cc/75?=${post.postedByUserId}`}
+											alt={post.postedMessage}
 										/>
 									</Link>
 									<div className="media-body">
-										<p className="mt-0 mb-1 lead">{user.name}</p>
-										<samp>{user.email}</samp>
+										<p className="mt-0 mb-1 lead">{post.postedMessage}</p>
+										<samp>
+											<Moment format="DD/MM/YY HH:mm">{post.postedTime}</Moment>
+										</samp>
 									</div>
 								</li>
 							))}
