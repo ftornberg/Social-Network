@@ -52,7 +52,8 @@ namespace API.Controllers
 
       IReadOnlyList<Post> posts = allPosts
       .Where(post => post.PostedToUserId == postedToUserId)
-      .OrderBy(posts => posts.PostedTime).ToList();
+      .OrderBy(posts => posts.PostedTime)
+      .ToList();
 
       var postDto = _mapper.Map<List<PostDto>>(posts);
 
