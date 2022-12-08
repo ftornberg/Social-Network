@@ -8,10 +8,11 @@ public class Post : BaseEntity
   {
   }
 
-  public Post(string postedMessage, int postedByUserId, int postedToUserId, DateTime postedTime)
+  public Post(string postedMessage, int postedByUserId, string postedByUserName, int postedToUserId, DateTime postedTime)
   {
     PostedMessage = postedMessage;
     PostedByUserId = postedByUserId;
+    PostedByUserName = postedByUserName;
     PostedToUserId = postedToUserId;
     PostedTime = postedTime;
   }
@@ -21,9 +22,10 @@ public class Post : BaseEntity
   [ForeignKey("UserId")]
   public int PostedByUserId { get; set; }
 
-  public int PostedToUserId { get; set; }
+  [ForeignKey("UserName")]
+  public string PostedByUserName { get; set; }
 
-  // public ICollection<Comment>? Comments { get; set; }
+  public int PostedToUserId { get; set; }
 
   public DateTime PostedTime { get; set; }
 }

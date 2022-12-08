@@ -2,6 +2,7 @@ export interface Post {
 	id: number;
 	postedMessage: string;
 	postedByUserId: number;
+	postedByUserName: string;
 	postedToUserId: number;
 	postedTime: Date;
 }
@@ -9,5 +10,6 @@ export interface Post {
 export interface CreatePost {
 	postedMessage: string;
 	postedByUserId: number;
+	postedByUserName: string;
 	postedToUserId: number;
 }
