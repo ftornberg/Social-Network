@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import Moment from 'react-moment';
 import { useParams } from 'react-router-dom';
 import agent from '../actions/agent';
+import Loading from './Loading';
 import Message from './Message';
 
 const UserWall = () => {
@@ -18,11 +19,9 @@ const UserWall = () => {
 
 	if (isLoading)
 		return (
-			<div className="row rounded">
-				<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-					Loading...
-				</div>
-			</div>
+			<>
+				<Loading />
+			</>
 		);
 
 	if (error)

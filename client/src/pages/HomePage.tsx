@@ -1,4 +1,5 @@
 import React from 'react';
+import ShowMessages from '../component/ShowMessages';
 import SideBar from '../component/SideBar';
 import Wall from '../component/Wall';
 
@@ -11,6 +12,9 @@ const HomePage = () => {
 				</div>
 				<div className="col-6">
 					<Wall />
+				</div>
+				<div className="col-2">
+					<ShowMessages />
 				</div>
 			</div>
 		</div>

@@ -13,7 +13,6 @@ const Message = () => {
 	useEffect(() => {
 		agent.ApplicationUser.getUser(parseInt(userId as string)).then(
 			(response) => {
-				console.log(response);
 				setUser(response);
 			}
 		);

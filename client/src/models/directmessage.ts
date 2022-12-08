@@ -1,14 +1,13 @@
 export interface DirectMessage {
 	id: number;
-	sender: string;
-	receiver: string;
+	sender: number;
+	receiver: number;
 	message: string;
-	timesent: Date;
+	timeSent: Date;
 }
 
-export interface DirectMessageDto {
-	sender: string;
-	receiver: string;
+export interface SendDirectMessage {
+	sender: number;
+	receiver: number;
 	message: string;
-	timesent: Date;
 }

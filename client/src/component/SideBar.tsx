@@ -1,11 +1,10 @@
 import React from 'react';
 import SendMessage from './SendMessage';
-import ShowMessages from './ShowMessages';
 
 const SideBar = () => {
 	return (
 		<div
-			className="d-flex flex-column flex-shrink-0 p-3 bg-light"
+			className="d-flex flex-column flex-shrink-0 p-3 bg-light shadow-lg rounded"
 			style={{ width: 280 }}
 		>
 			<a
@@ -13,7 +12,7 @@ const SideBar = () => {
 				className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
 			>
 				<svg className="bi me-2" width="40" height="32" />
-				<span className="fs-4">Sidebar</span>
+				<span className="fs-4">Skicka DM</span>
 			</a>
 			<hr />
 			<ul className="nav nav-pills flex-column mb-auto">
@@ -22,7 +21,7 @@ const SideBar = () => {
 				</li>
 				<li>
 					<a href="#" className="nav-link link-dark">
-						<ShowMessages />
+						Followers
 					</a>
 				</li>
 			</ul>
