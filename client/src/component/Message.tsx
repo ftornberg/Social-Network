@@ -27,6 +27,7 @@ const Message = () => {
 			return agent.ApplicationPost.createPost({
 				postedMessage: textAreaValue,
 				postedByUserId: 1,
+				postedByUserName: '',
 				postedToUserId: parseInt(userId ?? '0'),
 			});
 		},
