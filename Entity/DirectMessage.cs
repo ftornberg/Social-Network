@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Entity;
 public class DirectMessage : BaseEntity
 {
@@ -5,17 +7,27 @@ public class DirectMessage : BaseEntity
     {
     }
 
-    public DirectMessage(int sender, int receiver, string message, DateTime timeSent)
+    public DirectMessage(int senderUserId, string senderUserName, int receiverUserId, string receiverUserName, string message, DateTime timeSent)
     {
-        Sender = sender;
-        Receiver = receiver;
+        SenderUserId = senderUserId;
+        SenderUserName = senderUserName;
+        ReceiverUserId = receiverUserId;
+        ReceiverUserName = receiverUserName;
         Message = message;
         TimeSent = timeSent;
     }
 
-    public int Sender { get; set; }
+    [ForeignKey("UserId")]
+    public int SenderUserId { get; set; }
 
-    public int Receiver { get; set; }
+    [ForeignKey("UserName")]
+    public string SenderUserName { get; set; }
+
+    [ForeignKey("UserId")]
+    public int ReceiverUserId { get; set; }
+
+    [ForeignKey("UserName")]
+    public string ReceiverUserName { get; set; }
 
     public string Message { get; set; } = string.Empty;
 

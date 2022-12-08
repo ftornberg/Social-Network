@@ -18,7 +18,7 @@ public class DirectMessageController : BaseController
     {
         var directMessage = _mapper.Map<DirectMessage>(directMessageDto);
 
-        var user = await _userRepository.GetByIdAsync(directMessage.Receiver);
+        var user = await _userRepository.GetByIdAsync(directMessage.ReceiverUserId);
 
         if (user == null)
             return BadRequest();
@@ -29,15 +29,28 @@ public class DirectMessageController : BaseController
         return directMessageCreatedDto;
     }
 
-    [HttpGet("GetMessages/{userOne}/{userTwo}")]
-    public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOne, int userTwo)
+    [HttpGet("GetMessages/{userOneId}/{userTwoId}")]
+    public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOneId, int userTwoId)
     {
         var directMessages = await _directMessageRepository.ListAllAsync();
+        var users = await _userRepository.ListAllAsync();
 
-        IReadOnlyList<DirectMessage> messages = directMessages
-        .Where(message => (message.Sender == userOne && message.Receiver == userTwo) || (message.Sender == userTwo && message.Receiver == userOne))
+        var userOne = await _userRepository.GetByIdAsync(userOneId);
+        var userTwo = await _userRepository.GetByIdAsync(userTwoId);
+
+        IReadOnlyList<DirectMessage> messagesFromUserOne = directMessages
+        .Where(message => (message.SenderUserId == userOneId && message.ReceiverUserId == userTwoId)) 
         .OrderByDescending(message => message.TimeSent)
         .ToList();
+
+        IReadOnlyList<DirectMessage> messagesFromUserTwo = directMessages
+        .Where(message => (message.SenderUserId == userTwoId && message.ReceiverUserId == userOneId))
+        .OrderByDescending(message => message.TimeSent)
+        .ToList();
+
+        var messages = messagesFromUserOne.Concat(messagesFromUserTwo)
+            .OrderByDescending(message => message.TimeSent)
+            .ToList();
 
         var messagesDto = _mapper.Map<List<DirectMessageDto>>(messages);
 
