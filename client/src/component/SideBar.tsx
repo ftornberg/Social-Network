@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import agent from '../actions/agent';
+import { User } from '../models/user';
 import Loading from './Loading';
 import SendMessage from './SendMessage';
 
@@ -46,43 +47,28 @@ const SideBar = () => {
 				<li className="text-start">
 					<SendMessage />
 				</li>
-				<li>
-					<a href="#" className="nav-link link-dark">
-						Jag följer:
-					</a>
-				</li>
+				<li className="p-2">Jag följer:</li>
 				{data &&
-					data.map((followers) => (
-						<li>
-							<img
-								className="mr-2 pe-4 rounded-circle"
-								src={`https://i.pravatar.cc/75?=${followers.followerUserId}`}
-								alt="{followers.followerUserName}"
-							/>
-							{followers.followerUserName}
-						</li>
+					data.map((followers, index: number) => (
+						<Link
+							key={index}
+							to={`/user/${followers.followerUserId}`}
+							className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+						>
+							<li>
+								<img
+									className="mr-2 pe-4 rounded-circle"
+									src={`https://i.pravatar.cc/50?=${followers.followerUserId}`}
+									alt="{followers.followerUserName}"
+								/>
+								{followers.followerUserName}
+							</li>
+						</Link>
 					))}
 				<li></li>
 				<hr />
-				<li>
-					<a href="#" className="nav-link link-dark">
-						Dessa följer dig:
-					</a>
-				</li>
-				{data &&
-					data.map((followers) => (
-						<li>
-							<img
-								className="mr-2 pe-4 rounded-circle"
-								src={`https://i.pravatar.cc/75?=${followers.followsUserId}`}
-								alt="{followers.followerUserName}"
-							/>
-							{followers.followsUserName}
-						</li>
-					))}
 				<li></li>
 			</ul>
-			<hr />
 		</div>
 	);
 };
