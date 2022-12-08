@@ -32,11 +32,12 @@ namespace Social_Network.Test.UserTests
             _userRepositoryMock.Setup(x => x.GetByIdAsync(1))
                 .ReturnsAsync(new User
                 {
-                    Id = 1,
-                    Name = "Max",
-                    Email = "max@email.com",
-                    Password = "password",
-                    CreatedTime = DateTime.Now,
+                        Id = 1,
+                        Name = "Max",
+                        Email = "max@email.com",
+                        Password = "password",
+                        CreatedTime = DateTime.Now,
+
                 });
 
             // Act
@@ -45,6 +46,8 @@ namespace Social_Network.Test.UserTests
             
             // Assert
             Assert.AreEqual(1, userDto.Value.Id);
+            Assert.AreEqual("max@email.com", userDto.Value.Email);
+
             Assert.AreNotEqual(2, userDto.Value.Id);
         }
         
@@ -78,7 +81,9 @@ namespace Social_Network.Test.UserTests
             var users = await userController.GetUsersAsync();
 
             // Assert
-            Assert.IsNull(users.Value); // Varf�r kommer vi inte �t users.Result.Value?
+            Assert.AreEqual("Max", users.Value[0].Name);
+            Assert.AreEqual("Isac", users.Value[1].Name);
+            Assert.AreEqual(2, users.Value.Count);
         }
     }
 }
