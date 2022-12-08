@@ -15,9 +15,8 @@ namespace Social_Network.Test.UserTests
     [TestClass]
     public class DirectMessageTest
     {
-        private IMapper? _mapper;
-        private Mock<IGenericRepository<DirectMessage>>? _directMessageRepositoryMock;
-
+        private IMapper _mapper;
+        private Mock<IGenericRepository<DirectMessage>> _directMessageRepositoryMock;
         private Mock<IGenericRepository<User>> _userRepositoryMock;
 
         [TestInitialize]
@@ -31,13 +30,11 @@ namespace Social_Network.Test.UserTests
             _mapper = mapper;
             _directMessageRepositoryMock = new Mock<IGenericRepository<DirectMessage>>();
             _userRepositoryMock = new Mock<IGenericRepository<User>>();
-
         }
 
         [TestMethod]
         public async Task TestShouldGetMessagesFromControllerAsync()
         {
-
             _directMessageRepositoryMock.Setup(x => x.ListAllAsync())
                 .ReturnsAsync(new List<DirectMessage>
                 {

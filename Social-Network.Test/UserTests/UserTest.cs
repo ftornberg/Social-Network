@@ -10,8 +10,8 @@ namespace Social_Network.Test.UserTests
     [TestClass]
     public class UserControllerTest
     {
-        private IMapper? _mapper;
-        private Mock<IGenericRepository<User>>? _userRepositoryMock;
+        private IMapper _mapper;
+        private Mock<IGenericRepository<User>> _userRepositoryMock;
 
         [TestInitialize]
         public void Setup()
@@ -23,8 +23,8 @@ namespace Social_Network.Test.UserTests
             var mapper = mappingConfig.CreateMapper();
             _mapper = mapper;
             _userRepositoryMock = new Mock<IGenericRepository<User>>();
-
         }
+
         [TestMethod]
         public async Task TestShouldGetUserByIdFromControllerAsync()
         {
@@ -37,7 +37,6 @@ namespace Social_Network.Test.UserTests
                         Email = "max@email.com",
                         Password = "password",
                         CreatedTime = DateTime.Now,
-
                 });
 
             // Act
@@ -47,7 +46,6 @@ namespace Social_Network.Test.UserTests
             // Assert
             Assert.AreEqual(1, userDto.Value.Id);
             Assert.AreEqual("max@email.com", userDto.Value.Email);
-
             Assert.AreNotEqual(2, userDto.Value.Id);
         }
         

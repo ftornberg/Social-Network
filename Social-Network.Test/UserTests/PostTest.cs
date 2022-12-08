@@ -11,8 +11,8 @@ namespace Social_Network.Test.UserTests
     [TestClass]
     public class PostControllerTest
     {
-        private IMapper? _mapper;
-        private Mock<IGenericRepository<Post>>? _postRepositoryMock;
+        private IMapper _mapper;
+        private Mock<IGenericRepository<Post>> _postRepositoryMock;
 
         [TestInitialize]
         public void Setup()
