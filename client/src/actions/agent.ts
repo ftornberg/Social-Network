@@ -35,8 +35,11 @@ const ApplicationDirectMessage = {
 };
 
 const ApplicationFollower = {
-	list: (user: number) =>
-		requests.get<FollowUser[]>('/Follower/GetFollowersForUser/' + user),
+	listWhoImFollowing: (user: number) =>
+		requests.get<FollowUser[]>('/Follower/GetWhoUserFollows/' + user),
+
+	listMyFollowers: (user: number) =>
+		requests.get<FollowUser[]>('/Follower/GetSpecificUserFollowers/' + user),
 
 	follow: (data: FollowUser) =>
 		requests.post<FollowUser[]>('/Follower/FollowUser', data),

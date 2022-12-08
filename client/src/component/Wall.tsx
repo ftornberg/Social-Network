@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from 'react-query';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
@@ -34,6 +34,7 @@ const Wall = () => {
 			<div className="container-fluid">
 				<div className="col-sm rounded">
 					<div className="clearfix"></div>
+					<h3 className="display-2 ps-3">Min feed</h3>
 					<ul className="list-unstyled p-3 mb-2">
 						{data &&
 							data.map((post) => (
