@@ -7,6 +7,8 @@ namespace API.Dto
 
     public int PostedByUserId { get; set; }
 
+    public string PostedByUserName { get; set; }
+
     public int PostedToUserId { get; set; }
 
     public DateTime PostedTime { get; set; } = DateTime.Now;

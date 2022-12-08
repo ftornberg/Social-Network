@@ -18,6 +18,11 @@ namespace Entity
         [ForeignKey("UserId")]
         public int FollowerUserId { get; set; }
 
+        [ForeignKey("UserName")]
+        public string FollowerUserName { get; set; }
+
         public int FollowsUserId { get; set; }
+
+        public string FollowsUserName { get; set; }
     }
 }
