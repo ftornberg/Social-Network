@@ -11,8 +11,8 @@ namespace Social_Network.Test.UserTests
     [TestClass]
     public class CommentControllerTest
     {
-        private IMapper _mapper;
-        private Mock<IGenericRepository<Comment>> _commentRepositoryMock;
+        private IMapper? _mapper;
+        private Mock<IGenericRepository<Comment>>? _commentRepositoryMock;
 
         [TestInitialize]
         public void Setup()
@@ -30,7 +30,7 @@ namespace Social_Network.Test.UserTests
         public async Task TestShouldGetCommentByIdFromController()
         {
             // Arrange
-            _commentRepositoryMock.Setup(x => x.GetByIdAsync(1))
+            _commentRepositoryMock?.Setup(x => x.GetByIdAsync(1))
                 .ReturnsAsync(new Comment
                 {
                     Id = 1,
@@ -45,15 +45,16 @@ namespace Social_Network.Test.UserTests
             var commentDto = await commentController.GetCommentByIdAsync(1);
 
             // Assert
+            Assert.IsNotNull(commentDto.Value);
             Assert.AreEqual(1, commentDto.Value.PostId);
             Assert.AreNotEqual(2, commentDto.Value.PostId);
         }
 
         [TestMethod]
-        public async Task TestShouldGetCommentsByListFromController()
+        public async Task TestShouldGetCommentsAsyncFromController()
         {
             // Arrange
-            _commentRepositoryMock.Setup(x => x.ListAllAsync())
+            _commentRepositoryMock?.Setup(x => x.ListAllAsync())
             .ReturnsAsync(new List<Comment>
             {
                 new Comment
@@ -79,6 +80,8 @@ namespace Social_Network.Test.UserTests
             var comments = await commentController.GetCommentsAsync();
 
             // Assert
+            Assert.IsNotNull(comments[0].Message);
+            Assert.AreNotEqual(1, comments.Count);
             Assert.AreEqual(2, comments.Count);
         }
     }
