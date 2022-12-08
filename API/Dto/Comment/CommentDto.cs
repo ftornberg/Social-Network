@@ -1,7 +1,7 @@
-namespace API.Dto
+namespace API.Dto;
+
+    public class CommentDto
 {
-  public class CommentDto
-  {
     public int PostId { get; set; }
 
     public int CommentedByUserId { get; set; }
@@ -9,5 +9,4 @@ namespace API.Dto
     public string? Message { get; set; }
 
     public DateTime CommentedTime { get; set; }
-  }
 }

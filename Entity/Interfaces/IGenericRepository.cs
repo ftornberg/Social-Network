@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+namespace Entity.Interfaces;
 
-namespace Entity.Interfaces
+public interface IGenericRepository<T>
 {
-  public interface IGenericRepository<T>
-  {
     Task<IReadOnlyList<T>> ListAllAsync();
 
     Task<T> GetByIdAsync(dynamic id);
@@ -18,5 +15,4 @@ namespace Entity.Interfaces
     Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
 
     Task<int> CountAsync();
-  }
 }

@@ -1,13 +1,7 @@
-using API.Dto.Follower;
-using AutoMapper;
-using Entity;
-using Entity.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+namespace API.Controllers;
 
-namespace API.Controllers
+public class FollowerController : BaseController
 {
-  public class FollowerController : BaseController
-  {
     private readonly IGenericRepository<Follower> _followerRepository;
     private readonly IMapper _mapper;
     private readonly IGenericRepository<User> _userRepository;
@@ -20,7 +14,6 @@ namespace API.Controllers
     }
 
     [HttpPost("FollowUser")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<FollowerDto>> FollowUserAsync(FollowerDto followNewUserDto)
     {
       var followNewUser = _mapper.Map<Follower>(followNewUserDto);
@@ -34,12 +27,11 @@ namespace API.Controllers
       var followNewUserCreated = await _followerRepository.AddAsync(followNewUser);
       var followNewUserCreatedDto = _mapper.Map<FollowerDto>(followNewUserCreated);
 
-      return followNewUserCreatedDto;
+        return followNewUserCreatedDto;
     }
 
     // Shows whom I am following
     [HttpGet("GetWhoUserFollows/{userId}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetWhoUserFollowsAsync(int userId)
     {
       var allFollowers = await _followerRepository.ListAllAsync();
@@ -59,16 +51,15 @@ namespace API.Controllers
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetSpecificUserFollowersAsync(int userId)
     {
-      var allFollowers = await _followerRepository.ListAllAsync();
+        var allFollowers = await _followerRepository.ListAllAsync();
 
       IReadOnlyList<Follower> followers = allFollowers
       .Where(follower => follower.FollowsUserId == userId)
       .OrderBy(follower => follower.Id)
       .ToList();
 
-      var followersDto = _mapper.Map<List<FollowerDto>>(followers);
+        var followersDto = _mapper.Map<List<FollowerDto>>(followers);
 
-      return followersDto;
+        return followersDto;
     }
-  }
 }

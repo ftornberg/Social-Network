@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+namespace API.Controllers;
 
-namespace API.Controllers
+[ApiController]
+[Route("api/[controller]")]
+[ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
+public class BaseController : ControllerBase
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class BaseController : ControllerBase
-  {
-
-  }
 }

@@ -1,10 +1,10 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entity
+namespace Entity;
+
+public class Follower : BaseEntity
 {
-    public class Follower : BaseEntity
-    {
     public Follower()
     {
     }
@@ -15,14 +15,13 @@ namespace Entity
         FollowsUserId = followsUserId;
     }
 
-        [ForeignKey("UserId")]
-        public int FollowerUserId { get; set; }
+    [ForeignKey("UserId")]
+    public int FollowerUserId { get; set; }
 
-        [ForeignKey("UserName")]
-        public string FollowerUserName { get; set; }
+    [ForeignKey("UserName")]
+    public string FollowerUserName { get; set; } = string.Empty;
 
-        public int FollowsUserId { get; set; }
+    public int FollowsUserId { get; set; }
 
-        public string FollowsUserName { get; set; }
-    }
+    public string FollowsUserName { get; set; } = string.Empty;
 }
