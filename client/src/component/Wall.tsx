@@ -1,23 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
+import Loading from './Loading';
 
 const Wall = () => {
-	let userId: number = 1;
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['wallData'],
-		queryFn: () => agent.ApplicationPost.list().then((response) => response),
+		queryFn: () =>
+			agent.ApplicationPost.getAllPostsFromUsersFollowed(1).then(
+				(response) => response
+			),
 	});
 
 	if (isLoading)
 		return (
-			<div className="row rounded">
-				<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-					Loading...
-				</div>
-			</div>
+			<>
+				<Loading />
+			</>
 		);
 
 	if (error)

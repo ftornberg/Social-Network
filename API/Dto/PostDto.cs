@@ -11,6 +11,6 @@ namespace API.Dto
 
     public int PostedToUserId { get; set; }
 
-    public DateTime PostedTime { get; set; }
+    public DateTime PostedTime { get; set; } = DateTime.Now;
   }
 }

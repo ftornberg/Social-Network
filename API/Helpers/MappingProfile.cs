@@ -11,6 +11,10 @@ namespace API.Helpers
     {
       CreateMap<User, UserDto>().ReverseMap();
 
+      CreateMap<User, UserRegisterDto>().ReverseMap();
+
+      CreateMap<User, UserCredentialsDto>().ReverseMap();
+
       CreateMap<Follower, FollowerDto>().ReverseMap();
 
       CreateMap<DirectMessage, DirectMessageDto>().ReverseMap();

@@ -13,7 +13,6 @@ const Message = () => {
 	useEffect(() => {
 		agent.ApplicationUser.getUser(parseInt(userId as string)).then(
 			(response) => {
-				console.log(response);
 				setUser(response);
 			}
 		);
@@ -28,6 +27,7 @@ const Message = () => {
 			return agent.ApplicationPost.createPost({
 				postedMessage: textAreaValue,
 				postedByUserId: 1,
+				postedByUserName: '',
 				postedToUserId: parseInt(userId ?? '0'),
 			});
 		},

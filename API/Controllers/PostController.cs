@@ -8,12 +8,14 @@ namespace API.Controllers
   public class PostController : BaseController
   {
     private readonly IGenericRepository<Post> _postRepository;
+    private readonly IGenericRepository<Follower> _followerRepository;
     private readonly IMapper _mapper;
 
-    public PostController(IGenericRepository<Post> postRepository, IMapper mapper)
+    public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository)
     {
       _postRepository = postRepository;
       _mapper = mapper;
+      _followerRepository = followerRepository;
     }
 
     [HttpPost("CreatePost")]
@@ -30,13 +32,17 @@ namespace API.Controllers
       return postCreatedDto;
     }
 
-    [HttpGet("GetAllPosts")]
+    [HttpGet("GetAllPosts/{userId}")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
-    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync()
+    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync(int userId)
     {
       var allPosts = await _postRepository.ListAllAsync();
+      var followers = await _followerRepository.ListAllAsync();
+
+      var temp = followers.Where(follower => follower.FollowerUserId == userId);
 
       IReadOnlyList<Post> posts = allPosts
+      .Where(post => temp.Any(t => t.FollowsUserId == post.PostedByUserId))
       .OrderByDescending(post => post.PostedTime).ToList();
 
       var postDto = _mapper.Map<List<PostDto>>(posts);
@@ -44,7 +50,7 @@ namespace API.Controllers
       return postDto;
     }
 
-    [HttpGet("GetPostsToSpecificUser")]
+    [HttpGet("GetPostsToSpecificUser/{postedToUserId}")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
@@ -52,7 +58,7 @@ namespace API.Controllers
 
       IReadOnlyList<Post> posts = allPosts
       .Where(post => post.PostedToUserId == postedToUserId)
-      .OrderBy(posts => posts.PostedTime)
+      .OrderByDescending(posts => posts.PostedTime)
       .ToList();
 
       var postDto = _mapper.Map<List<PostDto>>(posts);
