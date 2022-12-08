@@ -37,7 +37,7 @@ namespace API.Controllers
       return directMessageCreatedDto;
     }
 
-    [HttpGet("GetMessages")]
+    [HttpGet("GetMessages/{userOne}/{userTwo}")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOne, int userTwo)
     {

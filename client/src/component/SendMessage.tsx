@@ -10,7 +10,7 @@ import { SendDirectMessage } from '../models/directmessage';
 
 const SendMessage = () => {
 	const queryClient = useQueryClient();
-	const [tinputValue, setInputValue] = useState('');
+	const [inputValue, setInputValue] = useState('');
 	const [values, setValues] = useState<SendDirectMessage>({
 		sender: 1,
 		receiver: 0,
@@ -24,7 +24,6 @@ const SendMessage = () => {
 	};
 
 	const [user, setUser] = useState<any>([]);
-
 	useEffect(() => {
 		agent.ApplicationUser.getUser(1).then((response) => {
 			setUser(response);

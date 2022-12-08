@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
@@ -8,7 +7,10 @@ import Loading from './Loading';
 const Wall = () => {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['wallData'],
-		queryFn: () => agent.ApplicationPost.list().then((response) => response),
+		queryFn: () =>
+			agent.ApplicationPost.getAllPostsFromUsersFollowed(1).then(
+				(response) => response
+			),
 	});
 
 	if (isLoading)

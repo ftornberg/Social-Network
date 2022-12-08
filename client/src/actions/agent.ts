@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { CreatePost, Post } from '../models/post';
 import { Register, User } from '../models/user';
+import { FollowUser } from '../models/followers';
 import { DirectMessage, SendDirectMessage } from '../models/directmessage';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -18,15 +19,22 @@ const requests = {
 };
 
 const ApplicationDirectMessage = {
-	list: (sender: number, receiver: number) =>
+	list: (userOne: number, userTwo: number) =>
 		requests.get<DirectMessage[]>(
-			'/DirectMessage/GetMessages?userOne=' + sender + '&userTwo=' + receiver
+			'/DirectMessage/GetMessages/' + userOne + '/' + userTwo
 		),
 	sendMessage: (sendDirectMessage: SendDirectMessage) =>
 		requests.post<DirectMessage>(
 			'/DirectMessage/SendMessage',
 			sendDirectMessage
 		),
+};
+
+const ApplicationFollower = {
+	list: (user: number) =>
+		requests.get<FollowUser[]>('/Follower/GetFollowersForUser/' + user),
+	follow: (data: FollowUser) =>
+		requests.post<FollowUser[]>('/Follower/FollowUser', data),
 };
 
 const ApplicationUser = {
@@ -36,15 +44,10 @@ const ApplicationUser = {
 };
 
 const ApplicationPost = {
-	list: () => requests.get<Post[]>('/post/GetAllPosts'),
-	getAllPosts: (userId: number) =>
-		requests.get<Post[]>(
-			'/post/GetPostsToSpecificUser/?postedToUserId=' + userId
-		),
+	getAllPostsFromUsersFollowed: (userId: number) =>
+		requests.get<Post[]>('post/GetAllPosts/' + userId),
 	getAllPostsToUser: (userId: number) =>
-		requests.get<Post[]>(
-			'/post/GetPostsToSpecificUser?postedToUserId=' + userId
-		),
+		requests.get<Post[]>('/post/GetPostsToSpecificUser/' + userId),
 	createPost: (post: CreatePost) =>
 		requests.post<Post>('/post/CreatePost/', post),
 };
@@ -53,6 +56,7 @@ const agent = {
 	ApplicationUser,
 	ApplicationPost,
 	ApplicationDirectMessage,
+	ApplicationFollower,
 };
 
 export default agent;

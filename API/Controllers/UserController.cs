@@ -17,16 +17,16 @@ namespace API.Controllers
       _mapper = mapper;
     }
 
-    [HttpPost("Register")]
+    [HttpPost("RegisterUser")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
-    public async Task<ActionResult<UserRegisterDto>> RegisterUser(UserRegisterDto userRegisterDto)
+    public async Task<ActionResult<UserRegisterDto>> RegisterUserAsync(UserRegisterDto userRegisterDto)
     {
       var user = _mapper.Map<User>(userRegisterDto);
 
       if (user == null) return BadRequest();
       var userCreated = await _userRepository.AddAsync(user);
       var userCreatedDto = _mapper.Map<UserDto>(userCreated);
-      
+
       return userCreatedDto;
     }
 
