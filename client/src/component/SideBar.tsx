@@ -54,9 +54,12 @@ const SideBar = () => {
 				{data &&
 					data.map((followers) => (
 						<li>
-							<a href="#" className="nav-link link-dark">
-								{followers.followerUserId}
-							</a>
+							<img
+								className="mr-2 pe-4 rounded-circle"
+								src={`https://i.pravatar.cc/75?=${followers.followerUserId}`}
+								alt="{followers.followerUserName}"
+							/>
+							{followers.followerUserName}
 						</li>
 					))}
 				<li></li>
@@ -69,12 +72,12 @@ const SideBar = () => {
 				{data &&
 					data.map((followers) => (
 						<li>
-							<Link
-								to={`/user/${followers.followerUserId}`}
-								className="nav-link link-dark"
-							>
-								{followers.followerUserId}
-							</Link>
+							<img
+								className="mr-2 pe-4 rounded-circle"
+								src={`https://i.pravatar.cc/75?=${followers.followsUserId}`}
+								alt="{followers.followerUserName}"
+							/>
+							{followers.followsUserName}
 						</li>
 					))}
 				<li></li>

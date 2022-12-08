@@ -10,9 +10,11 @@ namespace API.Controllers
     private readonly IGenericRepository<Post> _postRepository;
     private readonly IGenericRepository<Follower> _followerRepository;
     private readonly IMapper _mapper;
+    private readonly IGenericRepository<User> _userRepository;
 
-    public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository)
+    public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository, IGenericRepository<User> userRepository)
     {
+      _userRepository = userRepository;
       _postRepository = postRepository;
       _mapper = mapper;
       _followerRepository = followerRepository;
@@ -24,6 +26,8 @@ namespace API.Controllers
 
     {
       var post = _mapper.Map<Post>(postDto);
+      var users = await _userRepository.ListAllAsync();
+      post.PostedByUserName = users.FirstOrDefault(u => u.Id == post.PostedByUserId).Name;
 
       if (post == null) return BadRequest();
       var postCreated = await _postRepository.AddAsync(post);
