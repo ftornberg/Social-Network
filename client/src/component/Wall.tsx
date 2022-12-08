@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from 'react-query';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
@@ -34,6 +34,7 @@ const Wall = () => {
 			<div className="container-fluid">
 				<div className="col-sm rounded">
 					<div className="clearfix"></div>
+					<h3 className="display-2 ps-3">Min feed</h3>
 					<ul className="list-unstyled p-3 mb-2">
 						{data &&
 							data.map((post) => (
@@ -41,13 +42,18 @@ const Wall = () => {
 									className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
 									key={post.id}
 								>
-									<Link to={`/user/${post.postedToUserId}`}>
+									<Link
+										to={`/user/${post.postedToUserId}`}
+										className="text-decoration-none"
+									>
 										<img
 											className="mr-3 pe-4 rounded-circle"
 											src={`https://i.pravatar.cc/75?=${post.postedByUserId}`}
 											alt={post.postedMessage}
 										/>
-										<div className="fs-4">{post.postedByUserName}</div>
+										<div className="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+											{post.postedByUserName}
+										</div>
 									</Link>
 									<div className="media-body">
 										<p className="mt-0 mb-1 lead">{post.postedMessage}</p>

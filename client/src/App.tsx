@@ -1,9 +1,10 @@
 import './App.css';
 import Wall from './component/Wall';
 import UserWall from './component/UserWall';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function App() {
 			</a>
 			<QueryClientProvider client={queryClient}>
 				<RouterProvider router={router} />
+				<ReactQueryDevtools initialIsOpen={true} />
 			</QueryClientProvider>
 		</div>
 	);

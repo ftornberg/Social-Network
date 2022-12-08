@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Moment from 'react-moment';
 import { useParams } from 'react-router-dom';
 import agent from '../actions/agent';
@@ -6,6 +6,7 @@ import Loading from './Loading';
 import Message from './Message';
 
 const UserWall = () => {
+	const queryClient = useQueryClient();
 	const { userId } = useParams<{ userId: string }>();
 
 	const { isLoading, error, data } = useQuery({
@@ -14,6 +15,21 @@ const UserWall = () => {
 			return agent.ApplicationPost.getAllPostsToUser(
 				parseInt(userId as string)
 			).then((response) => response);
+		},
+	});
+
+	const addPostMutation = useMutation({
+		mutationFn: () => {
+			return agent.ApplicationFollower.follow({
+				followerUserId: 1,
+				followerUserName: '',
+				followsUserId: parseInt(userId as string),
+				followsUserName: '',
+			});
+		},
+
+		onSuccess: () => {
+			queryClient.invalidateQueries(['UserFollowsData, UserFollowerData']);
 		},
 	});
 
@@ -47,7 +63,11 @@ const UserWall = () => {
 								Meddelanden:{' '}
 								<span className="badge badge-light">{data?.length}</span>
 							</button>
-							<button type="button" className="btn btn-success m-4">
+							<button
+								onClick={() => addPostMutation.mutate()}
+								type="button"
+								className="btn btn-success m-4"
+							>
 								Follow
 							</button>
 						</div>
