@@ -12,9 +12,12 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 const requests = {
 	get: <T>(url: string, params?: URLSearchParams) =>
 		axios.get<T>(url, { params }).then(responseBody),
+
 	post: <T>(url: string, body: {}) =>
 		axios.post<T>(url, body).then(responseBody),
+
 	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+
 	del: <T>(url: string, body: {}) => axios.delete<T>(url).then(responseBody),
 };
 
@@ -23,6 +26,7 @@ const ApplicationDirectMessage = {
 		requests.get<DirectMessage[]>(
 			'/DirectMessage/GetMessages/' + userOne + '/' + userTwo
 		),
+
 	sendMessage: (sendDirectMessage: SendDirectMessage) =>
 		requests.post<DirectMessage>(
 			'/DirectMessage/SendMessage',
@@ -33,21 +37,26 @@ const ApplicationDirectMessage = {
 const ApplicationFollower = {
 	list: (user: number) =>
 		requests.get<FollowUser[]>('/Follower/GetFollowersForUser/' + user),
+
 	follow: (data: FollowUser) =>
 		requests.post<FollowUser[]>('/Follower/FollowUser', data),
 };
 
 const ApplicationUser = {
 	list: () => requests.get<User[]>('/user/Users'),
+
 	getUser: (id: number) => requests.get<User>('/user/' + id),
+
 	registerUser: (user: Register) => requests.post<User>('/user/Register', user),
 };
 
 const ApplicationPost = {
 	getAllPostsFromUsersFollowed: (userId: number) =>
 		requests.get<Post[]>('post/GetAllPosts/' + userId),
+
 	getAllPostsToUser: (userId: number) =>
 		requests.get<Post[]>('/post/GetPostsToSpecificUser/' + userId),
+
 	createPost: (post: CreatePost) =>
 		requests.post<Post>('/post/CreatePost/', post),
 };

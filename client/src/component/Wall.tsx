@@ -43,10 +43,11 @@ const Wall = () => {
 								>
 									<Link to={`/user/${post.postedToUserId}`}>
 										<img
-											className="mr-3 rounded-circle"
+											className="mr-3 pe-4 rounded-circle"
 											src={`https://i.pravatar.cc/75?=${post.postedByUserId}`}
 											alt={post.postedMessage}
 										/>
+										<div className="fs-4">{post.postedByUserName}</div>
 									</Link>
 									<div className="media-body">
 										<p className="mt-0 mb-1 lead">{post.postedMessage}</p>
