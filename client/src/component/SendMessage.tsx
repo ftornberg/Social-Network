@@ -1,8 +1,4 @@
-import {
-	QueryClient,
-	useMutation,
-	useQueryClient,
-} from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from 'react-query';
 import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
 import agent from '../actions/agent';

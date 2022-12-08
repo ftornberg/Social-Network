@@ -1,6 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-import userEvent from '@testing-library/user-event';
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import Moment from 'react-moment';
 import agent from '../actions/agent';
 import Loading from './Loading';
