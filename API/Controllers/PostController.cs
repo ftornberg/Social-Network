@@ -1,69 +1,60 @@
-using API.Dto;
-using AutoMapper;
-using Entity;
-using Entity.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-namespace API.Controllers
+namespace API.Controllers;
+
+    public class PostController : BaseController
 {
-  public class PostController : BaseController
-  {
     private readonly IGenericRepository<Post> _postRepository;
     private readonly IGenericRepository<Follower> _followerRepository;
     private readonly IMapper _mapper;
 
     public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository)
     {
-      _postRepository = postRepository;
-      _mapper = mapper;
-      _followerRepository = followerRepository;
+        _postRepository = postRepository;
+        _mapper = mapper;
+        _followerRepository = followerRepository;
     }
 
     [HttpPost("CreatePost")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<PostDto>> CreatePostAsync(PostDto postDto)
 
     {
-      var post = _mapper.Map<Post>(postDto);
+        var post = _mapper.Map<Post>(postDto);
 
-      if (post == null) return BadRequest();
-      var postCreated = await _postRepository.AddAsync(post);
-      var postCreatedDto = _mapper.Map<PostDto>(postCreated);
+        if (post == null) return BadRequest();
+        var postCreated = await _postRepository.AddAsync(post);
+        var postCreatedDto = _mapper.Map<PostDto>(postCreated);
 
-      return postCreatedDto;
+        return postCreatedDto;
     }
 
     [HttpGet("GetAllPosts/{userId}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync(int userId)
     {
-      var allPosts = await _postRepository.ListAllAsync();
-      var followers = await _followerRepository.ListAllAsync();
+        var allPosts = await _postRepository.ListAllAsync();
+        var followers = await _followerRepository.ListAllAsync();
 
-      var temp = followers.Where(follower => follower.FollowerUserId == userId);
+        var temp = followers.Where(follower => follower.FollowerUserId == userId);
 
-      IReadOnlyList<Post> posts = allPosts
-      .Where(post => temp.Any(t => t.FollowsUserId == post.PostedByUserId))
-      .OrderByDescending(post => post.PostedTime).ToList();
+        IReadOnlyList<Post> posts = allPosts
+        .Where(post => temp.Any(t => t.FollowsUserId == post.PostedByUserId))
+        .OrderByDescending(post => post.PostedTime).ToList();
 
-      var postDto = _mapper.Map<List<PostDto>>(posts);
+        var postDto = _mapper.Map<List<PostDto>>(posts);
 
-      return postDto;
+        return postDto;
     }
 
     [HttpGet("GetPostsToSpecificUser/{postedToUserId}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
-      var allPosts = await _postRepository.ListAllAsync();
+        var allPosts = await _postRepository.ListAllAsync();
 
-      IReadOnlyList<Post> posts = allPosts
-      .Where(post => post.PostedToUserId == postedToUserId)
-      .OrderByDescending(posts => posts.PostedTime)
-      .ToList();
+        IReadOnlyList<Post> posts = allPosts
+        .Where(post => post.PostedToUserId == postedToUserId)
+        .OrderByDescending(posts => posts.PostedTime)
+        .ToList();
 
-      var postDto = _mapper.Map<List<PostDto>>(posts);
+        var postDto = _mapper.Map<List<PostDto>>(posts);
 
-      return postDto;
+        return postDto;
     }
-  }
 }

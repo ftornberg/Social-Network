@@ -1,9 +1,7 @@
-using Entity;
-namespace API.Dto
+namespace API.Dto;
 
+public class DirectMessageDto : BaseEntity
 {
-  public class DirectMessageDto : BaseEntity
-  {
     public int Sender { get; set; }
 
     public int Receiver { get; set; }
@@ -11,5 +9,4 @@ namespace API.Dto
     public string? Message { get; set; }
 
     public DateTime TimeSent { get; set; } = DateTime.Now;
-  }
 }

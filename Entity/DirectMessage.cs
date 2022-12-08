@@ -4,7 +4,7 @@ public class DirectMessage : BaseEntity
     public DirectMessage()
     {
     }
-    
+
     public DirectMessage(int sender, int receiver, string message, DateTime timeSent)
     {
         Sender = sender;
@@ -17,7 +17,7 @@ public class DirectMessage : BaseEntity
 
     public int Receiver { get; set; }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
     public DateTime TimeSent { get; set; }
 }

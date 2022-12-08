@@ -1,11 +1,10 @@
-using System.Reflection;
 using Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public class NetworkContext : DbContext
 {
-  public class NetworkContext : DbContext
-  {
     public NetworkContext(DbContextOptions options) : base(options)
     {
     }
@@ -22,7 +21,6 @@ namespace Infrastructure
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-      base.OnModelCreating(builder);
+        base.OnModelCreating(builder);
     }
-  }
 }

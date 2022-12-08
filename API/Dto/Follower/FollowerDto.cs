@@ -1,14 +1,13 @@
-namespace API.Dto.Follower
+namespace API.Dto;
+
+public class FollowerDto
 {
-    public class FollowerDto
-    {
-        public int FollowerUserId { get; set; }
+    public int FollowerUserId { get; set; }
 
-        public string FollowerUserName { get; set; }
-        
-        public int FollowsUserId { get; set; }
+    public string? FollowerUserName { get; set; }
 
-        public string FollowsUserName { get; set; }
+    public int FollowsUserId { get; set; }
 
-    }
+    public string? FollowsUserName { get; set; }
+
 }
