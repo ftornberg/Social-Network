@@ -1,7 +1,9 @@
 export interface DirectMessage {
 	id: number;
-	sender: number;
-	receiver: number;
+	senderUserId: number;
+	senderUserName: string;
+	receiverUserId: number;
+	receiverUserName: string;
 	message: string;
 	timeSent: Date;
 }
