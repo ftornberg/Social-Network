@@ -49,7 +49,6 @@ const ShowMessages = () => {
 								<p>{dm.senderUserName}</p>
 								<p className="mt-0 mb-1 lead">{dm.message}</p>
 								<Moment format="DD/MM/YY HH:mm">{dm.timeSent}</Moment>
-								<>{console.log('DMs:', data)}</>
 							</div>
 						</li>
 					))}
