@@ -9,7 +9,7 @@ export interface DirectMessage {
 }
 
 export interface SendDirectMessage {
-	sender: number;
-	receiver: number;
+	senderUserId: number;
+	receiverUserId: number;
 	message: string;
 }

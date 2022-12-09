@@ -6,13 +6,13 @@ import { SendDirectMessage } from '../models/directmessage';
 
 const SendMessage = () => {
 	const queryClient = useQueryClient();
-	const [inputValue, setInputValue] = useState('');
+	const [inputValue, setInputValue] = useState(null);
 	const [values, setValues] = useState<SendDirectMessage>({
-		sender: 1,
-		receiver: 0,
+		senderUserId: 1,
+		receiverUserId: 0,
 		message: '',
 	});
-	const { sender, receiver, message } = values;
+	const { senderUserId, receiverUserId, message } = values;
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -29,15 +29,15 @@ const SendMessage = () => {
 	const addPostMutation = useMutation({
 		mutationFn: () => {
 			return agent.ApplicationDirectMessage.sendMessage({
-				sender: sender,
-				receiver: receiver,
+				senderUserId: senderUserId,
+				receiverUserId: receiverUserId,
 				message: message,
 			});
 		},
 
 		onSuccess: () => {
 			queryClient.invalidateQueries(['directMessageData']);
-			setInputValue('');
+			setInputValue(null);
 		},
 	});
 
@@ -63,8 +63,8 @@ const SendMessage = () => {
 				<input
 					type="text"
 					className="form-control"
-					name="receiver"
-					value={receiver}
+					name="receiverUserId"
+					value={receiverUserId}
 					placeholder="Mottagare"
 					aria-label="Username"
 					aria-describedby="basic-addon1"
