@@ -5,7 +5,7 @@ import { FollowUser } from '../models/followers';
 import { DirectMessage, SendDirectMessage } from '../models/directmessage';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
-axios.defaults.headers.delete['Content-Type'] = 'application/json';
+// axios.defaults.headers.delete['Content-Type'] = 'application/json';
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
