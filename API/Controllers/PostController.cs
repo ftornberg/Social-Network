@@ -1,3 +1,5 @@
+using API.Dto.Post;
+
 namespace API.Controllers;
 
     public class PostController : BaseController

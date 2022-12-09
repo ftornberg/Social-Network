@@ -1,3 +1,5 @@
+using API.Dto.Follower;
+
 namespace API.Controllers;
 
 public class FollowerController : BaseController

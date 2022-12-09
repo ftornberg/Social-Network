@@ -1,3 +1,5 @@
+using API.Dto.DirectMessage;
+
 namespace API.Controllers;
 
 public class DirectMessageController : BaseController
