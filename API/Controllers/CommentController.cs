@@ -18,7 +18,6 @@ public class CommentController : BaseController
     {
         var comment = _mapper.Map<Comment>(commentDto);
 
-        if (comment == null) return BadRequest();
         var commentCreated = await _commentRepository.AddAsync(comment);
         var commentCreatedDto = _mapper.Map<CommentDto>(commentCreated);
 
