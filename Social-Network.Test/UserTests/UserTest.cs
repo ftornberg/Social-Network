@@ -13,29 +13,29 @@ public class UserControllerTest
         {
             mc.AddProfile(new MappingProfile());
         });
-        var mapper = mappingConfig.CreateMapper();
-        _mapper = mapper;
-        _userRepositoryMock = new Mock<IGenericRepository<User>>();
+            var mapper = mappingConfig.CreateMapper();
+            _mapper = mapper;
+            _userRepositoryMock = new Mock<IGenericRepository<User>>();
 
-        _userRepositoryMock?.Setup(x => x.ListAllAsync())
+            _userRepositoryMock?.Setup(x => x.ListAllAsync())
             .ReturnsAsync(new List<User>
             {
-                    new User
-                    {
-                        Id = 1,
-                        Name = "Max",
-                        Email = "max@email.com",
-                        Password = "password",
-                        CreatedTime = DateTime.Now,
-                    },
-                    new User
-                    {
-                        Id = 2,
-                        Name = "Isac",
-                        Email = "isac@email.com",
-                        Password = "password",
-                        CreatedTime = DateTime.Now,
-                    }
+                new User
+                {
+                    Id = 1,
+                    Name = "Max",
+                    Email = "max@email.com",
+                    Password = "password",
+                    CreatedTime = DateTime.Now,
+                },
+                new User
+                {
+                    Id = 2,
+                    Name = "Isac",
+                    Email = "isac@email.com",
+                    Password = "password",
+                    CreatedTime = DateTime.Now,
+                }
             });
     }
 

@@ -67,9 +67,30 @@ public class CommentControllerTest
         var commentDto = await commentController.GetCommentByIdAsync(1);
 
         // Assert
-        Assert.IsNotNull(commentDto.Value);
         Assert.AreEqual(1, commentDto.Value.PostId);
         Assert.AreNotEqual(2, commentDto.Value.PostId);
+    }
+
+    [TestMethod]
+    public async Task TestCommentIdShouldNotBeNullFromController()
+    {
+        // Arrange
+        _commentRepositoryMock?.Setup(x => x.GetByIdAsync(1))
+            .ReturnsAsync(new Comment
+            {
+                Id = 1,
+                PostId = 1,
+                CommentedByUserId = 2,
+                Message = "Galaxy",
+                CommentedTime = DateTime.Now,
+            });
+
+        // Act
+        var commentController = new CommentController(_commentRepositoryMock.Object, _mapper);
+        var commentDto = await commentController.GetCommentByIdAsync(1);
+
+        // Assert
+        Assert.IsNotNull(commentDto.Value);
     }
 
     [TestMethod]
