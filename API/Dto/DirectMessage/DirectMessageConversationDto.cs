@@ -1,4 +1,4 @@
-namespace API.Dto;
+namespace API.Dto.DirectMessage;
 
 public class DirectMessageConversationDto : BaseEntity
 {
