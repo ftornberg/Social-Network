@@ -1,5 +1,6 @@
 import Moment from 'react-moment';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
 import Loading from './Loading';
 
@@ -31,27 +32,28 @@ const Conversations = () => {
 	return (
 		<div className="container-fluid">
 			<div className="clearfix"></div>
-			<ul className="list-unstyled p-3 mb-2">
-				<h2>Konversationer</h2>
+			<div className="list-unstyled p-3 mb-2">
+				<h2>Conversations</h2>
 				{data &&
 					data.map((conversations) => (
-						<div className="row">
-							<li
-								className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
-								key={conversations.id}
-							>
-								<img
-									className="mr-3 pe-4 rounded-circle"
-									src={`https://i.pravatar.cc/25?=${conversations.userName}`}
-									alt="{dm.senderName}"
-								/>
-								<div className="media-body">
-									<>{conversations.userName}</>
+						<Link to={`/conversation/${conversations.userId}`}>
+							<div className="container media bg-white text-dark p-4 mb-4 border rounded shadow-lg">
+								<div className="row">
+									<div className="col" key={conversations.id}>
+										<img
+											className="mr-3 pe-4 rounded-circle"
+											src={`https://i.pravatar.cc/40?=${conversations.userName}`}
+											alt="{dm.senderName}"
+										/>
+										<div className="col">
+											<p>{conversations.userName}</p>
+										</div>
+									</div>
 								</div>
-							</li>
-						</div>
+							</div>
+						</Link>
 					))}
-			</ul>
+			</div>
 		</div>
 	);
 };
