@@ -16,7 +16,7 @@ public class DirectMessageController : BaseController
   }
 
   [HttpPost("SendMessage")]
-  public async Task<ActionResult<DirectMessage>> SendMessageAsync(DirectMessageAddDto directMessageDto)
+  public async Task<ActionResult<DirectMessageGetDto>> SendMessageAsync(DirectMessageAddDto directMessageDto)
   {
     var directMessage = _mapper.Map<DirectMessage>(directMessageDto);
     directMessage.TimeSent = DateTime.Now;
@@ -35,7 +35,7 @@ public class DirectMessageController : BaseController
     // Fulfix pga bugg
     directMessageCreatedDto.TimeSent = directMessageCreated.TimeSent;
 
-    return directMessageCreated;
+    return directMessageCreatedDto;
   }
 
   [HttpGet("GetMessages/{userOneId}/{userTwoId}")]
