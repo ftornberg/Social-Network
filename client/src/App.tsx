@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import Conversations from './component/Conversations';
+import DirectMessagePage from './pages/DirectMessagePage';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,10 @@ const router = createBrowserRouter([
 	{
 		path: 'user/:userId',
 		element: <UserWall />,
+	},
+	{
+		path: 'conversation/:userId',
+		element: <DirectMessagePage />,
 	},
 ]);
 

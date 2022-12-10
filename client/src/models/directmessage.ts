@@ -13,3 +13,9 @@ export interface SendDirectMessage {
 	receiverUserId: number;
 	message: string;
 }
+
+export interface DirectMessageConversation {
+	id: number;
+	userId: number;
+	userName: string;
+}

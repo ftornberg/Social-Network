@@ -1,12 +1,9 @@
-import { useQuery } from 'react-query';
 import Moment from 'react-moment';
+import { useQuery } from 'react-query';
 import agent from '../actions/agent';
 import Loading from './Loading';
-import { defaultMethod } from 'react-router-dom/dist/dom';
-import userEvent from '@testing-library/user-event';
-import { useEffect } from 'react';
 
-const ShowMessages = () => {
+const Conversations = () => {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['directMessageData'],
 		queryFn: () =>
@@ -32,18 +29,26 @@ const ShowMessages = () => {
 		);
 
 	return (
-		<div className="container">
+		<div className="container-fluid">
 			<div className="clearfix"></div>
 			<ul className="list-unstyled p-3 mb-2">
-				<h2>Meddelanden</h2>
+				<h2>Konversationer</h2>
 				{data &&
-					data.map((message, index: number) => (
-						<div className="row my-3 shadow-lg">
-							<div className="card px-0" key={index}>
-								<div className="card-header">
-									<h5 className="card-title">{message.userName}</h5>
+					data.map((conversations) => (
+						<div className="row">
+							<li
+								className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
+								key={conversations.id}
+							>
+								<img
+									className="mr-3 pe-4 rounded-circle"
+									src={`https://i.pravatar.cc/25?=${conversations.userName}`}
+									alt="{dm.senderName}"
+								/>
+								<div className="media-body">
+									<>{conversations.userName}</>
 								</div>
-							</div>
+							</li>
 						</div>
 					))}
 			</ul>
@@ -51,4 +56,4 @@ const ShowMessages = () => {
 	);
 };
 
-export default ShowMessages;
+export default Conversations;
