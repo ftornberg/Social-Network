@@ -59,33 +59,27 @@ public class DirectMessageController : BaseController
 
     List<DirectMessageConversationDto> tempDtoList = new List<DirectMessageConversationDto>();
 
-    // Create list of conversations based on sent by user
-    var conversationSent = directMessages
-    .Where(message => message.SenderUserId == userId)
+    var conversations = directMessages
+    .Where(message => message.SenderUserId == userId || message.ReceiverUserId == userId)
     .OrderByDescending(message => message.TimeSent)
     .ToList();
 
-    foreach (var message in conversationSent)
+    foreach (var message in conversations)
     {
+      // Adds to list of conversations based on sent by user
       if (tempDtoList.All(dto => dto.UserId != message.ReceiverUserId))
         tempDtoList.Add(new DirectMessageConversationDto
         {
+          Id = tempDtoList.Count,
           UserId = message.ReceiverUserId,
           UserName = message.ReceiverUserName
         });
-    }
-
-    // Create list of conversations based on recieved by user
-    var conversationRecieved = directMessages
-    .Where(message => message.ReceiverUserId == userId)
-    .OrderByDescending(message => message.TimeSent)
-    .ToList();
-
-    foreach (var message in conversationRecieved)
-    {
-      if (tempDtoList.All(dto => dto.UserId != message.SenderUserId))
+        
+      // Adds to list of conversations based on recieved by user
+      else if (tempDtoList.All(dto => dto.UserId != message.SenderUserId))
         tempDtoList.Add(new DirectMessageConversationDto
         {
+          Id = tempDtoList.Count,
           UserId = message.SenderUserId,
           UserName = message.SenderUserName
         });
