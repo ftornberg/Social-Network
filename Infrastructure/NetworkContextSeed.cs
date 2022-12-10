@@ -154,31 +154,41 @@ public class NetworkContextSeed
       var follower = new Follower
       {
         FollowerUserId = 1,
+        FollowerUserName = "Steve Jobs",
         FollowsUserId = 2,
+        FollowsUserName = "Bill Gates"
       };
 
       var follower2 = new Follower
       {
         FollowerUserId = 1,
+        FollowerUserName = "Steve Jobs",
         FollowsUserId = 3,
+        FollowsUserName = "Mark Zuckerberg"
       };
 
       var follower3 = new Follower
       {
         FollowerUserId = 1,
+        FollowerUserName = "Steve Jobs",
         FollowsUserId = 4,
+        FollowsUserName = "Elon Musk"
       };
 
       var follower4 = new Follower
       {
         FollowerUserId = 2,
+        FollowerUserName = "Bill Gates",
         FollowsUserId = 1,
+        FollowsUserName = "Steve Jobs"
       };
 
       var follower5 = new Follower
       {
         FollowerUserId = 2,
+        FollowerUserName = "Bill Gates",
         FollowsUserId = 3,
+        FollowsUserName = "Mark Zuckerberg"
       };
       await context.Followers.AddRangeAsync(follower, follower2, follower3, follower4, follower5);
       await context.SaveChangesAsync();

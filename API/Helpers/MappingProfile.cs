@@ -10,17 +10,21 @@ public class MappingProfile : Profile
 {
   public MappingProfile()
   {
-    CreateMap<User, UserDto>().ReverseMap();
+    CreateMap<User, UserAddDto>().ReverseMap();
 
-    CreateMap<User, UserRegisterDto>().ReverseMap();
+    CreateMap<User, UserGetDto>().ReverseMap();
 
-    CreateMap<User, UserCredentialsDto>().ReverseMap();
+    CreateMap<Follower, FollowerAddDto>().ReverseMap();
 
-    CreateMap<Follower, FollowerDto>().ReverseMap();
+    CreateMap<Follower, FollowerGetDto>().ReverseMap();
 
-    CreateMap<DirectMessage, DirectMessageDto>().ReverseMap();
+    CreateMap<DirectMessage, DirectMessageAddDto>().ReverseMap();
 
-    CreateMap<Post, PostDto>().ReverseMap();
+    CreateMap<DirectMessage, DirectMessageGetDto>().ReverseMap();
+
+    CreateMap<Post, PostAddDto>().ReverseMap();
+
+    CreateMap<Post, PostGetDto>().ReverseMap();
 
     CreateMap<Comment, CommentDto>().ReverseMap();
   }

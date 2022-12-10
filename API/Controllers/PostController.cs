@@ -18,22 +18,26 @@ namespace API.Controllers;
     }
 
     [HttpPost("CreatePost")]
-    public async Task<ActionResult<PostDto>> CreatePostAsync(PostDto postDto)
+    public async Task<ActionResult<PostGetDto>> CreatePostAsync(PostAddDto postDto)
     {
         var post = _mapper.Map<Post>(postDto);
+        post.PostedTime = DateTime.Now;
 
-        var user = await _userRepository.GetByIdAsync(post.Id);
-        if (user == null) return BadRequest(new ApiResponse(400, "It is not possible to create a post because this user does not exist."));
+        var user = await _userRepository.GetByIdAsync(post.PostedToUserId);
+        if (user == null) return BadRequest(new ApiResponse(400, "It is not possible to create a post because the user does not exist."));
         post.PostedByUserName = user.Name;
 
         var postCreated = await _postRepository.AddAsync(post);
-        var postCreatedDto = _mapper.Map<PostDto>(postCreated);
+        var postCreatedDto = _mapper.Map<PostGetDto>(postCreated);
+
+        // Fulfix pga bugg
+        postCreatedDto.PostedTime = postCreated.PostedTime;
 
         return postCreatedDto;
     }
 
     [HttpGet("GetAllPosts/{userId}")]
-    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync(int userId)
+    public async Task<ActionResult<IReadOnlyList<PostGetDto>>> GetAllPostsAsync(int userId)
     {
         var allPosts = await _postRepository.ListAllAsync();
         if (allPosts == null) return BadRequest(new ApiResponse(400, "There are no posts."));
@@ -50,13 +54,13 @@ namespace API.Controllers;
 
         if (posts.Count == 0) return BadRequest(new ApiResponse(400, "There are no posts for this specific user."));
 
-        var postDto = _mapper.Map<List<PostDto>>(posts);
+        var postDto = _mapper.Map<List<PostGetDto>>(posts);
 
         return postDto;
     }
 
     [HttpGet("GetPostsToSpecificUser/{postedToUserId}")]
-    public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
+    public async Task<ActionResult<IReadOnlyList<PostGetDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
         var allPosts = await _postRepository.ListAllAsync();
         if (allPosts == null) return BadRequest(new ApiResponse(400, "There are no posts."));
@@ -68,7 +72,7 @@ namespace API.Controllers;
 
         if (posts.Count == 0) return BadRequest(new ApiResponse(400, "There are no posts for this specific user."));
 
-        var postDto = _mapper.Map<List<PostDto>>(posts);
+        var postDto = _mapper.Map<List<PostGetDto>>(posts);
 
         return postDto;
     }
