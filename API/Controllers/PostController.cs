@@ -39,7 +39,7 @@ namespace API.Controllers;
         if (allPosts == null) return BadRequest(new ApiResponse(400, "There are no posts."));
 
         var allFollows = await _followerRepository.ListAllAsync();
-        if (allFollows == null) return BadRequest(new ApiResponse(400, "There are no users that follows an other user."));
+        if (allFollows == null) return BadRequest(new ApiResponse(400, "There are no users that follows another user."));
 
         var followers = allFollows.Where(follower => follower.FollowerUserId == userId);
 

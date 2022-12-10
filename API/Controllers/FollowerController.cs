@@ -69,11 +69,4 @@ public class FollowerController : BaseController
 
       return followersDto;
     }
-
-    // private async Task<ActionResult<IReadOnlyList<Follower>>> GetAllFollowers()
-    // {
-    //   var allFollowers = await _followerRepository.ListAllAsync();
-    //   if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
-    //   return Ok(allFollowers);
-    // }
 }
