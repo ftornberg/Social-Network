@@ -36,7 +36,7 @@ const SendMessage = () => {
 		},
 
 		onSuccess: () => {
-			queryClient.invalidateQueries(['directMessageData']);
+			queryClient.invalidateQueries(['directMessageData, showMessageData']);
 			setInputValue(null);
 		},
 	});

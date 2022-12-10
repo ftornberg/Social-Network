@@ -33,20 +33,23 @@ const Conversations = () => {
 		<div className="container-fluid">
 			<div className="clearfix"></div>
 			<div className="list-unstyled p-3 mb-2">
-				<h2>Conversations</h2>
+				<h2 className="display-5 ps-4 pt-4">Konversationer</h2>
 				{data &&
-					data.map((conversations) => (
+					data.map((conversations, index: number) => (
 						<Link to={`/conversation/${conversations.userId}`}>
-							<div className="container media bg-white text-dark p-4 mb-4 border rounded shadow-lg">
+							<div
+								key={index}
+								className="container media bg-white text-dark ms-4 p-4 mb-4 border rounded shadow-lg"
+							>
 								<div className="row">
-									<div className="col" key={conversations.id}>
+									<div className="col">
 										<img
 											className="mr-3 pe-4 rounded-circle"
-											src={`https://i.pravatar.cc/40?=${conversations.userName}`}
+											src={`https://i.pravatar.cc/40?u=${conversations.userName}`}
 											alt="{dm.senderName}"
 										/>
-										<div className="col">
-											<p>{conversations.userName}</p>
+										<div className="link-dark	text-decoration-none">
+											<div>{conversations.userName}</div>
 										</div>
 									</div>
 								</div>

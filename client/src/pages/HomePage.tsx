@@ -1,4 +1,3 @@
-import React from 'react';
 import Conversations from '../component/Conversations';
 import SideBar from '../component/SideBar';
 import Wall from '../component/Wall';

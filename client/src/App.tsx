@@ -32,10 +32,10 @@ const router = createBrowserRouter([
 
 function App() {
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid justify-content-center">
 			<a
 				href="/"
-				className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+				className="d-flex align-items-center link-dark text-decoration-none"
 			>
 				<h1 className="display-1 center">Social Network</h1>
 			</a>
