@@ -2,17 +2,13 @@ import { useQuery } from 'react-query';
 import Moment from 'react-moment';
 import agent from '../actions/agent';
 import Loading from './Loading';
-import { defaultMethod } from 'react-router-dom/dist/dom';
-import userEvent from '@testing-library/user-event';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ShowMessages = () => {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['directMessageData'],
 		queryFn: () =>
-			agent.ApplicationDirectMessage.listAllConversationsWithUser(1).then(
-				(response) => response
-			),
+			agent.ApplicationDirectMessage.list(1, 2).then((response) => response),
 	});
 
 	if (isLoading)
@@ -32,22 +28,45 @@ const ShowMessages = () => {
 		);
 
 	return (
-		<div className="container">
-			<div className="clearfix"></div>
-			<ul className="list-unstyled p-3 mb-2">
-				<h2>Meddelanden</h2>
-				{data &&
-					data.map((message, index: number) => (
-						<div className="row my-3 shadow-lg">
-							<div className="card px-0" key={index}>
-								<div className="card-header">
-									<h5 className="card-title">{message.userName}</h5>
-								</div>
-							</div>
-						</div>
-					))}
-			</ul>
-		</div>
+		<>
+			<div className="container-fluid">
+				<div className="col-sm rounded">
+					<div className="clearfix"></div>
+					<h3 className="display-2 ps-3">ShowMessages</h3>
+					<ul className="list-unstyled p-3 mb-2">
+						{data &&
+							data.map((messages, index: number) => (
+								<li
+									className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
+									key={index}
+								>
+									<Link
+										to={`/user/${messages.senderUserId}`}
+										className="text-decoration-none"
+									>
+										<img
+											className="mr-3 pe-4 rounded-circle"
+											src={`https://i.pravatar.cc/75?=${messages.senderUserId}`}
+											alt={messages.senderUserName}
+										/>
+										<div className="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+											{messages.senderUserName}
+										</div>
+									</Link>
+									<div className="media-body">
+										<p className="mt-0 mb-1 lead">{messages.message}</p>
+										<samp>
+											<Moment format="DD/MM/YY HH:mm">
+												{messages.timeSent}
+											</Moment>
+										</samp>
+									</div>
+								</li>
+							))}
+					</ul>
+				</div>
+			</div>
+		</>
 	);
 };
 
