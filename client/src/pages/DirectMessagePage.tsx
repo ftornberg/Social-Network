@@ -1,18 +1,18 @@
 import React from 'react';
 import Conversations from '../component/Conversations';
+import SendMessage from '../component/SendMessage';
 import ShowMessages from '../component/ShowMessages';
 import SideBar from '../component/SideBar';
-import Wall from '../component/Wall';
 
-const HomePage = () => {
+const DirectMessagePage = () => {
 	return (
 		<div className="container-fluid">
-			<div className="row">
+			<div className="row align-items-start">
 				<div className="col-2">
 					<SideBar />
 				</div>
 				<div className="col-6">
-					<Wall />
+					<ShowMessages />
 				</div>
 				<div className="col-2">
 					<Conversations />
@@ -22,4 +22,4 @@ const HomePage = () => {
 	);
 };
 
-export default HomePage;
+export default DirectMessagePage;

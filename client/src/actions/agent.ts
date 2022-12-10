@@ -2,7 +2,11 @@ import axios, { AxiosResponse } from 'axios';
 import { CreatePost, Post } from '../models/post';
 import { Register, User } from '../models/user';
 import { FollowUser } from '../models/followers';
-import { DirectMessage, SendDirectMessage } from '../models/directmessage';
+import {
+	DirectMessage,
+	DirectMessageConversation,
+	SendDirectMessage,
+} from '../models/directmessage';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 // axios.defaults.headers.delete['Content-Type'] = 'application/json';
@@ -25,6 +29,11 @@ const ApplicationDirectMessage = {
 	list: (userOne: number, userTwo: number) =>
 		requests.get<DirectMessage[]>(
 			'/DirectMessage/GetMessages/' + userOne + '/' + userTwo
+		),
+
+	listAllConversationsWithUser: (userId: number) =>
+		requests.get<DirectMessageConversation[]>(
+			'DirectMessage/GetAllConversationsForUser/' + userId
 		),
 
 	sendMessage: (sendDirectMessage: SendDirectMessage) =>
