@@ -16,20 +16,22 @@ public class FollowerController : BaseController
     }
 
     [HttpPost("FollowUser")]
-    public async Task<ActionResult<FollowerDto>> FollowUserAsync(FollowerDto followNewUserDto)
+    public async Task<ActionResult<FollowerDto>> FollowUserAsync(FollowerDto newFollowingDto)
     {
-      var followNewUser = _mapper.Map<Follower>(followNewUserDto);
-      var users = await _userRepository.ListAllAsync();
+      var newFollowing = _mapper.Map<Follower>(newFollowingDto);
 
-      if (followNewUser == null) return BadRequest();
+      var FollowerUser = await _userRepository.GetByIdAsync(newFollowing.FollowerUserId);
+      if (FollowerUser == null) return BadRequest(new ApiResponse(400, "The user following was not found."));
+      newFollowing.FollowerUserName = FollowerUser.Name;
 
-      followNewUser.FollowerUserName = users.FirstOrDefault(u => u.Id == followNewUser.FollowerUserId).Name;
-      followNewUser.FollowsUserName = users.FirstOrDefault(u => u.Id == followNewUser.FollowsUserId).Name;
+      var FollowsUser = await _userRepository.GetByIdAsync(newFollowing.FollowsUserId);
+      if (FollowsUser == null) return BadRequest(new ApiResponse(400, "The user being follow was not found."));
+      newFollowing.FollowsUserName = FollowsUser.Name;
 
-      var followNewUserCreated = await _followerRepository.AddAsync(followNewUser);
-      var followNewUserCreatedDto = _mapper.Map<FollowerDto>(followNewUserCreated);
+      var newFollowingCreated = await _followerRepository.AddAsync(newFollowing);
+      var newFollowingCreatedDto = _mapper.Map<FollowerDto>(newFollowingCreated);
 
-        return followNewUserCreatedDto;
+      return newFollowingCreatedDto;
     }
 
     // Shows whom I am following
@@ -37,12 +39,14 @@ public class FollowerController : BaseController
     public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetWhoUserFollowsAsync(int userId)
     {
       var allFollowers = await _followerRepository.ListAllAsync();
+      if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
 
-      IReadOnlyList<Follower> following = allFollowers
+      IReadOnlyList<Follower> following= allFollowers
       .Where(follower => follower.FollowerUserId == userId)
       .OrderBy(follower => follower.Id)
       .ToList();
 
+      if(following.Count == 0) return BadRequest(new ApiResponse(400, "User is not following anyone."));
       var followersDto = _mapper.Map<List<FollowerDto>>(following);
 
       return followersDto;
@@ -50,18 +54,26 @@ public class FollowerController : BaseController
 
     // Shows whom is following me
     [HttpGet("GetSpecificUserFollowers/{userId}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 5)]
     public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetSpecificUserFollowersAsync(int userId)
     {
-        var allFollowers = await _followerRepository.ListAllAsync();
+      var allFollowers = await _followerRepository.ListAllAsync();
+      if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
 
       IReadOnlyList<Follower> followers = allFollowers
       .Where(follower => follower.FollowsUserId == userId)
       .OrderBy(follower => follower.Id)
       .ToList();
 
-        var followersDto = _mapper.Map<List<FollowerDto>>(followers);
+      if(followers.Count == 0) return BadRequest(new ApiResponse(400, "User have no followers."));
+      var followersDto = _mapper.Map<List<FollowerDto>>(followers);
 
-        return followersDto;
+      return followersDto;
     }
+
+    // private async Task<ActionResult<IReadOnlyList<Follower>>> GetAllFollowers()
+    // {
+    //   var allFollowers = await _followerRepository.ListAllAsync();
+    //   if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
+    //   return Ok(allFollowers);
+    // }
 }
