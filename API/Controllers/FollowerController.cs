@@ -39,7 +39,7 @@ public class FollowerController : BaseController
     public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetWhoUserFollowsAsync(int userId)
     {
       var allFollowers = await _followerRepository.ListAllAsync();
-      if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
+      if (allFollowers.Count == 0) return BadRequest(new ApiResponse(400, "No one is following anyone."));
 
       IReadOnlyList<Follower> following= allFollowers
       .Where(follower => follower.FollowerUserId == userId)
