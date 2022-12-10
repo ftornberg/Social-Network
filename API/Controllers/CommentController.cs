@@ -1,3 +1,5 @@
+using API.Dto.Comment;
+
 namespace API.Controllers;
 
 public class CommentController : BaseController
