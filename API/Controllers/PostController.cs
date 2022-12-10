@@ -11,19 +11,19 @@ namespace API.Controllers;
 
     public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository, IGenericRepository<User> userRepository)
     {
-      _userRepository = userRepository;
-      _postRepository = postRepository;
-      _mapper = mapper;
-      _followerRepository = followerRepository;
+    _userRepository = userRepository;
+    _postRepository = postRepository;
+    _mapper = mapper;
+    _followerRepository = followerRepository;
     }
 
     [HttpPost("CreatePost")]
     public async Task<ActionResult<PostDto>> CreatePostAsync(PostDto postDto)
 
     {
-      var post = _mapper.Map<Post>(postDto);
-      var users = await _userRepository.ListAllAsync();
-      post.PostedByUserName = users.FirstOrDefault(u => u.Id == post.PostedByUserId).Name;
+    var post = _mapper.Map<Post>(postDto);
+    var users = await _userRepository.ListAllAsync();
+    post.PostedByUserName = users.FirstOrDefault(u => u.Id == post.PostedByUserId).Name;
 
         if (post == null) return BadRequest();
         var postCreated = await _postRepository.AddAsync(post);

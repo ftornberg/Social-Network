@@ -1,3 +1,4 @@
+
 namespace Social_Network.Test.UserTests;
 
 [TestClass]
@@ -16,10 +17,39 @@ public class CommentControllerTest
         var mapper = mappingConfig.CreateMapper();
         _mapper = mapper;
         _commentRepositoryMock = new Mock<IGenericRepository<Comment>>();
+        
+        _commentRepositoryMock?.Setup(x => x.ListAllAsync())
+        .ReturnsAsync(new List<Comment>
+        {
+                new Comment
+                {
+                    Id = 1,
+                    PostId = 1,
+                    CommentedByUserId = 2,
+                    Message = "Dart Vader",
+                    CommentedTime = DateTime.Now,
+                },
+                new Comment
+                {
+                    Id = 2,
+                    PostId = 1,
+                    CommentedByUserId = 2,
+                    Message = "Gandalf",
+                    CommentedTime = DateTime.Now,
+                },
+                new Comment
+                {
+                    Id = 3,
+                    PostId = 2,
+                    CommentedByUserId = 2,
+                    Message = "Galaxy",
+                    CommentedTime = DateTime.Now,
+                }
+        });
     }
 
     [TestMethod]
-    public async Task TestShouldGetCommentByIdFromController()
+    public async Task TestShouldGetSpecificCommentByIdFromController()
     {
         // Arrange
         _commentRepositoryMock?.Setup(x => x.GetByIdAsync(1))
@@ -43,37 +73,27 @@ public class CommentControllerTest
     }
 
     [TestMethod]
-    public async Task TestShouldGetCommentsAsyncFromController()
+    public async Task TestShouldGetAllCommentsFromController()
     {
-        // Arrange
-        _commentRepositoryMock?.Setup(x => x.ListAllAsync())
-        .ReturnsAsync(new List<Comment>
-        {
-                new Comment
-                {
-                    Id = 1,
-                    PostId = 1,
-                    CommentedByUserId = 2,
-                    Message = "Dart Vader",
-                    CommentedTime = DateTime.Now,
-                },
-                new Comment
-                {
-                    Id = 2,
-                    PostId = 1,
-                    CommentedByUserId = 2,
-                    Message = "Gandalf",
-                    CommentedTime = DateTime.Now,
-                }
-        });
 
         // Act
         var commentController = new CommentController(_commentRepositoryMock.Object, _mapper);
         var comments = await commentController.GetCommentsAsync();
 
         // Assert
-        Assert.IsNotNull(comments[0].Message);
+        Assert.AreEqual(3, comments.Count);
         Assert.AreNotEqual(1, comments.Count);
-        Assert.AreEqual(2, comments.Count);
+    }
+
+    [TestMethod]
+    public async Task TestShouldNotGetNullFromController()
+    {
+
+        // Act
+        var commentController = new CommentController(_commentRepositoryMock.Object, _mapper);
+        var comments = await commentController.GetCommentsAsync();
+
+        // Assert
+        Assert.IsNotNull(comments);
     }
 }

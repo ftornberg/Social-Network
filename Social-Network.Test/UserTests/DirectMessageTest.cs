@@ -18,33 +18,65 @@ public class DirectMessageTest
         _mapper = mapper;
         _directMessageRepositoryMock = new Mock<IGenericRepository<DirectMessage>>();
         _userRepositoryMock = new Mock<IGenericRepository<User>>();
-    }
-
-    [TestMethod]
-    public async Task TestShouldGetMessagesFromControllerAsync()
-    {
+        
         _directMessageRepositoryMock?.Setup(x => x.ListAllAsync())
             .ReturnsAsync(new List<DirectMessage>
             {
                     new DirectMessage(
                         1,
+                        "Max",
                         2,
+                        "Isac",
                         "Hello",
                         DateTime.Now
                     ),
                     new DirectMessage (
                         2,
+                        "Isac",
                         1,
+                        "Max",
                         "Hello2",
                         DateTime.Now
                     ),
                     new DirectMessage (
                         3,
+                        "Tobias",
                         1,
+                        "Max",
                         "Hello again",
                         DateTime.Now
                     )
             });
+        
+    }
+
+    [TestMethod]
+    public async Task TestShouldGetMessagesFromTwoSpecificUsersFromController()
+    {
+        // Act
+        var direktMessageController = new DirectMessageController(_directMessageRepositoryMock.Object, _mapper, _userRepositoryMock.Object);
+        var direktMessageDto = await direktMessageController.GetMessagesAsync(1, 2);
+
+        // Assert
+        Assert.AreEqual("Hello2", direktMessageDto.Value[0].Message);
+        Assert.AreEqual("Hello", direktMessageDto.Value[1].Message);
+    }
+
+    [TestMethod]
+    public async Task TestShouldGetMessagesFromSpecificUserIdFromController()
+    {
+
+        // Act
+        var direktMessageController = new DirectMessageController(_directMessageRepositoryMock.Object, _mapper, _userRepositoryMock.Object);
+        var direktMessageDto = await direktMessageController.GetMessagesAsync(1, 2);
+
+        // Assert
+        Assert.AreEqual(2, direktMessageDto.Value.Count);
+    }
+
+    [TestMethod]
+    public async Task TestShouldGetSpecificUsersMessageFromController()
+    {
 
         // Act
         var direktMessageController = new DirectMessageController(_directMessageRepositoryMock.Object, _mapper, _userRepositoryMock.Object);
@@ -53,15 +85,11 @@ public class DirectMessageTest
         var containsOnlyCorrectUserIds = true;
         foreach (var item in direktMessageDto.Value)
         {
-            if (item.Sender != 1 && item.Sender != 2)
+            if (item.SenderUserId != 1 && item.SenderUserId != 2)
                 containsOnlyCorrectUserIds = false;
         }
 
         // Assert
-        Assert.AreEqual("Hello2", direktMessageDto.Value[0].Message);
-        Assert.AreNotEqual("Hello again", direktMessageDto.Value[1].Message);
-        Assert.AreEqual("Hello", direktMessageDto.Value[1].Message);
-        Assert.AreEqual(2, direktMessageDto.Value.Count);
         Assert.IsTrue(containsOnlyCorrectUserIds);
     }
 }

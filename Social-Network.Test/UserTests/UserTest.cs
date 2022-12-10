@@ -16,10 +16,31 @@ public class UserControllerTest
         var mapper = mappingConfig.CreateMapper();
         _mapper = mapper;
         _userRepositoryMock = new Mock<IGenericRepository<User>>();
+
+        _userRepositoryMock?.Setup(x => x.ListAllAsync())
+            .ReturnsAsync(new List<User>
+            {
+                    new User
+                    {
+                        Id = 1,
+                        Name = "Max",
+                        Email = "max@email.com",
+                        Password = "password",
+                        CreatedTime = DateTime.Now,
+                    },
+                    new User
+                    {
+                        Id = 2,
+                        Name = "Isac",
+                        Email = "isac@email.com",
+                        Password = "password",
+                        CreatedTime = DateTime.Now,
+                    }
+            });
     }
 
     [TestMethod]
-    public async Task TestShouldGetUserByIdFromControllerAsync()
+    public async Task TestShouldGetUserByIdFromController()
     {
         // Arrange
         _userRepositoryMock?.Setup(x => x.GetByIdAsync(1))
@@ -43,30 +64,8 @@ public class UserControllerTest
     }
 
     [TestMethod]
-    public async Task TestShouldGetAllUsersAsync()
+    public async Task TestShouldGetSpecificUserNameFromController()
     {
-        // Arrange
-        _userRepositoryMock?.Setup(x => x.ListAllAsync())
-            .ReturnsAsync(new List<User>
-            {
-                    new User
-                    {
-                        Id = 1,
-                        Name = "Max",
-                        Email = "max@email.com",
-                        Password = "password",
-                        CreatedTime = DateTime.Now,
-                    },
-                    new User
-                    {
-                        Id = 2,
-                        Name = "Isac",
-                        Email = "isac@email.com",
-                        Password = "password",
-                        CreatedTime = DateTime.Now,
-                    }
-            });
-
         // Act
         var userController = new UserController(_userRepositoryMock.Object, _mapper);
         var users = await userController.GetUsersAsync();
@@ -74,6 +73,16 @@ public class UserControllerTest
         // Assert
         Assert.AreEqual("Max", users.Value[0].Name);
         Assert.AreEqual("Isac", users.Value[1].Name);
+    }
+
+    [TestMethod]
+    public async Task TestShouldGetAllUsersFromController()
+    {
+        // Act
+        var userController = new UserController(_userRepositoryMock.Object, _mapper);
+        var users = await userController.GetUsersAsync();
+
+        // Assert
         Assert.AreEqual(2, users.Value.Count);
     }
 }
