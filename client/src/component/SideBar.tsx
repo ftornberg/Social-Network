@@ -4,6 +4,7 @@ import ShowFollowers from './ShowFollowers';
 import ShowFollowing from './ShowFollowing';
 
 const SideBar = () => {
+	const userId = 1;
 	return (
 		<div
 			className="d-flex flex-column flex-shrink-0 p-3 pt-6 bg-light shadow-lg rounded border"
@@ -20,19 +21,19 @@ const SideBar = () => {
 				</li>
 				<li className="list-group-item">
 					<Link
-						to="/conversation/$`{userId}`"
+						to={`/conversation/${userId}`}
 						className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
 					>
 						Konversationer
 					</Link>
 				</li>
 				<li className="list-group-item">
-					<a
-						href="/conversation/$`{userId}`"
+					<Link
+						to={`/findfriends/`}
 						className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
 					>
 						Hitta vänner
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<hr />

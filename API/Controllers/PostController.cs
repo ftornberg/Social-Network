@@ -11,10 +11,10 @@ namespace API.Controllers;
 
     public PostController(IGenericRepository<Post> postRepository, IMapper mapper, IGenericRepository<Follower> followerRepository, IGenericRepository<User> userRepository)
     {
-      _userRepository = userRepository;
-      _postRepository = postRepository;
-      _mapper = mapper;
-      _followerRepository = followerRepository;
+        _userRepository = userRepository;
+        _postRepository = postRepository;
+        _mapper = mapper;
+        _followerRepository = followerRepository;
     }
 
     [HttpPost("CreatePost")]

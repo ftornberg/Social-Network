@@ -1,6 +1,5 @@
 import React from 'react';
 import Conversations from '../component/Conversations';
-import ShowMessages from '../component/ShowMessages';
 import SideBar from '../component/SideBar';
 import Wall from '../component/Wall';
 

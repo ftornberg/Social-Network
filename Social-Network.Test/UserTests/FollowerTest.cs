@@ -18,12 +18,7 @@ public class FollowerTest
         _mapper = mapper;
         _followerRepositoryMock = new Mock<IGenericRepository<Follower>>();
         _userRepositoryMock = new Mock<IGenericRepository<User>>();
-    }
 
-    [TestMethod]
-    public async Task TestShouldGetFollowersForUserFromController()
-    {
-        // Arrange
         _followerRepositoryMock?.Setup(x => x.ListAllAsync())
         .ReturnsAsync(new List<Follower>
         {
@@ -43,10 +38,25 @@ public class FollowerTest
                     FollowsUserId = 1,
                 }
         });
+    }
 
+    [TestMethod]
+    public async Task TestShouldGetFollowersForUserFromController()
+    {
         // Act
         var followerController = new FollowerController(_followerRepositoryMock.Object, _userRepositoryMock.Object, _mapper);
-        var followerDto = await followerController.GetFollowersForUserAsync(2);
+        var followerDto = await followerController.GetSpecificUserFollowersAsync(2);
+
+        // Assert
+        Assert.AreNotEqual(3, followerDto.Value.Count);
+        Assert.AreEqual(2, followerDto.Value.Count);
+    }
+
+    [TestMethod]
+    public async Task TestShouldGetFollowersWithUserIdFromController()
+    {
+        var followerController = new FollowerController(_followerRepositoryMock.Object, _userRepositoryMock.Object, _mapper);
+        var followerDto = await followerController.GetSpecificUserFollowersAsync(2);
 
         var containsOnlyCorrectUserId = true;
         foreach (var item in followerDto.Value)
@@ -55,9 +65,5 @@ public class FollowerTest
                 containsOnlyCorrectUserId = false;
         }
 
-        // Assert
-        Assert.AreNotEqual(3, followerDto.Value.Count);
-        Assert.AreEqual(2, followerDto.Value.Count);
-        Assert.IsTrue(containsOnlyCorrectUserId);
-    }
+        Assert.IsTrue(containsOnlyCorrectUserId);    }
 }

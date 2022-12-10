@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Conversations from './component/Conversations';
 import DirectMessagePage from './pages/DirectMessagePage';
+import FindFriends from './component/FindFriends';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 	{
 		path: 'conversation/:userId',
 		element: <DirectMessagePage />,
+	},
+	{
+		path: 'findfriends',
+		element: <FindFriends />,
 	},
 ]);
 
