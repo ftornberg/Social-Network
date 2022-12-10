@@ -21,11 +21,11 @@ public class DirectMessageController : BaseController
     var directMessage = _mapper.Map<DirectMessage>(directMessageDto);
 
     var sender = await _userRepository.GetByIdAsync(directMessage.SenderUserId);
-    var receiver = await _userRepository.GetByIdAsync(directMessage.ReceiverUserId);
-
-    if (sender == null || receiver == null) return BadRequest();
-
+    if (sender == null) return BadRequest(new ApiResponse(400, "The user sending the message was not found."));
     directMessage.SenderUserName = sender.Name;
+
+    var receiver = await _userRepository.GetByIdAsync(directMessage.ReceiverUserId);
+    if (receiver == null) return BadRequest(new ApiResponse(400, "The user receiveing the message was not found."));
     directMessage.ReceiverUserName = receiver.Name;
 
     var directMessageCreated = await _directMessageRepository.AddAsync(directMessage);
@@ -38,7 +38,7 @@ public class DirectMessageController : BaseController
   public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOneId, int userTwoId)
   {
     var directMessages = await _directMessageRepository.ListAllAsync();
-    var users = await _userRepository.ListAllAsync();
+    if (directMessages.Count == 0) return BadRequest(new ApiResponse(400, "There are no direct messages."));
 
     IReadOnlyList<DirectMessage> messagesFromUserOne = directMessages
     .Where(message =>
@@ -56,36 +56,31 @@ public class DirectMessageController : BaseController
   public async Task<ActionResult<IReadOnlyList<DirectMessageConversationDto>>> GetAllConversationsForUserAsync(int userId)
   {
     var directMessages = await _directMessageRepository.ListAllAsync();
+    if (directMessages.Count == 0) return BadRequest(new ApiResponse(400, "There are no direct messages."));
 
     List<DirectMessageConversationDto> tempDtoList = new List<DirectMessageConversationDto>();
 
-    // Create list of conversations based on sent by user
-    var conversationSent = directMessages
-    .Where(message => message.SenderUserId == userId)
+    var conversations = directMessages
+    .Where(message => message.SenderUserId == userId || message.ReceiverUserId == userId)
     .OrderByDescending(message => message.TimeSent)
     .ToList();
 
-    foreach (var message in conversationSent)
+    foreach (var message in conversations)
     {
+      // Adds to list of conversations based on sent by user
       if (tempDtoList.All(dto => dto.UserId != message.ReceiverUserId))
         tempDtoList.Add(new DirectMessageConversationDto
         {
+          Id = tempDtoList.Count,
           UserId = message.ReceiverUserId,
           UserName = message.ReceiverUserName
         });
-    }
-
-    // Create list of conversations based on recieved by user
-    var conversationRecieved = directMessages
-    .Where(message => message.ReceiverUserId == userId)
-    .OrderByDescending(message => message.TimeSent)
-    .ToList();
-
-    foreach (var message in conversationRecieved)
-    {
-      if (tempDtoList.All(dto => dto.UserId != message.SenderUserId))
+        
+      // Adds to list of conversations based on recieved by user
+      else if (tempDtoList.All(dto => dto.UserId != message.SenderUserId))
         tempDtoList.Add(new DirectMessageConversationDto
         {
+          Id = tempDtoList.Count,
           UserId = message.SenderUserId,
           UserName = message.SenderUserName
         });

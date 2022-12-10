@@ -19,13 +19,13 @@ namespace API.Controllers;
 
     [HttpPost("CreatePost")]
     public async Task<ActionResult<PostDto>> CreatePostAsync(PostDto postDto)
-
     {
-    var post = _mapper.Map<Post>(postDto);
-    var users = await _userRepository.ListAllAsync();
-    post.PostedByUserName = users.FirstOrDefault(u => u.Id == post.PostedByUserId).Name;
+        var post = _mapper.Map<Post>(postDto);
 
-        if (post == null) return BadRequest();
+        var user = await _userRepository.GetByIdAsync(post.Id);
+        if (user == null) return BadRequest(new ApiResponse(400, "It is not possible to create a post because this user does not exist."));
+        post.PostedByUserName = user.Name;
+
         var postCreated = await _postRepository.AddAsync(post);
         var postCreatedDto = _mapper.Map<PostDto>(postCreated);
 
@@ -36,13 +36,19 @@ namespace API.Controllers;
     public async Task<ActionResult<IReadOnlyList<PostDto>>> GetAllPostsAsync(int userId)
     {
         var allPosts = await _postRepository.ListAllAsync();
-        var followers = await _followerRepository.ListAllAsync();
+        if (allPosts == null) return BadRequest(new ApiResponse(400, "There are no posts."));
 
-        var temp = followers.Where(follower => follower.FollowerUserId == userId);
+        var allFollows = await _followerRepository.ListAllAsync();
+        if (allFollows == null) return BadRequest(new ApiResponse(400, "There are no users that follows another user."));
+
+        var followers = allFollows.Where(follower => follower.FollowerUserId == userId);
 
         IReadOnlyList<Post> posts = allPosts
-        .Where(post => temp.Any(t => t.FollowsUserId == post.PostedByUserId))
-        .OrderByDescending(post => post.PostedTime).ToList();
+        .Where(post => followers.Any(t => t.FollowsUserId == post.PostedByUserId))
+        .OrderByDescending(post => post.PostedTime)
+        .ToList();
+
+        if (posts.Count == 0) return BadRequest(new ApiResponse(400, "There are no posts for this specific user."));
 
         var postDto = _mapper.Map<List<PostDto>>(posts);
 
@@ -53,11 +59,14 @@ namespace API.Controllers;
     public async Task<ActionResult<IReadOnlyList<PostDto>>> GetPostsToSpecificUserAsync(int postedToUserId)
     {
         var allPosts = await _postRepository.ListAllAsync();
-
+        if (allPosts == null) return BadRequest(new ApiResponse(400, "There are no posts."));
+        
         IReadOnlyList<Post> posts = allPosts
         .Where(post => post.PostedToUserId == postedToUserId)
         .OrderByDescending(posts => posts.PostedTime)
         .ToList();
+
+        if (posts.Count == 0) return BadRequest(new ApiResponse(400, "There are no posts for this specific user."));
 
         var postDto = _mapper.Map<List<PostDto>>(posts);
 
