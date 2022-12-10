@@ -15,7 +15,7 @@ export interface SendDirectMessage {
 }
 
 export interface DirectMessageConversation {
+	id: number;
 	userId: number;
 	userName: string;
-	id: number;
 }
