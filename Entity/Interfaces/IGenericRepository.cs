@@ -12,7 +12,5 @@ public interface IGenericRepository<T>
 
     Task DeleteAsync(T entity);
 
-    Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
-
     Task<int> CountAsync();
 }

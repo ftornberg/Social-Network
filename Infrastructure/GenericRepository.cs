@@ -28,23 +28,21 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
 
+    // Not yet used
     public async Task UpdateAsync(T entity)
     {
         _context.Set<T>().Update(entity);
         await _context.SaveChangesAsync();
     }
 
+    // Not yet used
     public async Task DeleteAsync(T entity)
     {
         _context.Set<T>().Remove(entity);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
-    {
-        return await _context.Set<T>().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-    }
-
+    // Not yet used
     public async Task<int> CountAsync()
     {
         return await _context.Set<T>().CountAsync();
