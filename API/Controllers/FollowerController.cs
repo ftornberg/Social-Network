@@ -16,8 +16,9 @@ public class FollowerController : BaseController
     }
 
     [HttpPost("FollowUser")]
-    public async Task<ActionResult<FollowerDto>> FollowUserAsync(FollowerDto newFollowingDto)
+    public async Task<ActionResult<FollowerGetDto>> FollowUserAsync(FollowerAddDto newFollowingDto)
     {
+      if(newFollowingDto.FollowerUserId == newFollowingDto.FollowsUserId) return BadRequest(new ApiResponse(400, "Can't follow yourself dufus."));
       var newFollowing = _mapper.Map<Follower>(newFollowingDto);
 
       var FollowerUser = await _userRepository.GetByIdAsync(newFollowing.FollowerUserId);
@@ -29,14 +30,14 @@ public class FollowerController : BaseController
       newFollowing.FollowsUserName = FollowsUser.Name;
 
       var newFollowingCreated = await _followerRepository.AddAsync(newFollowing);
-      var newFollowingCreatedDto = _mapper.Map<FollowerDto>(newFollowingCreated);
+      var newFollowingCreatedDto = _mapper.Map<FollowerGetDto>(newFollowingCreated);
 
       return newFollowingCreatedDto;
     }
 
     // Shows whom I am following
     [HttpGet("GetWhoUserFollows/{userId}")]
-    public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetWhoUserFollowsAsync(int userId)
+    public async Task<ActionResult<IReadOnlyList<FollowerGetDto>>> GetWhoUserFollowsAsync(int userId)
     {
       var allFollowers = await _followerRepository.ListAllAsync();
       if (allFollowers.Count == 0) return BadRequest(new ApiResponse(400, "No one is following anyone."));
@@ -47,14 +48,14 @@ public class FollowerController : BaseController
       .ToList();
 
       if(following.Count == 0) return BadRequest(new ApiResponse(400, "User is not following anyone."));
-      var followersDto = _mapper.Map<List<FollowerDto>>(following);
+      var followersDto = _mapper.Map<List<FollowerGetDto>>(following);
 
       return followersDto;
     }
 
     // Shows whom is following me
     [HttpGet("GetSpecificUserFollowers/{userId}")]
-    public async Task<ActionResult<IReadOnlyList<FollowerDto>>> GetSpecificUserFollowersAsync(int userId)
+    public async Task<ActionResult<IReadOnlyList<FollowerGetDto>>> GetSpecificUserFollowersAsync(int userId)
     {
       var allFollowers = await _followerRepository.ListAllAsync();
       if (allFollowers.Count == 1) return BadRequest(new ApiResponse(400, "No one is following anyone."));
@@ -65,7 +66,7 @@ public class FollowerController : BaseController
       .ToList();
 
       if(followers.Count == 0) return BadRequest(new ApiResponse(400, "User have no followers."));
-      var followersDto = _mapper.Map<List<FollowerDto>>(followers);
+      var followersDto = _mapper.Map<List<FollowerGetDto>>(followers);
 
       return followersDto;
     }

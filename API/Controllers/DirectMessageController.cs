@@ -16,9 +16,10 @@ public class DirectMessageController : BaseController
   }
 
   [HttpPost("SendMessage")]
-  public async Task<ActionResult<DirectMessageDto>> SendMessageAsync(DirectMessageDto directMessageDto)
+  public async Task<ActionResult<DirectMessageGetDto>> SendMessageAsync(DirectMessageAddDto directMessageDto)
   {
     var directMessage = _mapper.Map<DirectMessage>(directMessageDto);
+    directMessage.TimeSent = DateTime.Now;
 
     var sender = await _userRepository.GetByIdAsync(directMessage.SenderUserId);
     if (sender == null) return BadRequest(new ApiResponse(400, "The user sending the message was not found."));
@@ -29,13 +30,16 @@ public class DirectMessageController : BaseController
     directMessage.ReceiverUserName = receiver.Name;
 
     var directMessageCreated = await _directMessageRepository.AddAsync(directMessage);
-    var directMessageCreatedDto = _mapper.Map<DirectMessageDto>(directMessageCreated);
+    var directMessageCreatedDto = _mapper.Map<DirectMessageGetDto>(directMessageCreated);
+    
+    // Fulfix pga bugg
+    directMessageCreatedDto.TimeSent = directMessageCreated.TimeSent;
 
     return directMessageCreatedDto;
   }
 
   [HttpGet("GetMessages/{userOneId}/{userTwoId}")]
-  public async Task<ActionResult<IReadOnlyList<DirectMessageDto>>> GetMessagesAsync(int userOneId, int userTwoId)
+  public async Task<ActionResult<IReadOnlyList<DirectMessageGetDto>>> GetMessagesAsync(int userOneId, int userTwoId)
   {
     var directMessages = await _directMessageRepository.ListAllAsync();
     if (directMessages.Count == 0) return BadRequest(new ApiResponse(400, "There are no direct messages."));
@@ -47,7 +51,7 @@ public class DirectMessageController : BaseController
     .OrderByDescending(message => message.TimeSent)
     .ToList();
 
-    var messagesDto = _mapper.Map<List<DirectMessageDto>>(messagesFromUserOne);
+    var messagesDto = _mapper.Map<List<DirectMessageGetDto>>(messagesFromUserOne);
 
     return messagesDto;
   }
