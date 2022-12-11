@@ -24,18 +24,19 @@ const ShowUsers = () => {
 		},
 
 		onSuccess: () => {
-			queryClient.invalidateQueries(['UserFollowsData, UserFollowerData']);
+			queryClient.invalidateQueries(['UserFollowsData']);
+			queryClient.invalidateQueries(['UserFollowerData']);
 		},
 	});
 
 	return (
 		<div className="container">
-			<h1>Hitta vänner</h1>
+			<h1 className="display-2">Hitta vänner</h1>
 			<div className="row">
 				{users &&
 					users.map((user, index: number) => (
 						<div key={index} className="col-4 my-3">
-							<div className="card" style={{ width: 400 }}>
+							<div className="card rounded shadow-lg" style={{ width: 400 }}>
 								<Link to={`/user/${user.id}`}>
 									<img
 										className="card-img-top mr-3 pe-4 rounded"

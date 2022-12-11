@@ -9,10 +9,10 @@ const HomePage = () => {
 				<div className="col-2">
 					<SideBar />
 				</div>
-				<div className="col-6">
+				<div className="col-5 rounded shadow-lg">
 					<Wall />
 				</div>
-				<div className="col-2">
+				<div className="col-2 rounded">
 					<Conversations />
 				</div>
 			</div>

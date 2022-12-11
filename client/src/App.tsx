@@ -1,13 +1,11 @@
 import './App.css';
-import Wall from './component/Wall';
 import UserWall from './component/UserWall';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import Conversations from './component/Conversations';
 import DirectMessagePage from './pages/DirectMessagePage';
-import FindFriends from './component/FindFriends';
+import FindFriendsPage from './pages/FindFriendsPage';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +24,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: 'findfriends',
-		element: <FindFriends />,
+		element: <FindFriendsPage />,
 	},
 ]);
 
