@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import Moment from 'react-moment';
 import { useQuery } from 'react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
 import Loading from './Loading';
 import ShowMessages from './ShowMessages';
@@ -53,9 +52,6 @@ const Conversations = () => {
 											className="link-dark text-decoration-none"
 											onClick={() => {
 												getReceiver(conversations.userId);
-												<>
-													{console.log('Conv UserId', conversations.userId)};
-												</>;
 											}}
 										>
 											<img

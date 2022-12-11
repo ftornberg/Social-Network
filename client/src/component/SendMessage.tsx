@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
 import agent from '../actions/agent';
@@ -12,6 +12,7 @@ const SendMessage = () => {
 		receiverUserId: 0,
 		message: '',
 	});
+
 	const { senderUserId, receiverUserId, message } = values;
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +35,6 @@ const SendMessage = () => {
 				message: message,
 			});
 		},
-
 		onSuccess: () => {
 			queryClient.invalidateQueries(['directMessageData, showMessageData']);
 			setInputValue(null);

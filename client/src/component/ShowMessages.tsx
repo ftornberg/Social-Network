@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import Moment from 'react-moment';
 import agent from '../actions/agent';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ interface props {
 }
 const ShowMessages = ({ chatId }: props) => {
 	const [values, setValues] = useState<DirectMessage[]>();
-
 	const queryClient = useQueryClient();
 
 	useEffect(() => {
@@ -26,7 +25,7 @@ const ShowMessages = ({ chatId }: props) => {
 		<div className="container-fluid">
 			<div className="col-sm rounded">
 				<div className="clearfix"></div>
-				<h3 className="display-2 ps-3">ShowMessages</h3>
+				<h3 className="display-2 ps-3 text-white">ShowMessages</h3>
 				<ul className="list-unstyled p-3 mb-2">
 					{values &&
 						values.map((messages, index: number) => (

@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import agent from '../actions/agent';
-import FindFriendsPage from '../pages/FindFriendsPage';
 import Loading from './Loading';
 
 const ShowFollowers = () => {
@@ -26,7 +25,7 @@ const ShowFollowers = () => {
 			<Link to={`/findfriends/`} className="link-dark text-decoration-none">
 				<div className="row r``ounded">
 					<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-						Antingen så har ett fel inträffat, eller så följer du inte någon. gå
+						Antingen så har ett fel inträffat, eller så följer du inte någon. Gå
 						och gör det nu!
 					</div>
 				</div>

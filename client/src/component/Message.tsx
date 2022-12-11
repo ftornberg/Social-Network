@@ -6,9 +6,8 @@ import { useParams } from 'react-router-dom';
 const Message = () => {
 	const queryClient = useQueryClient();
 	const [textAreaValue, settextAreaValue] = useState('');
-	const { userId } = useParams<{ userId: string }>();
-
 	const [user, setUser] = useState<any>([]);
+	const { userId } = useParams<{ userId: string }>();
 
 	useEffect(() => {
 		agent.ApplicationUser.getUser(parseInt(userId as string)).then(
@@ -31,7 +30,6 @@ const Message = () => {
 				postedToUserId: parseInt(userId as string),
 			});
 		},
-
 		onSuccess: () => {
 			queryClient.invalidateQueries(['UserWallData']);
 			settextAreaValue('');

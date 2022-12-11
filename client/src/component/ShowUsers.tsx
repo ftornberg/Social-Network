@@ -22,7 +22,6 @@ const ShowUsers = () => {
 				followsUserName: '',
 			});
 		},
-
 		onSuccess: () => {
 			queryClient.invalidateQueries(['UserFollowsData']);
 			queryClient.invalidateQueries(['UserFollowerData']);
@@ -47,9 +46,9 @@ const ShowUsers = () => {
 									<h5 className="card-title">{user.name}</h5>
 
 									<p className="card-text">
-										Some quick example text to build on the card title and make
-										up the bulk of the card's content.
-										<></>
+										Ett litet exempel för att visa hur text fyller ut kortens
+										titel och innehåll. Här kan användarna skriva en kort
+										introduktion.
 									</p>
 									<button
 										onClick={() => addPostMutation.mutate(user.id)}
