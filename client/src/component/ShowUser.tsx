@@ -7,7 +7,6 @@ const ShowUser = () => {
 	useEffect(() => {
 		const id = Math.floor(Math.random() * 10) + 1;
 		agent.ApplicationUser.getUser(id).then((response) => {
-			console.log(response);
 			setUser(response);
 		});
 	}, []);

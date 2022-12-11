@@ -27,7 +27,6 @@ const UserWall = () => {
 				followsUserName: '',
 			});
 		},
-
 		onSuccess: () => {
 			queryClient.invalidateQueries(['UserFollowsData, UserFollowerData']);
 		},

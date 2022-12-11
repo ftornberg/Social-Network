@@ -2,12 +2,15 @@ import { ChangeEvent, useState } from 'react';
 import agent from '../actions/agent';
 import { Register } from '../models/user';
 
+// Not yet implemented
+
 const RegisterUser = () => {
 	const [values, setValues] = useState<Register>({
 		email: '',
 		password: '',
 		name: '',
 	});
+
 	const { email, password, name } = values;
 
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +24,7 @@ const RegisterUser = () => {
 			email: email,
 			password: password,
 		};
-
 		agent.ApplicationUser.registerUser(register).then((response) => {
-			console.log(response);
 			setValues(response);
 		});
 	};
