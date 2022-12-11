@@ -1,6 +1,6 @@
 namespace API.Dto.DirectMessage;
 
-public class DirectMessageDto : BaseEntity
+public class DirectMessageGetDto : BaseEntity
 {
   public int SenderUserId { get; set; }
 
@@ -12,5 +12,5 @@ public class DirectMessageDto : BaseEntity
 
   public string? Message { get; set; }
 
-  public DateTime TimeSent { get; set; } = DateTime.Now;
+  public DateTime TimeSent { get; set; }
 }

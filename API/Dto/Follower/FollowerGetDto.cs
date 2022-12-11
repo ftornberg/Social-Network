@@ -1,6 +1,6 @@
 namespace API.Dto.Follower;
 
-public class FollowerDto
+public class FollowerGetDto
 {
     public int FollowerUserId { get; set; }
 
