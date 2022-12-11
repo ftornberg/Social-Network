@@ -55,10 +55,3 @@ function App() {
 }
 
 export default App;
-
-// 	<Routes>
-// 	<Route path="users">
-// 		<Route path=":userId" element={<ProfilePage />} />
-// 		<Route path="me" element={...} />
-// 	</Route>
-// </Routes>
