@@ -22,11 +22,14 @@ const ShowFollowing = () => {
 
 	if (error)
 		return (
-			<div className="row rounded">
-				<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-					An error has occurred. Please try again later.
+			<Link to={`/findfriends/`} className="link-dark text-decoration-none">
+				<div className="row r``ounded">
+					<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
+						Antingen så har ett fel inträffat, eller så följer ingen dig. Visa
+						vägen genom att följa några!
+					</div>
 				</div>
-			</div>
+			</Link>
 		);
 
 	return (
@@ -45,8 +48,7 @@ const ShowFollowing = () => {
 								src={`https://i.pravatar.cc/50?=${followers.followsUserId}`}
 								alt="{followers.followerUserName}"
 							/>
-							{followers.followsUserName},
-							<>{console.log('Followers:', followers)}</>
+							{followers.followsUserName}
 						</li>
 					</Link>
 				))}

@@ -30,30 +30,29 @@ const Conversations = () => {
 		);
 
 	return (
-		<div className="container-fluid">
-			<div className="clearfix"></div>
-			<div className="list-unstyled p-3 mb-2">
-				<h2>Conversations</h2>
+		<div className="text-dark p-4 m-4 rounded">
+			<h2 className="display-5 ps-4 pt-4">Konversationer</h2>
+			<ul className="list-group">
 				{data &&
-					data.map((conversations) => (
-						<Link to={`/conversation/${conversations.userId}`}>
-							<div className="container media bg-white text-dark p-4 mb-4 border rounded shadow-lg">
-								<div className="row">
-									<div className="col" key={conversations.id}>
-										<img
-											className="mr-3 pe-4 rounded-circle"
-											src={`https://i.pravatar.cc/40?=${conversations.userName}`}
-											alt="{dm.senderName}"
-										/>
-										<div className="col">
-											<p>{conversations.userName}</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</Link>
+					data.map((conversations, index: number) => (
+						<li
+							key={index}
+							className="list-group-item d-flex justify-content-start align-items-center rounded"
+						>
+							<Link
+								to={`/conversation/${conversations.userId}`}
+								className="link-dark text-decoration-none"
+							>
+								<img
+									className="mr-3 pe-4 rounded-circle"
+									src={`https://i.pravatar.cc/40?u=${conversations.userName}`}
+									alt="{dm.senderName}"
+								/>
+								{conversations.userName}
+							</Link>
+						</li>
 					))}
-			</div>
+			</ul>
 		</div>
 	);
 };

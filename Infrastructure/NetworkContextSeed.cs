@@ -193,5 +193,212 @@ public class NetworkContextSeed
       await context.Followers.AddRangeAsync(follower, follower2, follower3, follower4, follower5);
       await context.SaveChangesAsync();
     }
+
+    if (!context.DirectMessages.Any())
+    {
+      var dm = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 1,
+        SenderUserName = "Steve Jobs",
+        ReceiverUserId = 2,
+        ReceiverUserName = "Bill Gates",
+        TimeSent = DateTime.Now
+      };
+
+      var dm2 = new DirectMessage
+      {
+        Message = "Hello Steve",
+        SenderUserId = 2,
+        SenderUserName = "Bill Gates",
+        ReceiverUserId = 1,
+        ReceiverUserName = "Steve Jobs",
+        TimeSent = DateTime.Now
+      };
+
+      var dm3 = new DirectMessage
+      {
+        Message = "Hello Mark",
+        SenderUserId = 1,
+        SenderUserName = "Steve Jobs",
+        ReceiverUserId = 3,
+        ReceiverUserName = "Mark Zuckerberg",
+        TimeSent = DateTime.Now
+      };
+
+      var dm4 = new DirectMessage
+      {
+        Message = "Hello Steve",
+        SenderUserId = 3,
+        SenderUserName = "Mark Zuckerberg",
+        ReceiverUserId = 1,
+        ReceiverUserName = "Steve Jobs",
+        TimeSent = DateTime.Now
+      };
+
+      var dm5 = new DirectMessage
+      {
+        Message = "Hello Elon",
+        SenderUserId = 1,
+        SenderUserName = "Steve Jobs",
+        ReceiverUserId = 4,
+        ReceiverUserName = "Elon Musk",
+        TimeSent = DateTime.Now
+      };
+
+      var dm6 = new DirectMessage
+      {
+        Message = "Hello Steve",
+        SenderUserId = 4,
+        SenderUserName = "Elon Musk",
+        ReceiverUserId = 1,
+        ReceiverUserName = "Steve Jobs",
+        TimeSent = DateTime.Now
+      };
+
+      var dm7 = new DirectMessage
+      {
+        Message = "Hello Jeff",
+        SenderUserId = 1,
+        SenderUserName = "Steve Jobs",
+        ReceiverUserId = 5,
+        ReceiverUserName = "Jeff Bezos",
+        TimeSent = DateTime.Now
+      };
+
+      var dm8 = new DirectMessage
+      {
+        Message = "Hello Steve",
+        SenderUserId = 5,
+        SenderUserName = "Jeff Bezos",
+        ReceiverUserId = 1,
+        ReceiverUserName = "Steve Jobs",
+        TimeSent = DateTime.Now
+      };
+
+      var dm9 = new DirectMessage
+      {
+        Message = "Hello Steve",
+        SenderUserId = 2,
+        SenderUserName = "Bill Gates",
+        ReceiverUserId = 3,
+        ReceiverUserName = "Mark Zuckerberg",
+        TimeSent = DateTime.Now
+      };
+
+      var dm10 = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 3,
+        SenderUserName = "Mark Zuckerberg",
+        ReceiverUserId = 2,
+        ReceiverUserName = "Bill Gates",
+        TimeSent = DateTime.Now
+      };
+
+      var dm11 = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 2,
+        SenderUserName = "Bill Gates",
+        ReceiverUserId = 4,
+        ReceiverUserName = "Elon Musk",
+        TimeSent = DateTime.Now
+      };
+
+      var dm12 = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 4,
+        SenderUserName = "Elon Musk",
+        ReceiverUserId = 2,
+        ReceiverUserName = "Bill Gates",
+        TimeSent = DateTime.Now
+      };
+
+      var dm13 = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 2,
+        SenderUserName = "Bill Gates",
+        ReceiverUserId = 5,
+        ReceiverUserName = "Jeff Bezos",
+        TimeSent = DateTime.Now
+      };
+
+      var dm14 = new DirectMessage
+      {
+        Message = "Hello Bill",
+        SenderUserId = 5,
+        SenderUserName = "Jeff Bezos",
+        ReceiverUserId = 2,
+        ReceiverUserName = "Bill Gates",
+        TimeSent = DateTime.Now
+      };
+
+      var dm15 = new DirectMessage
+      {
+        Message = "Hello Mark",
+        SenderUserId = 3,
+        SenderUserName = "Mark Zuckerberg",
+        ReceiverUserId = 4,
+        ReceiverUserName = "Elon Musk",
+        TimeSent = DateTime.Now
+      };
+
+      var dm16 = new DirectMessage
+      {
+        Message = "Hello Mark",
+        SenderUserId = 4,
+        SenderUserName = "Elon Musk",
+        ReceiverUserId = 3,
+        ReceiverUserName = "Mark Zuckerberg",
+        TimeSent = DateTime.Now
+      };
+
+      var dm17 = new DirectMessage
+      {
+        Message = "Hello Mark",
+        SenderUserId = 3,
+        SenderUserName = "Mark Zuckerberg",
+        ReceiverUserId = 5,
+        ReceiverUserName = "Jeff Bezos",
+        TimeSent = DateTime.Now
+      };
+
+      var dm18 = new DirectMessage
+      {
+        Message = "Hello Mark",
+        SenderUserId = 5,
+        SenderUserName = "Jeff Bezos",
+        ReceiverUserId = 3,
+        ReceiverUserName = "Mark Zuckerberg",
+        TimeSent = DateTime.Now
+      };
+
+      var dm19 = new DirectMessage
+      {
+        Message = "Hello Elon",
+        SenderUserId = 4,
+        SenderUserName = "Elon Musk",
+        ReceiverUserId = 5,
+        ReceiverUserName = "Jeff Bezos",
+        TimeSent = DateTime.Now
+      };
+
+      var dm20 = new DirectMessage
+      {
+        Message = "Hello Elon",
+        SenderUserId = 5,
+        SenderUserName = "Jeff Bezos",
+        ReceiverUserId = 4,
+        ReceiverUserName = "Elon Musk",
+        TimeSent = DateTime.Now
+      };
+
+      await context.DirectMessages.AddRangeAsync(dm, dm2, dm3, dm4, dm5, dm6, dm7, dm8, dm9, dm10, dm11, dm12, dm13, dm14, dm15, dm16, dm17, dm18, dm19, dm20);
+      await context.SaveChangesAsync();
+
+    }
   }
 }

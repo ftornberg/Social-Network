@@ -28,7 +28,7 @@ const Message = () => {
 				postedMessage: textAreaValue,
 				postedByUserId: 1,
 				postedByUserName: '',
-				postedToUserId: parseInt(userId ?? '0'),
+				postedToUserId: parseInt(userId as string),
 			});
 		},
 

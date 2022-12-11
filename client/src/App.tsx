@@ -1,13 +1,11 @@
 import './App.css';
-import Wall from './component/Wall';
-import UserWall from './component/UserWall';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import Conversations from './component/Conversations';
+import UserWall from './component/UserWall';
+import FindFriendsPage from './pages/FindFriendsPage';
 import DirectMessagePage from './pages/DirectMessagePage';
-import FindFriends from './component/FindFriends';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
@@ -26,16 +24,20 @@ const router = createBrowserRouter([
 	},
 	{
 		path: 'findfriends',
-		element: <FindFriends />,
+		element: <FindFriendsPage />,
+	},
+	{
+		path: '*',
+		element: <HomePage />,
 	},
 ]);
 
 function App() {
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid justify-content-center">
 			<a
 				href="/"
-				className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+				className="d-flex align-items-center link-dark text-decoration-none"
 			>
 				<h1 className="display-1 center">Social Network</h1>
 			</a>
