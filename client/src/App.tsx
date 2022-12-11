@@ -5,7 +5,12 @@ import FindFriendsPage from './pages/FindFriendsPage';
 import DirectMessagePage from './pages/DirectMessagePage';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+	createBrowserRouter,
+	Route,
+	RouterProvider,
+	Routes,
+} from 'react-router-dom';
 
 const queryClient = new QueryClient();
 

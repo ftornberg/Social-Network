@@ -55,7 +55,7 @@ const ApplicationFollower = {
 };
 
 const ApplicationUser = {
-	list: () => requests.get<User[]>('/user/Users'),
+	list: () => requests.get<User[]>('/user/GetUsers'),
 
 	getUser: (id: number) => requests.get<User>('/user/' + id),
 

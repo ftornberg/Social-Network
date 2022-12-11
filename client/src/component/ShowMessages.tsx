@@ -1,40 +1,26 @@
 import { useQuery, useQueryClient } from 'react-query';
 import Moment from 'react-moment';
 import agent from '../actions/agent';
-import Loading from './Loading';
-import { Link, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { DirectMessage } from '../models/directmessage';
 
-const ShowMessages = () => {
+interface props {
+	chatId: number;
+}
+const ShowMessages = ({ chatId }: props) => {
+	const [values, setValues] = useState<DirectMessage[]>();
+
 	const queryClient = useQueryClient();
-
-	const { isLoading, error, data } = useQuery({
-		queryKey: ['showMessageData'],
-		queryFn: () =>
-			agent.ApplicationDirectMessage.list(1, 2).then((response) => response),
-	});
 
 	useEffect(() => {
 		return () => {
+			agent.ApplicationDirectMessage.list(1, chatId).then((response) =>
+				setValues(response)
+			);
 			queryClient.invalidateQueries(['showMessageData']);
 		};
-	}, []);
-
-	if (isLoading)
-		return (
-			<>
-				<Loading />
-			</>
-		);
-
-	if (error)
-		return (
-			<div className="row rounded">
-				<div className="col-sm bg-light text-dark p-4 mb-4 rounded">
-					An error has occurred. Please try again later.
-				</div>
-			</div>
-		);
+	}, [chatId]);
 
 	return (
 		<div className="container-fluid">
@@ -42,8 +28,8 @@ const ShowMessages = () => {
 				<div className="clearfix"></div>
 				<h3 className="display-2 ps-3">ShowMessages</h3>
 				<ul className="list-unstyled p-3 mb-2">
-					{data &&
-						data.map((messages, index: number) => (
+					{values &&
+						values.map((messages, index: number) => (
 							<li
 								className="media bg-white text-dark p-4 mb-4 border rounded shadow-lg"
 								key={index}
