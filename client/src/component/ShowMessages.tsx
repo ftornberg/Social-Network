@@ -1,15 +1,24 @@
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import Moment from 'react-moment';
 import agent from '../actions/agent';
 import Loading from './Loading';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ShowMessages = () => {
+	const queryClient = useQueryClient();
+
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['showMessageData'],
 		queryFn: () =>
 			agent.ApplicationDirectMessage.list(1, 2).then((response) => response),
 	});
+
+	useEffect(() => {
+		return () => {
+			queryClient.invalidateQueries(['showMessageData']);
+		};
+	}, []);
 
 	if (isLoading)
 		return (

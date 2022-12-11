@@ -1,11 +1,11 @@
 import './App.css';
-import UserWall from './component/UserWall';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import DirectMessagePage from './pages/DirectMessagePage';
+import UserWall from './component/UserWall';
 import FindFriendsPage from './pages/FindFriendsPage';
+import DirectMessagePage from './pages/DirectMessagePage';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
 	{
 		path: 'findfriends',
 		element: <FindFriendsPage />,
+	},
+	{
+		path: '*',
+		element: <HomePage />,
 	},
 ]);
 
